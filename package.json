@@ -1,8 +1,11 @@
 {
   "dependencies": {
+    "@citation-js/core": "^0.7.14",
+    "@citation-js/plugin-doi": "^0.7.14",
     "@types/mdx": "^2.0.13",
     "lodash": "^4.17.21",
     "nextra": "^2.13.4",
-    "nextra-theme-docs": "^2.13.4"
+    "nextra-theme-docs": "^2.13.4",
+    "react-notifications-component": "^4.0.1"
   }
 }

@@ -25,7 +25,7 @@ function Select({
   return (
     <div
       className={`w-full flex flex-col ${
-        props.isDisabled === true ? "!opacity-80 !cursor-not-allowed" : ""
+        props.isDisabled === true ? "!opacity-100 !cursor-not-allowed" : ""
       }`}
     >
       {Boolean(label) && (
@@ -40,7 +40,7 @@ function Select({
         styles={ReactSelectTheme("light")}
         {...props}
         classNamePrefix={`select2-selection text-sm ${
-          props.isDisabled === true ? "!opacity-80 " : ""
+          props.isDisabled === true ? "!opacity-100 " : ""
         }
          `}
         className={`w-full ${className}`}

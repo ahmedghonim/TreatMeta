@@ -1,3 +1,4 @@
+"use client"
 import { Text } from "@/components/ui/text";
 import React from "react";
 import Icon1 from "@/svg/mean_and_standard_deviation";
@@ -61,7 +62,7 @@ function OurConversions() {
   return (
     <div className="relative flex items-center mt-10 md:h-screen md:mt-0">
       <div className="flex-1 space-y-7">
-        <Text variant="stroke-title">Our Conversions</Text>
+        <Text variant="stroke-title">Available Conversions</Text>
         <div className="w-full gap-4 space-y-4 md:grid md:space-y-0 md:grid-cols-12">
           <div className="col-span-8 gap-4 space-y-4 md:grid md:space-y-0 md:grid-cols-12 ">
             {data.map((item, index) => (
@@ -73,10 +74,10 @@ function OurConversions() {
               >
                 <Item
                   id={item.id}
-                  isPrimary={index === 0}
                   icon={item.icon}
                   title={item.title}
                   list={item.list}
+                  isPrimary={false}
                 />
               </div>
             ))}
@@ -87,6 +88,7 @@ function OurConversions() {
               title={mData.title}
               list={mData.list}
               id={mData.id}
+              isPrimary={true}
             />
           </div>
         </div>

@@ -4,16 +4,12 @@ export const tabs = [
     href: "/",
   },
   {
-    name: "Start",
+    name: "ConvertLab",
     href: "/start/default",
   },
   {
-    name: "About us",
-    href: "/about-us",
-  },
-  {
     name: "Guide",
-    href: "/docs",
+    href: "/content/meansd",
   },
   {
     name: "Cite us",

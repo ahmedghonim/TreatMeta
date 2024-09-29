@@ -13,6 +13,10 @@ import { Text } from "@/components/ui/text";
 import { Button } from "@/components/ui/button";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { presets } from "@/components/layout/chared";
+import { Store } from 'react-notifications-component';
+import { Tooltip } from 'react-tooltip'
+
+
 export default function StartPage({params}:{params: {slug:string}}) {
   const searchParams = useSearchParams();
   const id = searchParams?.get("id");
@@ -30,6 +34,7 @@ export default function StartPage({params}:{params: {slug:string}}) {
   const [inputParams, setInputParams] = useState<any>(null);
   const [funcIdsValues, setFuncIdsValues] = useState<any>(null);
   const [outputVariables, setOutputVariables] = useState<any>(null);
+  const [invalidRows, setInvalidRows] = useState<any>(null);
   const [getDataTable, setGetDataTable] = useState<any>([]);
   const [tableResult, setTableResult] = useState<any>([]);
   const [outputColumns, setOutputColumns]= useState<any>([]);
@@ -43,12 +48,9 @@ export default function StartPage({params}:{params: {slug:string}}) {
   const [labData, setLabData] = useState<any>([]);
   useEffect(() => {
     setCurrentPresets(presets);
-    console.log(presets)
-
-
-    
 
   }, [slug]);
+
   useEffect(() => {
     if (slug !=="default" && currentPresets.length > 0) {
       const fInput = currentPresets.find((x:any)=>x.ID==slug);
@@ -76,7 +78,8 @@ export default function StartPage({params}:{params: {slug:string}}) {
     }
   }, [firstInput]);
   useEffect(() => {
-    if (inputParams && selectedCategory && slug !=="default") {
+    if (inputParams && selectedCategory.length && slug !=="default") {
+
       handleFunc_IDs();
     }
   }, [inputParams, selectedCategory]);
@@ -99,6 +102,24 @@ export default function StartPage({params}:{params: {slug:string}}) {
       });
     });
   }, []);
+
+
+  function handleInvalidRows(rows:any, colnum:number, classstr:string){
+    let outputCells=[];
+  
+    for(let i=0; i < rows.length; i++){
+      for(let j=0; j < colnum; j++){
+      outputCells.push({
+        row:rows[i]-1,
+        col:j,
+        className: classstr
+      });
+      }
+    
+    }
+    return outputCells;
+
+  }
 
   async function handleFirstInput() {
     try {
@@ -177,6 +198,20 @@ export default function StartPage({params}:{params: {slug:string}}) {
       );
       setOutputVariables(outputVariables);
     } catch (e) {
+      Store.addNotification({
+        title: "Something went wrong!",
+        message: "You selection doesn't match available conversions.\n Please refer to the guide for more info.",
+        type: "danger",
+        insert: "top",
+        container: "bottom-full",
+        animationIn: ["animate__animated", "animate__fadeIn"],
+        animationOut: ["animate__animated", "animate__fadeOut"],
+        dismiss: {
+          duration: 5000,
+          onScreen: true,
+          pauseOnHover: true,
+        }
+      });
       console.log(e);
     }
   }
@@ -214,11 +249,12 @@ export default function StartPage({params}:{params: {slug:string}}) {
           category: firstInput?.category,
         },
       });
-      console.log(firstInput.current_prepost, firstInput.current_groups, firstInput.category,"here")
       const renamedCols= await renameVariables(firstInput.current_prepost, firstInput.current_groups, firstInput.category, Object.keys(data[0]).slice(1,-2));
       setOutputColumns(renamedCols);
       setTableResult(data.map((el:any)=> zipObject( Object.keys(el).slice(1,-2), Object.values(el).slice(1,-2))));
-      
+      const invalidIDs=data.filter((el:any)=>el.invalid==1).map((el:any)=>el.ID);
+    
+      setInvalidRows(handleInvalidRows(invalidIDs,renamedCols.length, "invalid-cell"));
       // save in local storage for later use
       const oldLocalGetDataTable = localStorage.getItem("getDataTable");
 
@@ -272,18 +308,20 @@ export default function StartPage({params}:{params: {slug:string}}) {
   });
 
   return (
+    <>
     <div className="w-full  h-full pt-[170px]">
       <div className="pb-12 space-y-4 text-center">
         <div className="relative flex flex-col ">
           <Text variant="white" size="f2">
-            Embark on Your{" "}
-            <span className="relative mx-2">
-              Research <Line className="absolute -bottom-2" />
+          <span className="relative mx-2">
+          Customize <Line className="absolute -bottom-2" />
             </span>
-            Journey with
+             Your Conversion Table{" "}
+
+            with
           </Text>
           <Text variant="white" size="f2">
-            Treatmeta
+            TreatMeta
           </Text>
         </div>
         <Text variant="default">
@@ -359,6 +397,7 @@ export default function StartPage({params}:{params: {slug:string}}) {
               <label
                 htmlFor="current_prepost"
                 className="flex items-center col-span-12 gap-3 text-base font-medium text-white cursor-pointer w-fit"
+                data-tooltip-id="prepost-tooltip" data-tooltip-content="Check this if your data is in a prepost format"
               >
                 <Input
                   className="w-5 h-5 "
@@ -375,6 +414,7 @@ export default function StartPage({params}:{params: {slug:string}}) {
                 />
                 Current Prepost
               </label>
+              <Tooltip id="prepost-tooltip" />
             </div>
           )}
           {category.length !== 0 && !outputVariables && (
@@ -417,13 +457,13 @@ export default function StartPage({params}:{params: {slug:string}}) {
           <div className="mt-10 space-y-6">
             <div className="flex justify-between">
               <Text size="tee" variant="white">
-                Convert your data here
+                Enter your data here
               </Text>
               <div className="flex">
 
               {tableResult.length < 1 && (
-               <Button className="h-[54px]" onClick={handleScripts}>
-                  Submit
+               <Button className="h-[54px] !px-10" onClick={handleScripts}>
+                  Convert
                 </Button>
 
 
@@ -435,6 +475,7 @@ export default function StartPage({params}:{params: {slug:string}}) {
                   onClick={() => {
                     setTableResult([]);
                   }}
+                  variant="ghost"
                 >
                   Reset
                 </Button>
@@ -469,11 +510,16 @@ export default function StartPage({params}:{params: {slug:string}}) {
                   row[key] === "NA" ? "" : row[key]
                 );
               })}
-              
+              columnSorting={{
+                headerAction: true,
+                sortEmptyCells: false,
+                indicator: true
+              }}
               readOnly={true}
               autoColumnSize
               autoWrapCol={true}
               rowHeaders={true}
+              cell={invalidRows}
               width="100%"
               height="auto"
               manualColumnResize={true}
@@ -484,6 +530,9 @@ export default function StartPage({params}:{params: {slug:string}}) {
           )}
        
       </div>
+      
     </div>
+    <div className="h-[50vh] w-full" ></div>
+    </>
   );
 }

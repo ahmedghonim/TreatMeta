@@ -2,6 +2,7 @@ import { useRef } from "react";
 import { HotTable } from "@handsontable/react";
 import { registerAllModules } from "handsontable/registry";
 import "handsontable/dist/handsontable.full.css";
+import { Button } from "./button";
 
 // register Handsontable's modules
 
@@ -30,7 +31,7 @@ const HandsonTable = ({
   const hotRef = useRef<any>(null);
 
   return (
-    <>
+    <div>
       <HotTable
         data={getDataTable}
         autoColumnSize
@@ -41,6 +42,11 @@ const HandsonTable = ({
         allowInsertRow= {true}
         allowInsertColumn= {false}
         allowRemoveColumn= {false}
+        columnSorting={{
+          headerAction: true,
+          sortEmptyCells: false,
+          indicator: true
+        }}
         columns={autoComplete}
         allowInvalid={false}
         width="100%"
@@ -136,7 +142,30 @@ const HandsonTable = ({
           }
         }}
       />
-    </>
+    <div className="mt-4">
+      <Button  className="mr-2"
+      variant={"ghost"}
+        onClick={ ()=>{
+          if (hotRef.current) {
+            const hot = hotRef.current?.hotInstance;
+            const row= hot.countRenderedRows();
+            
+            hot.alter("insert_row_below", row, 1)
+          }
+        }}
+      >Add Row</Button>
+          <Button variant={"ghost"}
+        onClick={ ()=>{
+          if (hotRef.current) {
+            const hot = hotRef.current?.hotInstance;
+            const row= hot.countRenderedRows();
+            
+            hot.alter("insert_row_below", row, 10)
+          }
+        }}
+      >Add 10 Rows</Button>
+      </div>
+    </div>
   );
 };
 

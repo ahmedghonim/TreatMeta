@@ -1,0 +1,172 @@
+# 2. Effect size estimation
+
+## 1. Dichotomous data pooling (for indirect meta-analysis, Prevalence (proportions))
+
+## Template
+
+### **A) Needed values**
+
+To …, you need the following values:
+
+1)  
+
+2) 
+
+3) 
+
+### B) Steps
+
+1) In the Input table: put each of the previous values into the corresponding cells 
+2) Click submit 
+3) In the Output table: you will get the …
+
+### **C) Equations**
+
+The output was calculated upon the following equations: 
+
+**1) Risk ratio:**
+
+$$
+ \textbf{RR}=\frac{\text { event } I}{\text { total I }} \div \frac{\text { event } C}{\text { total } C} 
+$$
+
+ Where: I; intervention, C; control
+
+Log RR = log (RR)
+
+$$
+ \operatorname{Var}_{\log \mathrm{RR}}=\frac{1}{\text { event I }}-\frac{1}{\text { total I }}+\frac{1}{\text { event } C}-\frac{1}{\text { total } C} 
+$$
+
+$$
+ SE_{\text {Var } \log R R}=\sqrt{\operatorname{Var} \log R R} 
+$$
+
+**2) Odds ratio:**
+
+$$
+\textbf{OR} =\frac{\text { event } I \times \text { nonevent } C}{\text { event } C \times \text { nonevent } I} 
+$$
+
+Where: I; intervention, C; control
+
+Log OR = log (OR)
+
+$$
+ \operatorname{Var}_{\log \mathrm{OR}}=\frac{1}{\text { event } I}+\frac{1}{\text { nonevent } \mathrm{I}}+\frac{1}{\text { event } C}+\frac{1}{\text { nonevent } C} 
+$$
+
+$$
+ \mathrm{SE}_{\text {Var } \log \mathrm{OR}}=\sqrt{\operatorname{Var} \log \mathrm{OR}} 
+$$
+
+### D) Citation and equations source
+
+Higgins JPT, Thomas J, Chandler J, Cumpston M, Li T, Page MJ, Welch VA (editors). *Cochrane Handbook for Systematic Reviews of Interventions* version 6.4 (updated August 2023). Cochrane, 2023. Available from www.training.cochrane.org/handbook.
+
+(Chapter: 6.4.1.2 Measures of relative effect: the risk ratio and odds ratio, URL: [Chapter 6: Choosing effect measures and computing estimates of effect | Cochrane Training](https://training.cochrane.org/handbook/current/chapter-06#section-6-4-1-2))
+
+### E) Additional notes
+
+In the meta-analysis, usually, we need to do this conversion when …. 
+
+If you want to compare intervention A and intervention B you need to calculate the logarithm of treatment effect (log TE) (log RR or log OR) and the Standard error of logarithm treatment effect (SE-logTE).
+
+Our calculator can calculate the logarithm treatment effect (log RR or log OR) and the Standard error of the logarithm treatment effect (SE-log RR or SE-log OR).
+
+in cases of:
+1- indirect meta-analysis
+2- pooled from other some (with no event and total)
+3- best case is transformed 
+
+:المراجع
+
+حط الباكدجز والمراجع للاندايركت في الجايد
+
+اتنين ستاديز بتوعالبريفيلانس ميتا
+
+---
+
+## 2. Continuous data pooling (for indirect meta-analysis)
+
+## Template
+
+### **A) Needed values**
+
+To …, you need the following values:
+
+1)  
+
+2) 
+
+3) 
+
+### B) Steps
+
+1) In the Input table: put each of the previous values into the corresponding cells 
+2) Click submit 
+3) In the Output table: you will get the …
+
+### **C) Equations**
+
+The output was calculated upon the following equations: 
+
+**1) …:** 
+
+**2) …:** 
+
+**3) …:** 
+
+### D) Citation and equations source
+
+Higgins JPT, Thomas J, Chandler J, Cumpston M, Li T, Page MJ, Welch VA (editors). *Cochrane Handbook for Systematic Reviews of Interventions* version 6.4 (updated August 2023). Cochrane, 2023. Available from www.training.cochrane.org/handbook.
+
+(Chapter: 6.5.2.10 Combining groups, URL: [Chapter 6: Choosing effect measures and computing estimates of effect | Cochrane Training](https://training.cochrane.org/handbook/current/chapter-06#section-6-5-2-10))
+
+### E) Additional notes
+
+In the meta-analysis, usually, we need to do this conversion when …. 
+
+If you want to compare intervention A and intervention B you need to calculate treatment effect (TE) (mean difference between intervention and control) and Standard error of treatment effect (SE-TE).
+
+Our calculator can calculate treatment effect (TE) (mean difference between intervention and control) and Standard error of treatment effect (SE-TE).
+
+Computing TE from studies that use independent groups We can estimate the mean difference (TE) from a study that use mean for two independent groups as follows.
+
+TE = mean for intervention – mean for control
+
+SD1 and SD2 will be the standard deviation of the two groups. N1 and N2 will be the sample size of the two groups. 
+
+In the case of homogenous data (if we use a fixed effect model), we assume the two standard deviations are equal.
+
+So we can calculate the variance of TE as follows:                 
+
+$$
+\textbf{Var}=\frac{N 1+N 2}{N 1 * N 2} S D^{2} 
+$$
+
+SD2 represents the pooled standard deviation of the two groups. Var represent variance
+
+$$
+ S D^{2}=\sqrt{\frac{(N 1-1) S D^{2}+(N 2-1) S D^{2}}{N 1+N 2-2}} 
+$$
+
+$$
+ \mathrm{SE}-\mathrm{TE}=\sqrt{v a r} 
+$$
+
+In the case of heterogeneous data (if we use a random effect model), we do not assume the two standard deviations are equal.
+
+$$
+\textbf{Var} =\frac{S D 1^{2}}{N 1}+\frac{S D 2^{2}}{N 2} 
+$$
+
+$$
+ \mathrm{SE}-\mathrm{TE}=\sqrt{v a r} 
+$$
+
+شبه اللي فوق في جزء الاندايركت
+
+---
+
+---

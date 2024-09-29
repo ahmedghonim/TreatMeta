@@ -3,7 +3,8 @@ import { Work_Sans } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import Nav from "@/components/layout/nav";
-import Footer from "@/components/layout/footer";
+import Content from "@/components/layout/content";
+
 
 const fontSans = Work_Sans({
   subsets: ["latin"],
@@ -70,11 +71,7 @@ export default function RootLayout({
         )}
       >
         <Nav />
-        <main className="relative overflow-x-hidden layoutPadding">
-          <div className="fixed w-[479.365px] h-[507.308px] rotate-[12.185deg] blur-[150px] left-10 top-10 -translate-x-1/2  rounded-[507.308px]" />
-          {children}
-          <Footer />
-        </main>
+        <Content children={children} />
       </body>
     </html>
   );

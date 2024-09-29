@@ -49,7 +49,7 @@ function ResearchHistory() {
   return (
     <div className="w-full h-full space-y-6 pt-[220px]">
       <span className="flex items-center gap-4">
-        <Text size="tef">Research History</Text>
+        <Text size="tef">Conversions History</Text>
         <Text size="tef" variant="primary">
           ({localCategoryResult.length})
         </Text>
@@ -97,7 +97,7 @@ const SingleConversion = ({
         </div>
         <div className="flex items-center gap-4 md:w-fit w-full">
           <Link className="w-full md:w-fit" href={`/history/${id}`}>
-            <Button className="w-full md:w-fit">View Research</Button>
+            <Button className="w-full md:w-fit">Retrieve Table</Button>
           </Link>
           <Button size="icon" variant="link" onClick={() => handelDelete(id)}>
             <DeleteIcon />

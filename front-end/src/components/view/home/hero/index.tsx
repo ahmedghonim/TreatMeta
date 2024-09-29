@@ -26,14 +26,14 @@ function Hero() {
       </div>
       <div className="flex items-center gap-3 mt-[28px]">
         <Link href="/start/default">
-          <Button className="min-w-[155px]">Get Start</Button>
+          <Button className="min-w-[155px]">Launch Converter</Button>
         </Link>
         <Button
           className="min-w-[155px]"
           variant="ghost"
           onClick={() => window.scrollTo({ top: 1000, behavior: "smooth" })}
         >
-          Explore Now{" "}
+          Find More{" "}
           <ArrowDown width={18} height={18} className="stroke-current" />
         </Button>
       </div>

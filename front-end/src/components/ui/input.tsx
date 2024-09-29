@@ -5,12 +5,13 @@ import { cn } from "@/lib/utils";
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
+  divStyle?: string;
 }
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ className, type, label, name, ...props }, ref) => {
+  ({ className, type, label,divStyle, name,...props }, ref) => {
     return (
-      <div className={cn("relative flex w-full flex-1 flex-col")}>
+      <div className={cn("relative flex w-full flex-1 flex-col", divStyle)}>
         {label && (
           <label htmlFor={name} className="pb-2 text-[12px] text-white">
             {label}

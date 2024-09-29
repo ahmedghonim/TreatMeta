@@ -167,7 +167,7 @@ calc_CCoef<-function(df){
   { 
     ccoef<-df%>%filter(!is.na(`ccoef`))
   }
-  else if("changeSD" %in% colnames(df))
+  else if("changeSDin" %in% colnames(df))
   {  
     change_sd<-df%>%filter(!is.na(changeSD),!is.na(preSD),!is.na(postSD))
   }
@@ -195,7 +195,8 @@ PrePost_to_MeanSD<-function(df){
                                                      changeSD=NA)
   out<-prepared_df%>%filter(invalid==0)%>%mutate(changeMean=postMean-preMean,
                             changeSD=sqrt(preSD^2+postSD^2 - 2*preSD*postSD*ccoef))
-  out<-rbind(invalid, out)%>%arrange(ID)
+  
+   out<-rbind(invalid, out)%>%arrange(ID)
   
 
   return(out)
@@ -364,6 +365,18 @@ Remove_NA<-function(df){
     return (df)
   }
 }
+Order_outCols<-function(df, lcols){
+
+  acc<-df
+  
+  for(itr in 1:length(lcols)-1){
+      acc<-acc%>%relocate(lcols[itr+1], .after = lcols[itr])
+  }
+  
+  return (acc)
+}
+
+
 char_cols<-df_names%>%filter(type=="text")
 char_cols<-char_cols$internal
 
@@ -395,7 +408,7 @@ Task_manager<-function( df, funcIDs, current_outputs, current_prepost, category 
   }
   #Remove empty rows
   df<-Remove_NA(df)
-  
+
   
   mandatory_inputs<-mandatory
   funcIDs<-as.vector(fromJSON(funcIDs))
@@ -407,7 +420,7 @@ Task_manager<-function( df, funcIDs, current_outputs, current_prepost, category 
   #Remove prepost from func_ID as it's determined by variables as a post-processor in the final step of category 1
   prepost_indicies<-which(mandatory$Function=="PrePost_to_MeanSD")
   funcIDs<-funcIDs[!funcIDs %in% prepost_indicies]
-  
+
   old_colnames<-colnames(df)
   #prepare columns for output variables if they aren't in the user input df
   if(sum(is.na(output_placeholder_indices))){
@@ -429,7 +442,7 @@ Task_manager<-function( df, funcIDs, current_outputs, current_prepost, category 
   ready_rows<-validated_df%>%filter_at(vars(current_outs), all_vars(!is.na(.))) %>% filter(!(ID %in% valid_rows$ID))
   invalid_rows<-validated_df%>%filter(invalid!=0 ,  !(ID %in% ready_rows$ID))
   if (c ==1){
-
+  
       if(nrow(valid_rows)>0){
         for(v in 1:nrow(valid_rows)){
         
@@ -440,7 +453,7 @@ Task_manager<-function( df, funcIDs, current_outputs, current_prepost, category 
     Cat1_output_vars<-c("ID", "Study_ID", "group_ID", "Mean", "SD","N", "invalid", "func")
     
     if(current_prepost && "change_group" %in% colnames(df)){
-      Cat1_output_vars<-c("ID", "Study_ID", "group_ID", "change_group", "Mean", "SD","N","ccoef", "invalid", "func")
+      Cat1_output_vars<-c("ID", "Study_ID", "group_ID", "change_group", "changeMean", "changeSD", "changeSDin", "Mean", "SD","N","ccoef", "invalid", "func")
     }
     
     
@@ -487,38 +500,49 @@ Task_manager<-function( df, funcIDs, current_outputs, current_prepost, category 
     
     valid_prepost<-PrePost_to_MeanSD(valid_prepost)
     Prepost_output_vars<-c("ID", "Study_ID","group_ID", "changeMean", "changeSD","invalid", "func" )
-    
+
     out_df<-rbind(valid_prepost%>%select(any_of(Prepost_output_vars))
                   ,invalid_prepost%>%select(any_of(Prepost_output_vars))
-                  )%>%arrange(ID)
+                  )%>%arrange(ID)%>%select(-ID)%>%rowid_to_column("ID")
   }
+browser()
   if("group_ID" %in% colnames(out_df) && category == 1){
  
-    max_group_val<-max(out_df$group_ID)
-    ma=ifelse(is.infinite(max_group_val),1,max_group_val) 
-    
+  
+
     na_df<-out_df%>%filter(is.na(group_ID)| invalid==1)%>%mutate(group_ID=1)
-    g_df<-out_df%>%filter(!is.na(group_ID))%>%arrange(ID)
+    dup_df<-out_df%>%filter(duplicated(Study_ID), duplicated(group_ID), !is.na(group_ID))%>%mutate(invalid=1)
+    na_df<-rbind(na_df, dup_df)
+    
+    g_df<-out_df%>%filter(!(ID %in% na_df$ID))%>%arrange(ID)
     max_group_val<-max(g_df$group_ID)
     ma=ifelse(is.infinite(max_group_val),1,max_group_val)
     
-    g_df<-rbind(g_df, na_df)%>%select(-ID)
-    g_df<-g_df%>%pivot_wider(names_from = group_ID, values_from = current_outs, names_glue = "{.value} {group_ID}", names_sort = TRUE)
-    #consider removing Group_ID if it exists 
-    
-    
-    paircols<-list()
-    if(length(current_outs)>1){
-      for( i in 1:ma){
-        paircols<-append(paircols,list(paste(current_outs, i)))
-        
+
+    if(ma>1){
+      newnames<-paste(current_outs,"1")
+      na_df<-na_df%>%rename_at(vars(current_outs), ~newnames)
+      newcols<-paste(current_outs, sort(rep(seq(2,ma), length(current_outs))) )
+      
+      
+      g_df<-g_df%>%select(-ID)
+      g_df<-g_df%>%pivot_wider(names_from = group_ID, values_from = current_outs, names_glue = "{.value} {group_ID}", names_sort = TRUE, names_repair = "unique")
+      if(nrow(na_df)>0){
+      na_df<-na_df %>% `is.na<-`(newcols)%>%select(-ID, -group_ID)
+      out_df<-rbind(na_df, g_df )%>%relocate(c(invalid, func), .after = last_col())%>%rowid_to_column("ID")
       }
-      out_df <- reduce(
-        .x = paircols, 
-        .f = ~ relocate(.x, .y[1], .before = .y[2]),
-        .init = g_df
-      ) %>%relocate(c(invalid, func), .after = last_col())%>%rowid_to_column("ID")
+      else{
+        out_df<-g_df%>%relocate(c(invalid, func), .after = last_col())%>%rowid_to_column("ID")
+      }
+      # paircols<-paste(current_outs, sort(rep(seq(1,ma), length(current_outs))))
+      # 
+      # out_df<-Order_outCols(g_df, paircols)
+
+    }else{
+      out_df<-out_df%>%select(-group_ID)
     }
+  
+
   }
 
   return(out_df)

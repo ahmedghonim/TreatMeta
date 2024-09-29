@@ -51,7 +51,7 @@ function Nav() {
             <div className="hidden md:flex">
               <Link href="/start">
                 <Button>
-                  Get Start <ArrowRight />
+                  Get Started <ArrowRight />
                 </Button>
               </Link>
             </div>
@@ -118,7 +118,7 @@ function Nav() {
                 <div>
                   <Link href="/start">
                     <Button>
-                      Get Start <ArrowRight />
+                      Get Started <ArrowRight />
                     </Button>
                   </Link>
                 </div>

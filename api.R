@@ -8,7 +8,7 @@ library(openxlsx)
 library(meta)
 library(utilities)
 options("plumber.port" = 8000)
-#* @apiTitle Statistical Analysis
+#* @apiTitle MetaTransformR
 #* @apiDescription This is a sample server for a Meta-analysis.
 #* @apiTOS http://example.com/terms/
 #* @apiContact list(name = "API Support", url = "http://www.example.com/support", email = "support@example.com")

@@ -1,0 +1,404 @@
+# 1. Mean and standard deviation (SD) conversions
+
+In just one click, all the below data types (for one group or more) will be converted to mean and SD, then automatically will convert mean and SD pre- (baseline) and post-treatment to mean and SD change.
+
+N.B: Correlation coefficient is calculated if available or estimated if not.
+
+## 1. Mean and standard deviation (SD) change
+
+### **A) Needed values**
+
+To calculate the change in mean (x̄) and standard deviation (SD) from baseline, you need the following values:
+
+1) Mean (x̄) (baseline)
+
+2) Mean (x̄) post-treatment (Final)
+
+3) Standard deviation (SD) (Baseline)
+
+4) Standard deviation (SD) (Final)
+
+5) Correlation coefficient (C.C)
+
+### B) Steps
+
+1) In the Input table: put each of the previous values into the corresponding cells 
+2) Click submit 
+3) In the Output table: you will get the mean and SD change
+
+### **C) Equations**
+
+The output was calculated upon the following equations: 
+
+**1) Mean (x̄) Change:**
+
+$$
+\textbf{x̄ Change = }x̄ (Final) - x̄ (Baseline)
+$$
+
+**2) Standard deviation (σ) change:** 
+
+$$
+\textbf{SD Change = }\sqrt{\mathrm{SD}{\text { Baseline}}^{2}+\mathrm{SD}{\mathrm{} \text { Final}}^{2}-\left(2 \times \mathrm{C.C} \times \mathrm{SD}{\text { Baseline}} \times \mathrm{SD }{\mathrm{ } \text { Final}}\right)} 
+$$
+
+### D) Citation and equations source
+
+Higgins JPT, Thomas J, Chandler J, Cumpston M, Li T, Page MJ, Welch VA (editors). *Cochrane Handbook for Systematic Reviews of Interventions* version 6.4 (updated August 2023). Cochrane, 2023. Available from www.training.cochrane.org/handbook.
+
+(Chapter: 6.5.2.8 Imputing standard deviations for changes from baseline, URL: [Chapter 6: Choosing effect measures and computing estimates of effect | Cochrane Training](https://training.cochrane.org/handbook/current/chapter-06#section-6-5-2-8))
+
+### E) Additional notes
+
+In the meta-analysis, we usually need to calculate C.C if the data presented contains the following:
+
+1) Standard deviation (SD) (Baseline)
+
+2) Standard deviation (SD) (Final)
+
+3) Standard deviation (SD) (Change)
+
+The output (C.C)  was calculated upon the following equation:
+
+$$
+\textbf{C.C = }\frac{\mathrm{SD}{\text { Baseline}}^{2}+\mathrm{SD}{\mathrm{} \text { Final}}^{2}-\mathrm{SD}{\mathrm{} \text { Change}}^{2}}{2 \times \mathrm{SD}{\text { Baseline}} \times \mathrm{SD}{\mathrm{} \text { Final }}} 
+$$
+
+---
+
+## 2. Mean and confidence interval (CI)
+
+### **A) Needed values**
+
+To estimate the mean and standard deviation (SD) from mean and 95% confidence intervals (CI), you need the following values:
+
+1) Mean
+
+2) Upper limit of CI
+
+3) Lower limit of CI
+
+4) Sample size (N)
+
+### B) Steps
+
+1) In the Input table: put each of the previous values into the corresponding cells 
+2) Click submit 
+3) In the Output table: you will get the data presented as mean and standard deviation
+
+### **C) Equations**
+
+The output was calculated upon the following equations: 
+
+**1) SD:** 
+
+$$
+\textbf{SD = }\sqrt{\mathrm{N}} \times \frac{Upper Limit - Lower Limit }{3.92}
+$$
+
+### D) Citation and equations source
+
+Higgins JPT, Thomas J, Chandler J, Cumpston M, Li T, Page MJ, Welch VA (editors). *Cochrane Handbook for Systematic Reviews of Interventions* version 6.4 (updated August 2023). Cochrane, 2023. Available from www.training.cochrane.org/handbook.
+
+(Chapter: 6.5.2.2 Obtaining standard deviations from standard errors and confidence intervals for group means, URL: [Chapter 6: Choosing effect measures and computing estimates of effect | Cochrane Training](https://training.cochrane.org/handbook/current/chapter-06#section-6-5-2-2))
+
+### E) Additional notes
+
+This equation is for 95%CI. For 90% CI, 3.92 should be replaced by 3.29, and for 99% confidence intervals it should be replaced by 5.15
+
+---
+
+## 3. Mean and standard error (SE)
+
+### **A) Needed values**
+
+To estimate the mean and standard deviation (SD) from mean and standard error (SE), you need the following values:
+
+1) Mean
+
+2) Standard Error (SE)
+
+3) Sample size (N)
+
+### B) Steps
+
+1) In the Input table: put each of the previous values into the corresponding cells 
+2) Click submit 
+3) In the Output table: you will get the data presented as mean and standard deviation
+
+### **C) Equations**
+
+The output was calculated upon the following equations: 
+
+**1) SD:** 
+
+$$
+\textbf{SD = }S E \times \sqrt{N} 
+$$
+
+### D) Citation and equations source
+
+Higgins JPT, Thomas J, Chandler J, Cumpston M, Li T, Page MJ, Welch VA (editors). *Cochrane Handbook for Systematic Reviews of Interventions* version 6.4 (updated August 2023). Cochrane, 2023. Available from www.training.cochrane.org/handbook.
+
+(Chapter: 6.5.2.2 Obtaining standard deviations from standard errors and confidence intervals for group means, URL: [Chapter 6: Choosing effect measures and computing estimates of effect | Cochrane Training](https://training.cochrane.org/handbook/current/chapter-06#section-6-5-2-2))
+
+### E) Additional notes
+
+When performing this transformation, SE should be computed based on data from a single intervention group, rather than using the SE of the mean difference between two intervention groups 
+
+---
+
+## 4. Median and range
+
+### **A) Needed values**
+
+To estimate mean (x̄) and standard deviation (σ) from median (Md) and range (a-b), you need the following values:
+
+1) Median (Md)
+
+2) The smallest value [minimum in the range] (a)
+
+3) The largest value [maximum in the range] (b)
+
+4) Sample size (N)
+
+### B) Steps
+
+1) In the Input table: put each of the previous values into the corresponding cells 
+2) Click submit 
+3) In the Output table: you will get the data presented as mean and standard deviation
+
+### **C) Equations**
+
+The output was calculated upon the following equations: 
+
+**1) Mean (x̄):**
+
+$$
+\textbf{x̄ = } ((a+2Md+b)/4)+((a-2Md+b)/4)
+$$
+
+    If the sample size was fairly large it can be calculated according to only:
+
+$$
+\textbf{x̄}\simeq 
+ ((a+2Md+b)/4)
+$$
+
+**2) Standard deviation (σ):**  
+
+$$
+if (N\lt15) \longrightarrow  \sigma\simeq R/4\simeq \frac{b-a}{\sqrt{12}}
+$$
+
+$$
+if (15\lt N\lt 60)\longrightarrow      \sigma\simeq R/4\simeq \frac{b-a}{4}
+$$
+
+$$
+ if (N\gt60)\longrightarrow \sigma\simeq R/4\simeq \frac{b-a}{6}
+$$
+
+### D) Citation and equations source
+
+Higgins JPT, Thomas J, Chandler J, Cumpston M, Li T, Page MJ, Welch VA (editors). *Cochrane Handbook for Systematic Reviews of Interventions* version 6.4 (updated August 2023). Cochrane, 2023. Available from www.training.cochrane.org/handbook.
+
+(Chapter: 6.5.2.6 Ranges, URL: [Chapter 6: Choosing effect measures and computing estimates of effect | Cochrane Training](https://training.cochrane.org/handbook/current/chapter-06#section-6-5-2-6))
+
+---
+
+## 5. Median and inter quartile range (IQR)
+
+### **A) Needed values**
+
+To estimate mean (x̄) and standard deviation (SD) from median (Md) and inter-quartile range (هضق), you need the following values:
+
+1) Median (Md)
+
+2) First Quartile (Q1)
+
+3) Third Quartile (Q3)
+
+4) Sample size (N)
+
+### B) Steps
+
+1) In the Input table: put each of the previous values into the corresponding cells 
+2) Click submit 
+3) In the Output table: you will get the data presented as mean and standard deviation
+
+### **C) Equations**
+
+The output was calculated upon the following equations: 
+
+**1) Mean (x̄):**
+
+$$
+\textbf{x̄ } \simeq  ((Q1 + Md + Q3) / 3)
+$$
+
+**2) Standard deviation (SD):** 
+
+((Q3 - Q1) / ((2 * z^(-1)) (0.75n - 0.125 / N+0.25))) ****
+
+where z is a constant symbol 
+
+**Approximately (SD):** 
+
+$$
+\textbf{SD }\simeq  (Q3-Q1/1.35) = (IQR/1.35)
+$$
+
+### D) Citation and equations source
+
+Higgins JPT, Thomas J, Chandler J, Cumpston M, Li T, Page MJ, Welch VA (editors). *Cochrane Handbook for Systematic Reviews of Interventions* version 6.4 (updated August 2023). Cochrane, 2023. Available from www.training.cochrane.org/handbook.
+
+(Chapter: 6.5.2.5 Interquartile ranges, URL: [Chapter 6: Choosing effect measures and computing estimates of effect | Cochrane Training](https://training.cochrane.org/handbook/current/chapter-06#section-6-5-2-5))
+
+---
+
+## 6. P-value of the difference between groups
+
+### **A) Needed values**
+
+To estimate the mean standard deviation (SD) for each group from the mean difference and P-value of the difference between two groups, you need the following values:
+
+1) P-value (between two groups) 
+
+2) Sample size of Experimental group (Ne)
+
+3) Sample size of Control group (Nc)
+
+4) Mean Difference between two groups  
+
+### B) Steps
+
+1) In the Input table: put each of the previous values into the corresponding cells 
+2) Click submit 
+3) In the Output table: you will get the mean and SD (that will be used for both groups)
+
+### **C) Equations**
+
+The output was calculated upon the following equations: 
+
+**1)** **P value to t value to SE then to SD**
+
+$$
+\textbf{SE = }\frac{Mean  \:Difference}{t-value} 
+$$
+
+**Then:**
+
+$$
+\textbf{SD = }  \frac{S E}{\sqrt{\frac{1}{N_{E}}+\frac{1}{N_{C}}}} 
+$$
+
+### D) Citation and equations source
+
+Higgins JPT, Thomas J, Chandler J, Cumpston M, Li T, Page MJ, Welch VA (editors). *Cochrane Handbook for Systematic Reviews of Interventions* version 6.4 (updated August 2023). Cochrane, 2023. Available from www.training.cochrane.org/handbook.
+
+(Chapter: 6.5.2.3 Obtaining standard deviations from standard errors, confidence intervals, t statistics and P values for differences in means, URL: [Chapter 6: Choosing effect measures and computing estimates of effect | Cochrane Training](https://training.cochrane.org/handbook/current/chapter-06#section-6-5-2-3))
+
+### E) Additional notes
+
+If the study provides you with the mean for each group, you might need to compute the mean difference using the formula: 
+
+$$
+\textbf{Mean Difference = }Mean1−Mean2
+$$
+
+Where Mean 1 is a mean for the first group, Mean 2 is a mean for the second group
+
+When studies report levels of significance, they often use shorthand expressions like "P\<0.05" or "P=NS" (which means "not significant" and usually implies P>0.05). Instead of exact P values, a conservative approach is to round up to the nearest limit (e.g., for P\<0.05, use P=0.05; for P\<0.01, use P=0.01; and for P\<0.001, use P=0.001). However, this approach does not work when results are reported as P=NS or P>0.05 .
+
+In a meta-analysis, you will require SDs for both the experimental and comparator groups. These equations compute the average SDs for both arms, allowing you to use this common SD for both groups.
+
+---
+
+## 7. Standard error (SE) of the difference between groups
+
+### **A) Needed values**
+
+To estimate the standard deviation (SD) from the standard error (SE) of the difference between two groups, you need the following values:
+
+1) Standard error between two groups (SE) 
+
+2) Sample size of Experimental group (Ne)
+
+3) Sample size of Control group (Nc)
+
+### B) Steps
+
+1) In the Input table: put each of the previous values into the corresponding cells 
+2) Click submit 
+3) In the Output table: you will get the mean and SD (that will be used for both groups)
+
+### **C) Equations**
+
+The output was calculated upon the following equation: 
+
+**1) SD:**
+
+$$
+\textbf{SD = }\frac{S E}{\sqrt{\frac{1}{N_{E}}+\frac{1}{N_{C}}}} 
+$$
+
+### D) Citation and equations source
+
+Higgins JPT, Thomas J, Chandler J, Cumpston M, Li T, Page MJ, Welch VA (editors). *Cochrane Handbook for Systematic Reviews of Interventions* version 6.4 (updated August 2023). Cochrane, 2023. Available from www.training.cochrane.org/handbook.
+
+(Chapter: 6.5.2.3 Obtaining standard deviations from standard errors, confidence intervals, t statistics and P values for differences in means, URL: [Chapter 6: Choosing effect measures and computing estimates of effect | Cochrane Training](https://training.cochrane.org/handbook/current/chapter-06#section-6-5-2-3))
+
+### E) Additional notes
+
+In a meta-analysis, you will require SDs for both the experimental and comparator groups. This equation computes the average SDs for both arms, allowing you to use this common SD for both groups.
+
+---
+
+## 8. Confidence interval (CI) of the difference between groups
+
+### **A) Needed values**
+
+To estimate the standard deviation (SD) for both groups from the Confidence interval (CI) of the difference between two groups, you need the following values:
+
+1) Upper limit of the CI
+
+2) Lower limit of the CI
+
+3) Sample size of Experimental group (Ne)
+
+4) Sample size of Control group (Nc)
+
+5) CI level (Usually 95% CI)
+
+### B) Steps
+
+1) In the Input table: put each of the previous values into the corresponding cells 
+2) Click submit 
+3) In the Output table: you will get the mean and SD (that will be used for both groups)
+
+### **C) Equations**
+
+The output was calculated upon the following equations: 
+
+**1) CI to SE then to SD**
+
+$$
+\textbf{SE = } \frac{Upper Limit - Lower Limit }{3.92}
+$$
+
+**Then:**
+
+$$
+\textbf{SD = }\frac{S E}{\sqrt{\frac{1}{N_{E}}+\frac{1}{N_{C}}}} 
+$$
+
+### D) Citation and equations source
+
+Higgins JPT, Thomas J, Chandler J, Cumpston M, Li T, Page MJ, Welch VA (editors). *Cochrane Handbook for Systematic Reviews of Interventions* version 6.4 (updated August 2023). Cochrane, 2023. Available from www.training.cochrane.org/handbook.
+
+(Chapter: 6.5.2.3 Obtaining standard deviations from standard errors, confidence intervals, t statistics and P values for differences in means, URL: [Chapter 6: Choosing effect measures and computing estimates of effect | Cochrane Training](https://training.cochrane.org/handbook/current/chapter-06#section-6-5-2-3))
+
+### E) Additional notes
+
+In a meta-analysis, you will require SDs for both the experimental and comparator groups. These equations compute the average SDs for both arms, allowing you to use this common SD for both groups.

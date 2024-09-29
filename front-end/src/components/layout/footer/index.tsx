@@ -9,9 +9,7 @@ function Footer() {
   return (
     <div className="flex flex-col justify-end gap-6 md:h-screen bg-background">
       <FooterContactUsSection />
-      <div className="md:w-[80%] mx-auto md:mt-16 mt-11 w-full">
-        <FooterSiteMap />
-      </div>
+    
       <div className="mt-11">
         <FooterInfo />
       </div>
