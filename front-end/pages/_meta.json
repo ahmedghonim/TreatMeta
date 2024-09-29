@@ -7,6 +7,8 @@
     "frameworks": {
       "title": "Start",
       "type": "page",
-      "href": "/start"
-    }
+      "href": "/start/default"
+    },
+    "content": "Content"
+
 }  

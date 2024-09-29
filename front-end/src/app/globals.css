@@ -235,16 +235,16 @@
   transform: rotateX(190deg);
 }
 
-th > div {
+ th > div {
   @apply bg-[#48647D] text-white text-base font-bold !p-2;
 }
 th {
-  @apply !p-0 w-fit;
+ 
 }
 
 td {
-  @apply !bg-[#1E3040] !text-base  !font-bold !text-white !text-center;
-}
+  @apply bg-[#1E3040] !text-base !text-white text-center;
+} 
 
 @font-face { 
   font-family: "Mismo"; 

@@ -3,7 +3,7 @@ export default {
     project: {
       link: 'https://github.com/shuding/nextra'
     },
-    primaryHue:{dark:5.26, light:80},
-    primarySaturation:{dark:60, light:20}
+    primaryHue:{dark:25.26, light:80},
+    primarySaturation:{dark:100, light:20}
     // ... other theme options
   }

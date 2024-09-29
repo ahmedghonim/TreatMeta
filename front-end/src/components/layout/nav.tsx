@@ -12,7 +12,7 @@ function Nav() {
   const pathname = usePathname();
   const [openSidBar, setOpenSidBar] = useState(false);
   return (
-    <nav className="bg-[#0F182E80] layoutPadding fixed top-0 z-40 inset-x-0 ">
+    <nav className="bg-[#0F182E] layoutPadding fixed top-0 z-40 inset-x-0 ">
       <div className="grid justify-between w-full grid-cols-12 py-4 mx-auto ">
         <div className="col-span-2 md:flex md:items-center md:gap-12">
           <Link href="/" className="flex flex-col items-center justify-center text-white font-semibold">

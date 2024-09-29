@@ -70,9 +70,10 @@ Rename_variables<-function(input_params, df_names, current_groups, current_prepo
   pp<-current_prepost
   n=as.numeric(current_groups)
   
-
+  
   
   c=category
+
   conditional<-paste0("C",c,"_G",ifelse(n>2,3,n),"_P", pp)
   
   conditional_names<-df_names%>%filter(condition==conditional)
@@ -119,7 +120,7 @@ function(current_groups, current_prepost, category){
   pp<-fromJSON(current_prepost)
   n=fromJSON(current_groups)
   c<-fromJSON((category))
-  
+
   conditional<-paste0("C",c,"_G",ifelse(n>2,3,n),"_P", pp)
   eligible_functions<-mandatory%>%filter(`condition`==conditional) %>% select(`ID`,`Function`)
   
@@ -148,10 +149,11 @@ function(current_groups, current_prepost, category){
 #' @param category JSON object of The dataframe containing user-chosen input variables
 #' @serializer json list(na="string")
 function(input_params, user_inputs, current_prepost, category){
+
   funcs<-fromJSON(input_params)
   outs<-fromJSON(user_inputs)
 
-  available_funcs<-mandatory[funcs,]%>%select(-Function, -condition, -category)
+  available_funcs<-mandatory%>%filter(ID %in% funcs)%>%select(-Function, -condition, -category)
   available_funcs<- available_funcs %>%  rowwise() %>% 
     mutate(original=sum( c_across(2: ncol(available_funcs) ) ), current=0 )
   cols<- match(outs, colnames(available_funcs))

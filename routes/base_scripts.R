@@ -68,6 +68,7 @@ split_df_prepost<-function(df){
   
   ready_df<-data.frame()
   if(nrow(df)==2 && sum(df$change_group) == 1){
+
     df<-calc_CCoef(df)
     pre_group<-df%>% filter(change_group==0) %>% rename(preMean=Mean, preSD=SD)
     post_group<-df%>% filter(change_group==1) %>% rename(postMean=Mean, postSD=SD)
@@ -76,8 +77,10 @@ split_df_prepost<-function(df){
     
   }
   else{
-    ready_df<-df%>%rename(preMean=Mean, preSD=SD)%>%mutate(postMean=NA, postSD=NA, invalid=1)
+   
+    ready_df<-df%>%rename(preMean=Mean, preSD=SD)%>%mutate(postMean=NA, postSD=NA, ccoef=NA, invalid=1)
   }
+  ready_df<-ready_df%>%select(ID, Study_ID, change_group, preMean,preSD, postMean, postSD, ccoef, invalid, func)
   return (as_tibble(ready_df))
 }
 
@@ -88,13 +91,16 @@ compose_followups<-function(df){
     group_by(change_group)%>%group_split()
   
   split_followups<-lapply(followups, function(x) {
-    bl<-baseline
-    bl$Study_ID<-x$Study_ID
-    split_df_prepost(rbind(bl, x%>%mutate(change_group=1)) )
-    } )
-  
+    
+      bl<-baseline
+      bl$Study_ID<-x$Study_ID
+      split_df_prepost(rbind(bl, x%>%mutate(change_group=1)) )
+    
+    }
+  )
   merged_followups<-do.call("rbind", split_followups)
   return(merged_followups)
+   
 }
 
 prepare_prepost<-function(df){
@@ -121,19 +127,22 @@ prepare_prepost<-function(df){
         else if(min(arm$change_group) == 0 && sum(duplicated(arm$change_group)) == 0 ){
           merged_followups<-compose_followups(arm)
           output_study_list<-append(output_study_list, list(merged_followups))
-        }else{
+        }
+        else{
+          
           output_study_list<-append(output_study_list, list(split_df_prepost(arm)))
         }
           
  
        }
       output_study_list<-append(output_study_list,list(do.call("rbind",output_arm_list)))
-    }else if (min(itm$change_group) == 0){
+    }else if (min(itm$change_group) == 0 && sum(duplicated(itm$change_group)) == 0 ){
      
       merged_followups<-compose_followups(itm)
-      
       output_study_list<-append(output_study_list, list(merged_followups))
+      
     } else{
+  
       output_study_list<-append(output_study_list, list(split_df_prepost(itm)))
     }
   
@@ -141,7 +150,7 @@ prepare_prepost<-function(df){
   }
 
   df<-do.call("rbind", output_study_list)
-  
+
   
   return (
 
@@ -163,11 +172,11 @@ calc_CCoef<-function(df){
     change_sd<-df%>%filter(!is.na(changeSD),!is.na(preSD),!is.na(postSD))
   }
   if(nrow(ccoef)){
-    cc_def<-mean(ccoef$CC)
+    cc_def<-mean(ccoef$ccoef)
   }
   else if(nrow(change_sd)){
     change_sd<-change_sd%>%mutate(CC=(preSD^2+postSD^2-changeSD^2)/(2*preSD*postSD))
-    cc_def<-mean(change_sd$CC)
+    cc_def<-mean(change_sd$change_sd)
   }
   
   return(df%>%mutate(ccoef=cc_def))
@@ -182,9 +191,12 @@ PrePost_to_MeanSD<-function(df){
 
   
   
-  
+  invalid<-prepared_df%>%filter(invalid==1)%>%mutate(changeMean=NA,
+                                                     changeSD=NA)
   out<-prepared_df%>%filter(invalid==0)%>%mutate(changeMean=postMean-preMean,
                             changeSD=sqrt(preSD^2+postSD^2 - 2*preSD*postSD*ccoef))
+  out<-rbind(invalid, out)%>%arrange(ID)
+  
 
   return(out)
   
@@ -417,6 +429,7 @@ Task_manager<-function( df, funcIDs, current_outputs, current_prepost, category 
   ready_rows<-validated_df%>%filter_at(vars(current_outs), all_vars(!is.na(.))) %>% filter(!(ID %in% valid_rows$ID))
   invalid_rows<-validated_df%>%filter(invalid!=0 ,  !(ID %in% ready_rows$ID))
   if (c ==1){
+
       if(nrow(valid_rows)>0){
         for(v in 1:nrow(valid_rows)){
         
@@ -427,7 +440,7 @@ Task_manager<-function( df, funcIDs, current_outputs, current_prepost, category 
     Cat1_output_vars<-c("ID", "Study_ID", "group_ID", "Mean", "SD","N", "invalid", "func")
     
     if(current_prepost && "change_group" %in% colnames(df)){
-      Cat1_output_vars<-c("ID", "Study_ID", "group_ID", "change_group", "Mean", "SD","N", "invalid", "func")
+      Cat1_output_vars<-c("ID", "Study_ID", "group_ID", "change_group", "Mean", "SD","N","ccoef", "invalid", "func")
     }
     
     
@@ -467,7 +480,7 @@ Task_manager<-function( df, funcIDs, current_outputs, current_prepost, category 
     invalid_rows<-invalid_rows%>%mutate(lab_output=lab_apply)%>%select(ID,lab_output,invalid, func)
   }
   out_df<-rbind(ready_rows,valid_rows, invalid_rows)%>%arrange(ID)
-  if(current_prepost && "change_group" %in% colnames(out_df)){
+  if(current_prepost && all(c("Mean", "SD", "change_group") %in% colnames(out_df)) ){
     
     valid_prepost<-out_df%>%filter(!is.na(change_group),!is.na(Mean), !is.na(SD), !is.na(Study_ID))
     invalid_prepost<-out_df%>%filter(!(ID %in% valid_prepost$ID))

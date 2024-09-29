@@ -452,29 +452,16 @@ export default function StartPage({params}:{params: {slug:string}}) {
             </div>
           </div>
         )}
-        {!outputVariables && getDataTable.length >= 1 && (
-          <div className="w-full my-6">
-            <Text size="tee" variant="white">
-              Results
-            </Text>
 
-            <HotTable
-              colHeaders={selectedCategory.map((item: any) => item.label)}
-              data={getDataTable}
-              autoWrapCol={true}
-              rowHeaders={true}
-              columns={autoComplete}
-              width="100%"
-              height="auto"
-              manualColumnResize={true}
-              autoWrapRow={true}
-              licenseKey="non-commercial-and-evaluation"
-            />
-          </div>
-        )}
 
-        <div className="w-full my-5">
+        
+
           {tableResult.length >= 1 && (
+            <div className="w-full my-5">
+              <Text size="tee" variant="white" className="my-6">
+                    Results
+                  </Text>
+            
             <HotTable
               colHeaders= {outputColumns}
               data={tableResult.map((row: any) => {
@@ -482,6 +469,8 @@ export default function StartPage({params}:{params: {slug:string}}) {
                   row[key] === "NA" ? "" : row[key]
                 );
               })}
+              
+              readOnly={true}
               autoColumnSize
               autoWrapCol={true}
               rowHeaders={true}
@@ -491,8 +480,9 @@ export default function StartPage({params}:{params: {slug:string}}) {
               autoWrapRow={true}
               licenseKey="non-commercial-and-evaluation"
             />
+             </div>
           )}
-        </div>
+       
       </div>
     </div>
   );
