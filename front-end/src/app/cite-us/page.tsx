@@ -170,7 +170,7 @@ function Bibliography(){
     
       
            
-            {citations.map((el:any, i:number)=> <Citation id={i+1} title={el.title} content={csl[i]} handler={setActive} currentActive={active}/>)}
+            {citations.map((el:any, i:number)=> <Citation key={i+1} id={i+1} title={el.title} content={csl[i]} handler={setActive} currentActive={active}/>)}
            
 
     </div>}
