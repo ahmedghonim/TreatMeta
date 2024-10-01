@@ -1,10 +1,9 @@
 # 1. Mean and standard deviation (SD) conversions
 
-In just one click, all the below data types (for one group or more) will be converted to mean and SD, then automatically will convert mean and SD pre- (baseline) and post-treatment to mean and SD change.
+In just one click, all the data types below (for one group or more) will be converted to mean and SD, and then will be automatically converted to mean and SD pre- (baseline) and post-treatment to mean and SD change.
+N.B: The correlation coefficient is calculated if available or assumed if not.
 
-N.B: Correlation coefficient is calculated if available or estimated if not.
-
-## 1. Mean and standard deviation (SD) change
+## 1. Mean and standard deviation (SD) Change
 
 ### **A) Needed values**
 
@@ -44,25 +43,25 @@ $$
 
 ### D) Citation and equations source
 
-Higgins JPT, Thomas J, Chandler J, Cumpston M, Li T, Page MJ, Welch VA (editors). *Cochrane Handbook for Systematic Reviews of Interventions* version 6.4 (updated August 2023). Cochrane, 2023. Available from www.training.cochrane.org/handbook.
-
-(Chapter: 6.5.2.8 Imputing standard deviations for changes from baseline, URL: [Chapter 6: Choosing effect measures and computing estimates of effect | Cochrane Training](https://training.cochrane.org/handbook/current/chapter-06#section-6-5-2-8))
+Higgins JPT, Thomas J, Chandler J, Cumpston M, Li T, Page MJ, Welch VA (editors). *Cochrane Handbook for Systematic Reviews of Interventions* version 6.4 (updated August 2023). Cochrane, 2023. Available from www.training.cochrane.org/handbook. [Chapter: 6.5.2.8 Imputing standard deviations for changes from baseline, URL: [Chapter 6: Choosing effect measures and computing estimates of effect | Cochrane Training](https://training.cochrane.org/handbook/current/chapter-06#section-6-5-2-8)].
 
 ### E) Additional notes
 
-In the meta-analysis, we usually need to calculate C.C if the data presented contains the following:
+**1)** In the meta-analysis, we usually need to calculate C.C if the data presented contains the following:
 
-1) Standard deviation (SD) (Baseline)
+    A) Standard deviation (SD) (Baseline)
 
-2) Standard deviation (SD) (Final)
+    B) Standard deviation (SD) (Final)
 
-3) Standard deviation (SD) (Change)
+    C) Standard deviation (SD) (Change)
 
-The output (C.C)  was calculated upon the following equation:
+The output (C.C)  will be calculated upon the following equation:
 
 $$
 \textbf{C.C = }\frac{\mathrm{SD}{\text { Baseline}}^{2}+\mathrm{SD}{\mathrm{} \text { Final}}^{2}-\mathrm{SD}{\mathrm{} \text { Change}}^{2}}{2 \times \mathrm{SD}{\text { Baseline}} \times \mathrm{SD}{\mathrm{} \text { Final }}} 
 $$
+
+**2)** If the previous values (SD Baseline, SD Final, and SD Change) were unavailable**,** C.C is assumed to be 0, 0.25, 0.50, 0.75, or 0.95. (Abrams, K. R., Gillies, C. L., & Lambert, P. C. (2005). Meta‐analysis of heterogeneously reported trials assessing change from baseline. *Statistics in medicine*, *24*(24), 3823-3844).
 
 ---
 
@@ -98,13 +97,11 @@ $$
 
 ### D) Citation and equations source
 
-Higgins JPT, Thomas J, Chandler J, Cumpston M, Li T, Page MJ, Welch VA (editors). *Cochrane Handbook for Systematic Reviews of Interventions* version 6.4 (updated August 2023). Cochrane, 2023. Available from www.training.cochrane.org/handbook.
-
-(Chapter: 6.5.2.2 Obtaining standard deviations from standard errors and confidence intervals for group means, URL: [Chapter 6: Choosing effect measures and computing estimates of effect | Cochrane Training](https://training.cochrane.org/handbook/current/chapter-06#section-6-5-2-2))
+Higgins JPT, Thomas J, Chandler J, Cumpston M, Li T, Page MJ, Welch VA (editors). *Cochrane Handbook for Systematic Reviews of Interventions* version 6.4 (updated August 2023). Cochrane, 2023. Available from www.training.cochrane.org/handbook. [Chapter: 6.5.2.2 Obtaining standard deviations from standard errors and confidence intervals for group means, URL: [Chapter 6: Choosing effect measures and computing estimates of effect | Cochrane Training](https://training.cochrane.org/handbook/current/chapter-06#section-6-5-2-2)].
 
 ### E) Additional notes
 
-This equation is for 95%CI. For 90% CI, 3.92 should be replaced by 3.29, and for 99% confidence intervals it should be replaced by 5.15
+This equation is for 95%CI. For 90% CI, 3.92 should be replaced by 3.29, and for 99% confidence intervals it should be replaced by 5.15.
 
 ---
 
@@ -138,13 +135,11 @@ $$
 
 ### D) Citation and equations source
 
-Higgins JPT, Thomas J, Chandler J, Cumpston M, Li T, Page MJ, Welch VA (editors). *Cochrane Handbook for Systematic Reviews of Interventions* version 6.4 (updated August 2023). Cochrane, 2023. Available from www.training.cochrane.org/handbook.
-
-(Chapter: 6.5.2.2 Obtaining standard deviations from standard errors and confidence intervals for group means, URL: [Chapter 6: Choosing effect measures and computing estimates of effect | Cochrane Training](https://training.cochrane.org/handbook/current/chapter-06#section-6-5-2-2))
+Higgins JPT, Thomas J, Chandler J, Cumpston M, Li T, Page MJ, Welch VA (editors). *Cochrane Handbook for Systematic Reviews of Interventions* version 6.4 (updated August 2023). Cochrane, 2023. Available from www.training.cochrane.org/handbook. [Chapter: 6.5.2.2 Obtaining standard deviations from standard errors and confidence intervals for group means, URL: [Chapter 6: Choosing effect measures and computing estimates of effect | Cochrane Training](https://training.cochrane.org/handbook/current/chapter-06#section-6-5-2-2)]
 
 ### E) Additional notes
 
-When performing this transformation, SE should be computed based on data from a single intervention group, rather than using the SE of the mean difference between two intervention groups 
+When performing this conversion, SE for a single group should be used, rather than using the SE of the mean difference between two groups. 
 
 ---
 
@@ -188,11 +183,11 @@ $$
 **2) Standard deviation (σ):**  
 
 $$
-if (N\lt15) \longrightarrow  \sigma\simeq R/4\simeq \frac{b-a}{\sqrt{12}}
+if (N\lt25) \longrightarrow  \sigma\simeq R/4\simeq \frac{b-a}{\sqrt{12}}
 $$
 
 $$
-if (15\lt N\lt 60)\longrightarrow      \sigma\simeq R/4\simeq \frac{b-a}{4}
+if (25\lt N\lt 60)\longrightarrow      \sigma\simeq R/4\simeq \frac{b-a}{4}
 $$
 
 $$
@@ -201,9 +196,15 @@ $$
 
 ### D) Citation and equations source
 
-Higgins JPT, Thomas J, Chandler J, Cumpston M, Li T, Page MJ, Welch VA (editors). *Cochrane Handbook for Systematic Reviews of Interventions* version 6.4 (updated August 2023). Cochrane, 2023. Available from www.training.cochrane.org/handbook.
+Higgins JPT, Thomas J, Chandler J, Cumpston M, Li T, Page MJ, Welch VA (editors). *Cochrane Handbook for Systematic Reviews of Interventions* version 6.4 (updated August 2023). Cochrane, 2023. Available from www.training.cochrane.org/handbook. (Chapter: 6.5.2.6 Ranges, URL: [Chapter 6: Choosing effect measures and computing estimates of effect | Cochrane Training](https://training.cochrane.org/handbook/current/chapter-06#section-6-5-2-6))
 
-(Chapter: 6.5.2.6 Ranges, URL: [Chapter 6: Choosing effect measures and computing estimates of effect | Cochrane Training](https://training.cochrane.org/handbook/current/chapter-06#section-6-5-2-6))
+Wan X, Wang W, Liu J, Tong T. Estimating the sample mean and standard deviation from the sample size, median, range and/or interquartile range. *BMC Med Res Methodol*. 2014;14:135. Published 2014 Dec 19. doi:10.1186/1471-2288-14-135
+
+Hozo SP, Djulbegovic B, Hozo I. Estimating the mean and variance from the median, range, and the size of a sample. *BMC Med Res Methodol*. 2005;5:13. Published 2005 Apr 20. doi:10.1186/1471-2288-5-13
+
+### E) Additional notes
+
+Use this conversion with caution, as the data skewness may affect the results. 
 
 ---
 
@@ -239,7 +240,7 @@ $$
 
 **2) Standard deviation (SD):** 
 
-((Q3 - Q1) / ((2 * z^(-1)) (0.75n - 0.125 / N+0.25))) ****
+((Q3 - Q1) / ((2 * z^(-1) ) (0.75n - 0.125 / N+0.25))) 
 
 where z is a constant symbol 
 
@@ -251,9 +252,15 @@ $$
 
 ### D) Citation and equations source
 
-Higgins JPT, Thomas J, Chandler J, Cumpston M, Li T, Page MJ, Welch VA (editors). *Cochrane Handbook for Systematic Reviews of Interventions* version 6.4 (updated August 2023). Cochrane, 2023. Available from www.training.cochrane.org/handbook.
+Higgins JPT, Thomas J, Chandler J, Cumpston M, Li T, Page MJ, Welch VA (editors). *Cochrane Handbook for Systematic Reviews of Interventions* version 6.4 (updated August 2023). Cochrane, 2023. Available from www.training.cochrane.org/handbook. (Chapter: 6.5.2.5 Interquartile ranges, URL: [Chapter 6: Choosing effect measures and computing estimates of effect | Cochrane Training](https://training.cochrane.org/handbook/current/chapter-06#section-6-5-2-5))
 
-(Chapter: 6.5.2.5 Interquartile ranges, URL: [Chapter 6: Choosing effect measures and computing estimates of effect | Cochrane Training](https://training.cochrane.org/handbook/current/chapter-06#section-6-5-2-5))
+Wan X, Wang W, Liu J, Tong T. Estimating the sample mean and standard deviation from the sample size, median, range and/or interquartile range. *BMC Med Res Methodol*. 2014;14:135. Published 2014 Dec 19. doi:10.1186/1471-2288-14-135
+
+Hozo SP, Djulbegovic B, Hozo I. Estimating the mean and variance from the median, range, and the size of a sample. *BMC Med Res Methodol*. 2005;5:13. Published 2005 Apr 20. doi:10.1186/1471-2288-5-13
+
+### E) Additional notes
+
+None.  
 
 ---
 
@@ -295,9 +302,9 @@ $$
 
 ### D) Citation and equations source
 
-Higgins JPT, Thomas J, Chandler J, Cumpston M, Li T, Page MJ, Welch VA (editors). *Cochrane Handbook for Systematic Reviews of Interventions* version 6.4 (updated August 2023). Cochrane, 2023. Available from www.training.cochrane.org/handbook.
+Higgins JPT, Thomas J, Chandler J, Cumpston M, Li T, Page MJ, Welch VA (editors). *Cochrane Handbook for Systematic Reviews of Interventions* version 6.4 (updated August 2023). Cochrane, 2023. Available from www.training.cochrane.org/handbook. (Chapter: 6.5.2.3 Obtaining standard deviations from standard errors, confidence intervals, t statistics and P values for differences in means, URL: [Chapter 6: Choosing effect measures and computing estimates of effect | Cochrane Training](https://training.cochrane.org/handbook/current/chapter-06#section-6-5-2-3))
 
-(Chapter: 6.5.2.3 Obtaining standard deviations from standard errors, confidence intervals, t statistics and P values for differences in means, URL: [Chapter 6: Choosing effect measures and computing estimates of effect | Cochrane Training](https://training.cochrane.org/handbook/current/chapter-06#section-6-5-2-3))
+Lin, J. T. (1989). Approximating the normal tail probability and its inverse for use on a pocket calculator. *Journal of the Royal Statistical Society: Series C (Applied Statistics)*, *38*(1), 69-70.‏
 
 ### E) Additional notes
 
@@ -345,13 +352,11 @@ $$
 
 ### D) Citation and equations source
 
-Higgins JPT, Thomas J, Chandler J, Cumpston M, Li T, Page MJ, Welch VA (editors). *Cochrane Handbook for Systematic Reviews of Interventions* version 6.4 (updated August 2023). Cochrane, 2023. Available from www.training.cochrane.org/handbook.
-
-(Chapter: 6.5.2.3 Obtaining standard deviations from standard errors, confidence intervals, t statistics and P values for differences in means, URL: [Chapter 6: Choosing effect measures and computing estimates of effect | Cochrane Training](https://training.cochrane.org/handbook/current/chapter-06#section-6-5-2-3))
+Higgins JPT, Thomas J, Chandler J, Cumpston M, Li T, Page MJ, Welch VA (editors). *Cochrane Handbook for Systematic Reviews of Interventions* version 6.4 (updated August 2023). Cochrane, 2023. Available from www.training.cochrane.org/handbook. (Chapter: 6.5.2.3 Obtaining standard deviations from standard errors, confidence intervals, t statistics and P values for differences in means, URL: [Chapter 6: Choosing effect measures and computing estimates of effect | Cochrane Training](https://training.cochrane.org/handbook/current/chapter-06#section-6-5-2-3))
 
 ### E) Additional notes
 
-In a meta-analysis, you will require SDs for both the experimental and comparator groups. This equation computes the average SDs for both arms, allowing you to use this common SD for both groups.
+In the meta-analysis, you probably need SDs for both the experimental and comparator groups. This equation computes the average SDs for both arms, allowing you to use this common SD for both groups.
 
 ---
 
@@ -395,10 +400,8 @@ $$
 
 ### D) Citation and equations source
 
-Higgins JPT, Thomas J, Chandler J, Cumpston M, Li T, Page MJ, Welch VA (editors). *Cochrane Handbook for Systematic Reviews of Interventions* version 6.4 (updated August 2023). Cochrane, 2023. Available from www.training.cochrane.org/handbook.
-
-(Chapter: 6.5.2.3 Obtaining standard deviations from standard errors, confidence intervals, t statistics and P values for differences in means, URL: [Chapter 6: Choosing effect measures and computing estimates of effect | Cochrane Training](https://training.cochrane.org/handbook/current/chapter-06#section-6-5-2-3))
+Higgins JPT, Thomas J, Chandler J, Cumpston M, Li T, Page MJ, Welch VA (editors). *Cochrane Handbook for Systematic Reviews of Interventions* version 6.4 (updated August 2023). Cochrane, 2023. Available from www.training.cochrane.org/handbook. (Chapter: 6.5.2.3 Obtaining standard deviations from standard errors, confidence intervals, t statistics and P values for differences in means, URL: [Chapter 6: Choosing effect measures and computing estimates of effect | Cochrane Training](https://training.cochrane.org/handbook/current/chapter-06#section-6-5-2-3))
 
 ### E) Additional notes
 
-In a meta-analysis, you will require SDs for both the experimental and comparator groups. These equations compute the average SDs for both arms, allowing you to use this common SD for both groups.
+In the meta-analysis, you probably need SDs for both the experimental and comparator groups. These equations compute the average SDs for both arms, allowing you to use this common SD for both groups.

@@ -204,8 +204,9 @@ PrePost_to_MeanSD<-function(df){
 }
 
 calculate_prop<-function(df){
-  m.prop.r<-metaprop(N,N_total,studlab = Study_ID ,df, sm = "PRAW")
-  m.prop<-metaprop(N,N_total,studlab = Study_ID ,df, sm = "PLN")
+#Rename N_total -> N_Events
+  m.prop.r<-metaprop(N_total,N,studlab = Study_ID ,df, sm = "PRAW",method.incr = "only0")
+  m.prop<-metaprop(N_total,N,studlab = Study_ID ,df, sm = "PLN", method.incr = "only0")
   df$TE=m.prop.r$TE
   df$seTE=m.prop.r$seTE
   df$logTE=m.prop$TE
@@ -392,6 +393,7 @@ char_cols<-char_cols$internal
 Task_manager<-function( df, funcIDs, current_outputs, current_prepost, category ){
   #make sure output columns exist in data // pre-processing step
   df<-fromJSON(df)
+
   #find a better way to exclude string variables
   if(sum(char_cols %in% colnames(df))>0){
     
@@ -505,10 +507,10 @@ Task_manager<-function( df, funcIDs, current_outputs, current_prepost, category 
                   ,invalid_prepost%>%select(any_of(Prepost_output_vars))
                   )%>%arrange(ID)%>%select(-ID)%>%rowid_to_column("ID")
   }
-browser()
+
   if("group_ID" %in% colnames(out_df) && category == 1){
  
-  
+  browser()
 
     na_df<-out_df%>%filter(is.na(group_ID)| invalid==1)%>%mutate(group_ID=1)
     dup_df<-out_df%>%filter(duplicated(Study_ID), duplicated(group_ID), !is.na(group_ID))%>%mutate(invalid=1)
@@ -529,6 +531,10 @@ browser()
       g_df<-g_df%>%pivot_wider(names_from = group_ID, values_from = current_outs, names_glue = "{.value} {group_ID}", names_sort = TRUE, names_repair = "unique")
       if(nrow(na_df)>0){
       na_df<-na_df %>% `is.na<-`(newcols)%>%select(-ID, -group_ID)
+      if(length(colnames(g_df))!= length(colnames(na_df)) ){
+        diff_columns<-colnames(na_df)[which(!(colnames(na_df) %in%  colnames(g_df) ))]
+        g_df[,diff_columns]<-NA
+      }
       out_df<-rbind(na_df, g_df )%>%relocate(c(invalid, func), .after = last_col())%>%rowid_to_column("ID")
       }
       else{

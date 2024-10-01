@@ -282,7 +282,8 @@
 
 @font-face { 
   font-family: "Mismo"; 
-  src: url('./fonts/mismo.otf'); 
+  src: url('./fonts/mismo.otf') format('opentype'); 
+  
   font-weight: normal; 
   font-style: normal; 
 } 

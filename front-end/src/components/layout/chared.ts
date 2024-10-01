@@ -51,8 +51,8 @@ export const presets =[
             "prepost":0,
             "colnames":[
                 "Study_ID",
-                "N",
                 "N_total",
+                "N",
                 "Mean",
                 "SD"
             ]

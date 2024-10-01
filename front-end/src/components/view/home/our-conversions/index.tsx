@@ -39,7 +39,7 @@ function OurConversions() {
     {
       id: "IPD",
       icon: Icon3,
-      title: "Mean and SD calculation",
+      title: "Data for each patient",
       list: ["From data for each patient into mean and SD"],
     },
 

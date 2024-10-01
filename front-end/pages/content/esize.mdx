@@ -1,172 +1,99 @@
 # 2. Effect size estimation
 
-## 1. Dichotomous data pooling (for indirect meta-analysis, Prevalence (proportions))
-
-## Template
+## 1. Dichotomous data pooling (for indirect meta-analysis, prevalence (proportional) meta-analysis)
 
 ### **A) Needed values**
 
-To …, you need the following values:
+To estimate the effect size and its logit transformation for dichotomous data, you need the following values:
 
-1)  
+1)  Events number
 
-2) 
-
-3) 
+2) Total patients’ number
 
 ### B) Steps
 
 1) In the Input table: put each of the previous values into the corresponding cells 
 2) Click submit 
-3) In the Output table: you will get the …
+3) In the Output table: you will get the log of risk ratio or odds ratio, with their log standard error (SE)
 
 ### **C) Equations**
 
 The output was calculated upon the following equations: 
 
-**1) Risk ratio:**
+**1) Prevalence**:
 
 $$
- \textbf{RR}=\frac{\text { event } I}{\text { total I }} \div \frac{\text { event } C}{\text { total } C} 
+ \textbf{Prevalence estimate}=\frac{\text { Event } }{\text { Total  }} 
 $$
 
- Where: I; intervention, C; control
+**2)** Log Prevalence = log (Prevalence)
 
-Log RR = log (RR)
-
-$$
- \operatorname{Var}_{\log \mathrm{RR}}=\frac{1}{\text { event I }}-\frac{1}{\text { total I }}+\frac{1}{\text { event } C}-\frac{1}{\text { total } C} 
-$$
+**3)** Standard error **(**SE) [log transformed]:
 
 $$
- SE_{\text {Var } \log R R}=\sqrt{\operatorname{Var} \log R R} 
-$$
-
-**2) Odds ratio:**
-
-$$
-\textbf{OR} =\frac{\text { event } I \times \text { nonevent } C}{\text { event } C \times \text { nonevent } I} 
-$$
-
-Where: I; intervention, C; control
-
-Log OR = log (OR)
-
-$$
- \operatorname{Var}_{\log \mathrm{OR}}=\frac{1}{\text { event } I}+\frac{1}{\text { nonevent } \mathrm{I}}+\frac{1}{\text { event } C}+\frac{1}{\text { nonevent } C} 
-$$
-
-$$
- \mathrm{SE}_{\text {Var } \log \mathrm{OR}}=\sqrt{\operatorname{Var} \log \mathrm{OR}} 
+SE = \sqrt{\frac{1}{Event}-\frac{1}{Total}}
 $$
 
 ### D) Citation and equations source
 
-Higgins JPT, Thomas J, Chandler J, Cumpston M, Li T, Page MJ, Welch VA (editors). *Cochrane Handbook for Systematic Reviews of Interventions* version 6.4 (updated August 2023). Cochrane, 2023. Available from www.training.cochrane.org/handbook.
+**1)** Higgins JPT, Thomas J, Chandler J, Cumpston M, Li T, Page MJ, Welch VA (editors). *Cochrane Handbook for Systematic Reviews of Interventions* version 6.4 (updated August 2023). Cochrane, 2023. Available from www.training.cochrane.org/handbook. (Chapter: 6.4.1.2 Measures of relative effect: the risk ratio and odds ratio, URL: [Chapter 6: Choosing effect measures and computing estimates of effect | Cochrane Training](https://training.cochrane.org/handbook/current/chapter-06#section-6-4-1-2))
 
-(Chapter: 6.4.1.2 Measures of relative effect: the risk ratio and odds ratio, URL: [Chapter 6: Choosing effect measures and computing estimates of effect | Cochrane Training](https://training.cochrane.org/handbook/current/chapter-06#section-6-4-1-2))
+**2)** Package ‘meta’ ([meta: General Package for Meta-Analysis (r-project.org)](https://cran.r-project.org/web/packages/meta/meta.pdf))
+
+**3)** Barendregt, Jan & Doi, Suhail & Lee, Yong Yi & Pacella, Rosana & Vos, Theo. (2013). Meta-analysis of prevalence. Journal of epidemiology and community health. 67. 10.1136/jech-2013-203104. ([Meta-analysis of prevalence | Journal of Epidemiology & Community Health (bmj.com)](https://jech.bmj.com/content/67/11/974))
+
+**4)** Barker, T.H., Migliavaca, C.B., Stein, C. *et al.* Conducting proportional meta-analysis in different types of systematic reviews: a guide for synthesisers of evidence. *BMC Med Res Methodol* **21**, 189 (2021). https://doi.org/10.1186/s12874-021-01381-z. ([Conducting proportional meta-analysis in different types of systematic reviews: a guide for synthesisers of evidence | BMC Medical Research Methodology | Full Text (biomedcentral.com)](https://bmcmedresmethodol.biomedcentral.com/articles/10.1186/s12874-021-01381-z))
 
 ### E) Additional notes
 
-In the meta-analysis, usually, we need to do this conversion when …. 
+    **A) For indirect meta-analysis,** in dichotomous outcomes, we need to do this conversion if we want to compare intervention A and intervention B indirectly (in case of no direct comparisons), hence we need to calculate the logarithm of treatment effect (log TE) (log RR or log OR) and the standard error of logarithm treatment effect (SE-logTE) for each study (intervention), then enter them as different subgroups and check for “between subgroups difference” option.
 
-If you want to compare intervention A and intervention B you need to calculate the logarithm of treatment effect (log TE) (log RR or log OR) and the Standard error of logarithm treatment effect (SE-logTE).
+    **B)** **For prevalence (proportional) meta-analysis,** we use this conversion as if we used event and total provided by each study for pooling, probably we will face the following two problems: “Firstly, the confidence limits fall outside of the established zero to one range [4]; this may impact on the readability and presentation of the pooled data as a forest-plot. The second concern, and by far the most prudent, is that the variance from studies contributing proportional data at the extreme ends of the zero to one range tends toward zero. This in turn, artificially inflates the weight that these studies contribute towards the pooled-prevalence estimate. Transformation of that data is therefore required during the meta-analysis process to deal with these problems.” Therefore, we provide you with the logit transformed version of data.  
 
-Our calculator can calculate the logarithm treatment effect (log RR or log OR) and the Standard error of the logarithm treatment effect (SE-log RR or SE-log OR).
+Also, in certain cases, some of the included studies only provide the prevalence (with no event and total), so we need to pool other studies to get the prevalence of all studies then pool them together in the meta-analysis. 
 
-in cases of:
-1- indirect meta-analysis
-2- pooled from other some (with no event and total)
-3- best case is transformed 
-
-:المراجع
-
-حط الباكدجز والمراجع للاندايركت في الجايد
-
-اتنين ستاديز بتوعالبريفيلانس ميتا
+   **C)** A correction of 0.5 may be added to each count in the case of zero events as recommended by Cochrane.  
 
 ---
 
 ## 2. Continuous data pooling (for indirect meta-analysis)
 
-## Template
-
 ### **A) Needed values**
 
-To …, you need the following values:
+To estimate the effect size for continuous data, you need the following values:
 
-1)  
+1)  Mean
 
-2) 
+2) Standard deviation (SD)
 
-3) 
+3) Total patients’ number
 
 ### B) Steps
 
 1) In the Input table: put each of the previous values into the corresponding cells 
 2) Click submit 
-3) In the Output table: you will get the …
+3) In the Output table: you will get the mean difference (MD) and its standard error (SE). 
 
 ### **C) Equations**
 
 The output was calculated upon the following equations: 
 
-**1) …:** 
+**1) Mean**  = Entered mean 
 
-**2) …:** 
+**2)** Log mean= log (mean)
 
-**3) …:** 
+**2)** Standard error **(**SE) [raw]**:** 
+
+$$
+SE=\frac{SD}{\sqrt{N}}
+$$
 
 ### D) Citation and equations source
 
-Higgins JPT, Thomas J, Chandler J, Cumpston M, Li T, Page MJ, Welch VA (editors). *Cochrane Handbook for Systematic Reviews of Interventions* version 6.4 (updated August 2023). Cochrane, 2023. Available from www.training.cochrane.org/handbook.
+1) Higgins JPT, Thomas J, Chandler J, Cumpston M, Li T, Page MJ, Welch VA (editors). *Cochrane Handbook for Systematic Reviews of Interventions* version 6.5 (updated August 2023). Cochrane, 2023. Available from www.training.cochrane.org/handbook. (Chapter: 6.5 Continuous outcome data, URL: [https://training.cochrane.org/handbook/current/chapter-06#section-6-5](https://training.cochrane.org/handbook/current/chapter-06#section-6-5))
 
-(Chapter: 6.5.2.10 Combining groups, URL: [Chapter 6: Choosing effect measures and computing estimates of effect | Cochrane Training](https://training.cochrane.org/handbook/current/chapter-06#section-6-5-2-10))
+2) Package ‘meta’ ([meta: General Package for Meta-Analysis (r-project.org)](https://cran.r-project.org/web/packages/meta/meta.pdf))
 
 ### E) Additional notes
 
-In the meta-analysis, usually, we need to do this conversion when …. 
-
-If you want to compare intervention A and intervention B you need to calculate treatment effect (TE) (mean difference between intervention and control) and Standard error of treatment effect (SE-TE).
-
-Our calculator can calculate treatment effect (TE) (mean difference between intervention and control) and Standard error of treatment effect (SE-TE).
-
-Computing TE from studies that use independent groups We can estimate the mean difference (TE) from a study that use mean for two independent groups as follows.
-
-TE = mean for intervention – mean for control
-
-SD1 and SD2 will be the standard deviation of the two groups. N1 and N2 will be the sample size of the two groups. 
-
-In the case of homogenous data (if we use a fixed effect model), we assume the two standard deviations are equal.
-
-So we can calculate the variance of TE as follows:                 
-
-$$
-\textbf{Var}=\frac{N 1+N 2}{N 1 * N 2} S D^{2} 
-$$
-
-SD2 represents the pooled standard deviation of the two groups. Var represent variance
-
-$$
- S D^{2}=\sqrt{\frac{(N 1-1) S D^{2}+(N 2-1) S D^{2}}{N 1+N 2-2}} 
-$$
-
-$$
- \mathrm{SE}-\mathrm{TE}=\sqrt{v a r} 
-$$
-
-In the case of heterogeneous data (if we use a random effect model), we do not assume the two standard deviations are equal.
-
-$$
-\textbf{Var} =\frac{S D 1^{2}}{N 1}+\frac{S D 2^{2}}{N 2} 
-$$
-
-$$
- \mathrm{SE}-\mathrm{TE}=\sqrt{v a r} 
-$$
-
-شبه اللي فوق في جزء الاندايركت
-
----
-
----
+In the meta-analysis of continuous outcomes, we need to do this conversion if we want to compare intervention A and intervention B indirectly (in case of no direct comparisons), hence we need to calculate the treatment effect (TE) (mean difference between intervention and control groups) and standard error of the treatment effect (SE-TE) for each study (intervention), then enter them as different subgroups and check for “between subgroups difference” option.
