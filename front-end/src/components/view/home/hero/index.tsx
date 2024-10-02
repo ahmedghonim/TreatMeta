@@ -9,7 +9,7 @@ import Link from "next/link";
 
 function Hero() {
   return (
-    <div className="relative flex flex-col items-center h-screen gap-4 pt-[20vh]">
+    <div className="relative flex flex-col items-center h-screen gap-4 h-[calc(100vh-110px)] pt-[10vh]">
       <div className="py-6 px-8 flex justify-center items-center flex-col gap-4">
         <TextLogo width={192} height={20} />
         <Text variant="white" >Where Data Gets the Treatment it Deserves</Text>

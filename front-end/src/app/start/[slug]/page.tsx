@@ -8,13 +8,15 @@ import { registerAllModules } from "handsontable/registry";
 import HandsonTable from "@/components/ui/handson-table";
 import { Input } from "@/components/ui/input";
 import { fetchData } from "@/lib/fetchData";
+import { renameVariables } from "@/lib/renameVariables";
 import Select from "@/components/ui/select";
 import { Text } from "@/components/ui/text";
 import { Button } from "@/components/ui/button";
-import { useParams, useRouter, useSearchParams } from "next/navigation";
+import { redirect, useRouter, useSearchParams } from "next/navigation";
 import { presets } from "@/components/layout/chared";
 import { Store } from 'react-notifications-component';
 import { Tooltip } from 'react-tooltip'
+import React from "react";
 
 
 export default function StartPage({params}:{params: {slug:string}}) {
@@ -53,12 +55,19 @@ export default function StartPage({params}:{params: {slug:string}}) {
 
   useEffect(() => {
     if (slug !=="default" && currentPresets.length > 0) {
-      const fInput = currentPresets.find((x:any)=>x.ID==slug);
-      setFirstInput({
-        current_groups: fInput.groups+"",
-        category: fInput.category+"",
-        current_prepost: fInput.prepost+""
-      });
+      try {
+        const fInput = currentPresets.find((x:any)=>x.ID==slug);
+        setFirstInput({
+          current_groups: fInput.groups+"",
+          category: fInput.category+"",
+          current_prepost: fInput.prepost+""
+        });
+      } catch (error) {
+        console.log(error);
+      
+        redirect('/start/default');
+      }
+
     }
   }, [currentPresets]);
 
@@ -148,28 +157,7 @@ export default function StartPage({params}:{params: {slug:string}}) {
       console.log(e);
     }
   }
-  //Rename variables
-  async function renameVariables(
-    prepost: boolean,
-    groups: number,
-    category: number,
-    vars: Array<string>
-  ) {
-    try {
-      const { data } = await fetchData<any>("/Rename_variables", {
-        method: "POST",
-        body: {
-          var_names: JSON.stringify(vars),
-          current_groups: groups,
-          current_prepost: prepost,
-          category: category
-        },
-      });
-      return data;
-    } catch (e) {
-      console.log(e);
-    }
-  }
+
   //FuncIDs
   async function handleFunc_IDs() {
     const categoryValue = selectedCategory.map((item: any) => {
@@ -335,13 +323,17 @@ export default function StartPage({params}:{params: {slug:string}}) {
           {category.length < 1 && (
             <div className="grid items-end w-full grid-cols-12 gap-6">
               <div className="col-span-4">
+                
                 <Input
-                  label="Current Groups"
+                  label="Number of groups"
                   name="current_groups"
+                  id="current_groups"
                   max={10}
                   min={0}
                   value={+firstInput.current_groups}
                   type="number"
+                  data-tooltip-id="groups-tooltip" 
+                  data-tooltip-content="Number of compared arms in the included studies"
                   onChange={(e) => {
                     setFirstInput({
                       ...firstInput,
@@ -349,11 +341,12 @@ export default function StartPage({params}:{params: {slug:string}}) {
                     });
                   }}
                 />
+                <Tooltip id="groups-tooltip" />
               </div>
               <div className="col-span-4">
                 <Select
                   name="Category"
-                  label="Category"
+                  label="Conversion category"
                   options={availableCategoriesData}
                   onChange={(e: any) => {
                     setFirstInput({
@@ -397,7 +390,7 @@ export default function StartPage({params}:{params: {slug:string}}) {
               <label
                 htmlFor="current_prepost"
                 className="flex items-center col-span-12 gap-3 text-base font-medium text-white cursor-pointer w-fit"
-                data-tooltip-id="prepost-tooltip" data-tooltip-content="Check this if your data is in a prepost format"
+                data-tooltip-id="prepost-tooltip" data-tooltip-content="Check this if you want to calculate change from baseline"
               >
                 <Input
                   className="w-5 h-5 "
@@ -412,7 +405,7 @@ export default function StartPage({params}:{params: {slug:string}}) {
                     });
                   }}
                 />
-                Current Prepost
+                Data have pre-post design?
               </label>
               <Tooltip id="prepost-tooltip" />
             </div>

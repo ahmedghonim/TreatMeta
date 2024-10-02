@@ -1,15 +1,16 @@
 import type { Metadata } from "next";
-import { Work_Sans } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import Nav from "@/components/layout/nav";
 import Content from "@/components/layout/content";
 
 
-const fontSans = Work_Sans({
-  subsets: ["latin"],
-  variable: "--font-sans",
-});
+
+const fontSans = localFont({
+  src:"./fonts/WorkSans-VariableFont_wght.ttf",
+  variable: "--font-sans"
+})
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
@@ -43,7 +44,7 @@ export async function generateMetadata(): Promise<Metadata> {
     openGraph: {
       type: "website",
       title: "TreatMeta",
-      url: "https://www.TreatMeta.com",
+      url: "https://www.TreatMeta.net",
       siteName: "TreatMeta",
       images: [
         {
@@ -71,6 +72,7 @@ export default function RootLayout({
         )}
       >
         <Nav />
+        <div className="w-full h-[110px]"></div>
         <Content>{children}</Content>
       </body>
     </html>

@@ -79,11 +79,23 @@ Rename_variables<-function(input_params, df_names, current_groups, current_prepo
   conditional_names<-df_names%>%filter(condition==conditional)
   default_names<-df_names%>%filter( condition=="D", !(internal %in% conditional_names$internal))
   
-  
+  browser()
   final_names<-rbind(conditional_names, default_names) %>% arrange(ID)
-  
   inds<-match(inputs,final_names$internal)
-  return (rbind(inputs,final_names$ui[inds]))
+  output_names<-final_names$ui[inds]
+  drf<-as.data.frame(output_names)%>%rowid_to_column("ID")
+  param_list<-drf%>%group_by(output_names)%>%group_split()
+  param_list<-lapply(param_list, function(x){
+    if(nrow(x)>1)
+    {
+      return(x%>%rowid_to_column("d")%>%mutate(output_names=paste(output_names, d))%>%select(-d))
+    }else{
+      return(x)
+    }
+  })
+  output_names<-do.call("rbind", param_list)%>%arrange(ID)
+  output_names<-output_names$output_names
+  return (rbind(inputs,output_names))
   
 }
 #' check eligible functions for given groups and prepost

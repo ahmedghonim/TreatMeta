@@ -205,8 +205,8 @@ PrePost_to_MeanSD<-function(df){
 
 calculate_prop<-function(df){
 #Rename N_total -> N_Events
-  m.prop.r<-metaprop(N_total,N,studlab = Study_ID ,df, sm = "PRAW",method.incr = "only0")
-  m.prop<-metaprop(N_total,N,studlab = Study_ID ,df, sm = "PLN", method.incr = "only0")
+  m.prop.r<-metaprop(N_events,N,studlab = Study_ID ,df, sm = "PRAW",method.incr = "only0")
+  m.prop<-metaprop(N_events,N,studlab = Study_ID ,df, sm = "PLN", method.incr = "only0")
   df$TE=m.prop.r$TE
   df$seTE=m.prop.r$seTE
   df$logTE=m.prop$TE
@@ -510,13 +510,19 @@ Task_manager<-function( df, funcIDs, current_outputs, current_prepost, category 
 
   if("group_ID" %in% colnames(out_df) && category == 1){
  
-  browser()
 
-    na_df<-out_df%>%filter(is.na(group_ID)| invalid==1)%>%mutate(group_ID=1)
-    dup_df<-out_df%>%filter(duplicated(Study_ID), duplicated(group_ID), !is.na(group_ID))%>%mutate(invalid=1)
-    na_df<-rbind(na_df, dup_df)
+    lst<-out_df%>%group_by(Study_ID)%>%group_split()
+    valid_inds<-lapply(lst, function(x){if(nrow(x%>%distinct(group_ID))==nrow(x) && nrow(x)>1 && max(x$group_ID)<11){ 
+           return(TRUE)
+           }else {return(FALSE)}})
+    g_df<-do.call("rbind", lst[unlist(valid_inds)])
+    na_df<-do.call("rbind", lst[!unlist(valid_inds)])
     
-    g_df<-out_df%>%filter(!(ID %in% na_df$ID))%>%arrange(ID)
+    # na_df<-out_df%>%filter(is.na(group_ID)| invalid==1)%>%mutate(group_ID=1)
+    # dup_df<-out_df%>%filter(duplicated(Study_ID), duplicated(group_ID), !is.na(group_ID))%>%mutate(invalid=1)
+    # na_df<-rbind(na_df, dup_df)%>%distinct(ID, .keep_all = TRUE)
+    #g_df<-out_df%>%filter(!(ID %in% na_df$ID))%>%arrange(ID)
+    
     max_group_val<-max(g_df$group_ID)
     ma=ifelse(is.infinite(max_group_val),1,max_group_val)
     
