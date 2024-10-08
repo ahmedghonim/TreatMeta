@@ -79,7 +79,7 @@ Rename_variables<-function(input_params, df_names, current_groups, current_prepo
   conditional_names<-df_names%>%filter(condition==conditional)
   default_names<-df_names%>%filter( condition=="D", !(internal %in% conditional_names$internal))
   
-  browser()
+
   final_names<-rbind(conditional_names, default_names) %>% arrange(ID)
   inds<-match(inputs,final_names$internal)
   output_names<-final_names$ui[inds]

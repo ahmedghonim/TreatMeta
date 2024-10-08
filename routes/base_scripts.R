@@ -441,7 +441,7 @@ Task_manager<-function( df, funcIDs, current_outputs, current_prepost, category 
   validated_df<-Validate_requirements(funcIDs, df, mandatory_inputs, current_prepost)%>%rowid_to_column("ID")
 
   valid_rows<-validated_df%>%filter(invalid==0)
-  ready_rows<-validated_df%>%filter_at(vars(current_outs), all_vars(!is.na(.))) %>% filter(!(ID %in% valid_rows$ID))
+  ready_rows<-validated_df%>%filter_at(vars(current_outs), all_vars(!is.na(.))) %>% filter(!(ID %in% valid_rows$ID))%>%mutate(invalid=0)
   invalid_rows<-validated_df%>%filter(invalid!=0 ,  !(ID %in% ready_rows$ID))
   if (c ==1){
   
@@ -509,13 +509,13 @@ Task_manager<-function( df, funcIDs, current_outputs, current_prepost, category 
   }
 
   if("group_ID" %in% colnames(out_df) && category == 1){
- 
+   
 
     lst<-out_df%>%group_by(Study_ID)%>%group_split()
     valid_inds<-lapply(lst, function(x){if(nrow(x%>%distinct(group_ID))==nrow(x) && nrow(x)>1 && max(x$group_ID)<11){ 
            return(TRUE)
            }else {return(FALSE)}})
-    g_df<-do.call("rbind", lst[unlist(valid_inds)])
+    g_df<-do.call("rbind", lst[unlist(valid_inds)])%>%mutate(func=NA)
     na_df<-do.call("rbind", lst[!unlist(valid_inds)])
     
     # na_df<-out_df%>%filter(is.na(group_ID)| invalid==1)%>%mutate(group_ID=1)
