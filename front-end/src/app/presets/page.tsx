@@ -26,9 +26,11 @@ function PresetItem(
        <div className="py-4 px-6 rounded-md bg-[#1e304052] relative overflow-hidden hover:translate-y-2 hover:scale-[0.95] transform-gpu ease-in-out duration-300 h-full">
             <Text size="tee" variant="white">{Name}</Text>
             <ul className="list-disc text-white pl-6 mt-2">
-                {Description.map((el:any, i:any)=> <li key={i}>
+                {Description.map((el:any, i:any)=> <React.Fragment key={i}>
+                    <li key={i}>
                 <Text size="base" variant="default">{el}</Text>
-                </li>)}
+                </li>
+                </React.Fragment>)}
             </ul>
             <Text variant="stroke-title" className="absolute right-[5%] bottom-[0px] translate-y-[30%] opacity-85">{ID+""}</Text>
 
@@ -45,7 +47,7 @@ function PresetPage(){
         <>
         <Text variant="stroke-title">Presets</Text>
         <div className="grid grid-cols-3 gap-x-4 gap-y-6 w-full mt-4 items-stretch">
-            {presets.map((el:any, i:any)=><PresetItem ID={i+1} url={el.ID} Name={el.Name} Description={el.conversions}/>)}
+            {presets.map((el:any, i:any)=><PresetItem key={i} ID={i+1} url={el.ID} Name={el.Name} Description={el.conversions}/>)}
         </div>
         </>
     )
