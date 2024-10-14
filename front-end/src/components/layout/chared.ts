@@ -49,15 +49,16 @@ export const presets =[
 
             ],
             "conversions": [
-              "Median and IQR",
-              "Median and Range",
               "Mean and SE",
-              "Mean and CI"
+              "Mean and CI",
+              "Median and IQR",
+              "Median and Range"
+              
             ]
         },  
         {
           "ID":"MeanSdPP",
-          "Name": "Change from baseline",
+          "Name": "Change from baseline<span class='text-lg text-gray-400'> (All formats)</span>",
           "category":1,
           "groups":1,
           "prepost":1,
@@ -79,19 +80,20 @@ export const presets =[
               "ccoef"
 
           ],
+          sub:"Pre-Post",
           "conversions": [
             "Mean and SD",
-            "Median and IQR",
-            "Median and Range",
             "Mean and SE",
             "Mean and CI",
-            "Pre-post"
+            "Median and IQR",
+            "Median and Range"
+            
           ]
       },
        
         {
           "ID":"PPS",
-          "Name": "Change from baseline (??)",
+          "Name": "Change from baseline",
           "category":1,
           "groups":1,
           "prepost":1,
@@ -104,10 +106,9 @@ export const presets =[
               "ccoef"
 
           ],
+          sub:"Pre-Post",
           "conversions": [
-            "Mean and SD",
-            "Pre-post"
-
+            "Mean and SD"
           ]
       },
       
@@ -149,13 +150,14 @@ export const presets =[
                 "llci",
                 "ulci"
             ],
+            sub:"Combine rows with common ID",
             "conversions": [
               "Mean and SD",
               "Mean and SE",
               "Mean and CI",
               "Median and IQR",
-              "Median and Range",
-              "Combine rows with same ID??"
+              "Median and Range"
+              
             ]
         },
         {
@@ -174,7 +176,7 @@ export const presets =[
         },
         {
             "ID":"IPD",
-            "Name": "Patient data summary",
+            "Name": "Data summary",
             "category":4,
             "groups":1,
             "prepost":0,

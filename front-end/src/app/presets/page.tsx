@@ -8,15 +8,18 @@ function PresetItem(
         ID,
         url,
         Name,
+        Sub,
         Description
     }
     :{
         ID:Number,
         url:string,
         Name:string,
+        Sub?: string,
         Description: string[]
 
     }){
+
     return(
         <div className="min-h-48">
             <Link
@@ -24,7 +27,8 @@ function PresetItem(
       
     >
        <div className="py-4 px-6 rounded-md bg-[#1e304052] relative overflow-hidden hover:translate-y-2 hover:scale-[0.95] transform-gpu ease-in-out duration-300 h-full">
-            <Text size="tee" variant="white">{Name}</Text>
+            <Text size="tee" variant="white"><div dangerouslySetInnerHTML={{ __html: Name }} /></Text>
+            {Sub && <Text size="et" variant="default" className="block text-gray-400 font-bold">{Sub}</Text>}
             <ul className="list-disc text-white pl-6 mt-2">
                 {Description.map((el:any, i:any)=> <React.Fragment key={i}>
                     <li key={i}>
@@ -47,7 +51,7 @@ function PresetPage(){
         <>
         <Text variant="stroke-title">Presets</Text>
         <div className="grid grid-cols-3 gap-x-4 gap-y-6 w-full mt-4 items-stretch">
-            {presets.map((el:any, i:any)=><PresetItem key={i} ID={i+1} url={el.ID} Name={el.Name} Description={el.conversions}/>)}
+            {presets.map((el:any, i:any)=><PresetItem key={i} ID={i+1} url={el.ID} Name={el.Name} Description={el.conversions} Sub={el.sub}/>)}
         </div>
         </>
     )
