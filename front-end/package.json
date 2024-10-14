@@ -1,6 +1,6 @@
 {
   "name": "data_conversion",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -32,6 +32,7 @@
     "react": "^18",
     "react-dom": "^18",
     "react-markdown": "^9.0.1",
+    "react-notifications-component": "^4.0.1",
     "react-select": "^5.8.0",
     "react-spinners": "^0.14.1",
     "react-tooltip": "^5.28.0",
