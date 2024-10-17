@@ -12,16 +12,11 @@ function Hero() {
     <div className="relative flex flex-col items-center h-screen gap-4 h-[calc(100vh-110px)] pt-[10vh]">
       <div className="py-6 px-8 flex justify-center items-center flex-col gap-4">
         <TextLogo width={192} height={20} />
-        <Text variant="white" >Where Data Gets the Treatment it Deserves</Text>
+        <Text variant="white">Where Data Gets the Treatment it Deserves</Text>
       </div>
       <div className="mt-[4vh] space-y-5 text-center">
         <Text variant="default" size="teb" center>
           Forget about the nightmare of handling multiple data formats
-        </Text>
-
-        <Text variant="default" center>
-          Lorem ipsum dolor sit amet consectetur. Tristique in maecenas
-          convallis orci turpis viverra felis auctor
         </Text>
       </div>
       <div className="flex items-center gap-3 mt-[28px]">

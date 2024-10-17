@@ -200,7 +200,7 @@
 }
 
 .layoutPadding {
-  @apply px-6 md:px-[118px];
+  @apply px-6 lg:px-[118px];
 }
 
 /* thumbnail */
@@ -235,14 +235,14 @@
   transform: rotateX(190deg);
 }
 .rnc__base {
-  top:0;
-  left:0;
+  top: 0;
+  left: 0;
 }
 
-.handsontable{
+.handsontable {
   z-index: 1;
 }
-.handsontable td.invalid-cell{
+.handsontable td.invalid-cell {
   background-color: var(--primary) !important;
 }
 .handsontable th > div {
@@ -254,59 +254,61 @@
 
 .handsontable td {
   @apply !bg-[#1E3040] !text-base !text-white !font-bold !text-center;
-} 
+}
 
 .citation {
   @apply bg-secondary text-white py-4 max-h-[50vh] overflow-y-scroll;
-
 }
-.citation .index{
+.citation .index {
   @apply pl-8 pr-4 py-4 font-bold text-center;
-  
 }
-.citation .record{
+.citation .record {
   @apply font-normal text-justify py-4 pr-12 pl-4 relative;
-
 }
 
-.citation .row:not(:last-of-type) .record::after{
+.citation .row:not(:last-of-type) .record::after {
   content: " ";
   height: 2px;
 
   @apply absolute left-4 right-12 bottom-0 bg-white;
 }
 
-.insert-row{
+.insert-row {
   @apply text-white text-4xl w-16 h-16 bg-primary rounded-full;
 }
 
-@font-face { 
-  font-family: "Mismo"; 
-  src: url('./fonts/mismo.otf') format('opentype'); 
-  
-  font-weight: normal; 
-  font-style: normal; 
-} 
+@font-face {
+  font-family: "Mismo";
+  src: url("./fonts/mismo.otf") format("opentype");
 
-div:has(article){
-background-color: #080d20;}
-
-.Docs nav{
- @apply !h-28;
+  font-weight: normal;
+  font-style: normal;
 }
-#__next > div > div > div.nx-mx-auto.nx-flex.nx-max-w-\[90rem\] > aside *{
+
+div:has(article) {
+  background-color: #080d20;
+}
+
+.Docs nav {
+  @apply !h-28;
+}
+#__next > div > div > div.nx-mx-auto.nx-flex.nx-max-w-\[90rem\] > aside * {
   background-color: #080d20;
   box-shadow: none !important;
-
 }
-#__next > div > div > div.nx-mx-auto.nx-flex.nx-max-w-\[90rem\] > aside{
+#__next > div > div > div.nx-mx-auto.nx-flex.nx-max-w-\[90rem\] > aside {
   top: 7rem !important;
 }
-#__next > div > div > div.nx-mx-auto.nx-flex.nx-max-w-\[90rem\] > nav > div > div{
+#__next
+  > div
+  > div
+  > div.nx-mx-auto.nx-flex.nx-max-w-\[90rem\]
+  > nav
+  > div
+  > div {
   background-color: #080d20;
   box-shadow: none !important;
 }
-
 
 nav.nextra-toc {
   position: sticky;

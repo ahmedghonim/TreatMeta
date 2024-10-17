@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { Text } from "@/components/ui/text";
 import React from "react";
 import Icon1 from "@/svg/mean_and_standard_deviation";
@@ -77,7 +77,6 @@ function OurConversions() {
                   icon={item.icon}
                   title={item.title}
                   list={item.list}
-                  isPrimary={false}
                 />
               </div>
             ))}
@@ -88,7 +87,6 @@ function OurConversions() {
               title={mData.title}
               list={mData.list}
               id={mData.id}
-              isPrimary={true}
             />
           </div>
         </div>
@@ -101,27 +99,22 @@ function Item({
   icon: Icon,
   title,
   list,
-  isPrimary,
   id,
 }: {
   id: string | null;
   icon: any;
   title: string;
   list: string[];
-  isPrimary?: boolean;
 }) {
   return (
     <Link
       href={`/start/${id}`}
       className={cn(
-        "p-4 bg-[#1e304052] h-full rounded-md space-y-1 cursor-pointer block",
-        {
-          "bg-primary": isPrimary,
-        }
+        "p-4 bg-[#1e304052] h-full rounded-md space-y-1 cursor-pointer block hover:bg-primary duration-300"
       )}
     >
       <div className="space-y-3">
-        <Icon width={32} height={32} />
+        <Icon width={32} height={32} className="fill-white" />
         <Text size="tee" variant="white">
           {title}
         </Text>
@@ -130,14 +123,14 @@ function Item({
         {list.map((item) => (
           <li
             key={item}
-            className={cn("flex items-start gap-2", {
-              "text-white": isPrimary,
-            })}
+            className={cn(
+              "flex items-start gap-2 hover:text-white duration-300 "
+            )}
           >
-            <Text variant={isPrimary ? "white" : "default"} size="base">
+            <Text className="hover:!text-white" size="base">
               •
             </Text>
-            <Text variant={isPrimary ? "white" : "default"} size="base">
+            <Text className="hover:!text-white" size="base">
               {item}
             </Text>
           </li>
