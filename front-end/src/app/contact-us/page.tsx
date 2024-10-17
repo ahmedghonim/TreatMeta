@@ -4,7 +4,7 @@ import ContactInfo from "@/components/view/contact/contact-info";
 
 function ContactUsPage() {
   return (
-    <div className="md:h-screen flex flex-col md:flex-row items-center  md:gap-6 gap-8 pt-[15%]  pb-[12%]">
+    <div className="flex flex-col md:flex-row justify-stretch items-stretch  md:gap-6 gap-8 pt-[15%]  pb-[12%]">
       <ContactInfo />
 
       <ContactForm />

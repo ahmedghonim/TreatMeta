@@ -145,7 +145,7 @@ function OurStory() {
               </CarouselItem>
             ))}
           </CarouselContent>
-          <Text>
+          <Text className="font-bold bg-primary  text-white w-12 h-12 rounded-full flex items-center justify-center mx-auto">
             {current}/{count}
           </Text>
           <CarouselPrevious />

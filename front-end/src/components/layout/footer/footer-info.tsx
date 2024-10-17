@@ -31,8 +31,7 @@ function FooterInfo() {
       </div>
 
       <div className="flex flex-col items-end justify-between md:w-1/3 h-full ">
-        <span className="block bg-white h-px w-[45px]"></span>
-        <div className="relative flex flex-col items-end justify-end h-full gap-1">
+        <div className="relative flex flex-col items-end justify-end h-full gap-4">
           {socialData.map((item) =>
             item.link ? (
               <Link

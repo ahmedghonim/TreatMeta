@@ -4,13 +4,12 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import Nav from "@/components/layout/nav";
 import Content from "@/components/layout/content";
-
-
+import BgVideo from "./bg-video";
 
 const fontSans = localFont({
-  src:"./fonts/WorkSans-VariableFont_wght.ttf",
-  variable: "--font-sans"
-})
+  src: "./fonts/WorkSans-VariableFont_wght.ttf",
+  variable: "--font-sans",
+});
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
@@ -73,6 +72,7 @@ export default function RootLayout({
       >
         <Nav />
         <div className="w-full h-[110px]"></div>
+        <BgVideo />
         <Content>{children}</Content>
       </body>
     </html>

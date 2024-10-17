@@ -15,12 +15,14 @@ function OurConversions() {
     icon: Icon1,
     title: "Mean and standard deviation (SD) conversions",
     list: [
+      "Mean and standard deviation (SD) change with correlation coefficient",
       "Mean and confidence interval (CI)",
       "Mean and standard error (SE)",
       "Median and range",
       "Median and inter quartile range (IQR)",
-      "P value of difference between groups",
-      "P value of difference between groups",
+      "P-value of the difference between groups",
+      "Standard error (SE) of the difference between groups",
+      "Confidence interval (CI) of the difference between groups",
     ],
   };
 
@@ -30,37 +32,35 @@ function OurConversions() {
       icon: Icon2,
       title: "Effect size estimation",
       list: [
-        "Indirect meta-analysis",
-        "Prevalence (proportions) meta-analysis",
-        "Dichotomous data pooling",
-        "Continuous data pooling",
+        "Dichotomous data pooling (for indirect meta-analysis, and proportional meta-analysis)",
+        "Continuous data pooling (for indirect meta-analysis)",
       ],
     },
     {
       id: "IPD",
       icon: Icon3,
-      title: "Data for each patient",
-      list: ["From data for each patient into mean and SD"],
+      title: "Mean and standard deviation (SD) calculation",
+      list: ["From data for each patient into a single mean and SD"],
     },
 
     {
       id: "CombineMeans",
       icon: Icon4,
-      title: "Mean and SD combination",
-      list: ["From two or more groups into single mean and SD"],
+      title: "Mean and standard deviation (SD) combination",
+      list: ["From two or more groups into a single mean and SD"],
     },
     {
       id: "Labs",
       icon: Icon5,
-      title: "Units and labs conversions",
+      title: "Units of measure (lab) conversions",
       list: [
-        "More than 150 lab and units conversions such as hormones, blood sugar, length, weight, and many others.",
+        "From one unit to another with more than 400 lab and unit conversions such as hormones, blood sugar, length, weight, and many others.",
       ],
     },
   ];
 
   return (
-    <div className="relative flex items-center mt-10 md:h-screen md:mt-0">
+    <div className="relative flex items-center my-10 lg:my-16 ">
       <div className="flex-1 space-y-7">
         <Text variant="stroke-title">Available Conversions</Text>
         <div className="w-full gap-4 space-y-4 md:grid md:space-y-0 md:grid-cols-12">
@@ -115,7 +115,7 @@ function Item({
     >
       <div className="space-y-3">
         <Icon width={32} height={32} className="fill-white" />
-        <Text size="tee" variant="white">
+        <Text size="tef" variant="white">
           {title}
         </Text>
       </div>
