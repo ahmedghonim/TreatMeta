@@ -4,7 +4,7 @@ import React from "react";
 
 function BgVideo() {
   const pathname = usePathname();
-  console.log("pathname >>>> ", pathname);
+
   return (
     pathname === "/" && (
       <video
