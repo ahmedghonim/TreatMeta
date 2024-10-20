@@ -14,16 +14,15 @@ import { Text } from "@/components/ui/text";
 import { Button } from "@/components/ui/button";
 import { redirect, useRouter, useSearchParams } from "next/navigation";
 import { presets } from "@/components/layout/chared";
-import { Store } from 'react-notifications-component';
-import { Tooltip } from 'react-tooltip'
+import { Store } from "react-notifications-component";
+import { Tooltip } from "react-tooltip";
 import React from "react";
 
-
-export default function StartPage({params}:{params: {slug:string}}) {
+export default function StartPage({ params }: { params: { slug: string } }) {
   const searchParams = useSearchParams();
   const id = searchParams?.get("id");
   const router = useRouter();
-  const  slug  = params.slug;
+  const slug = params.slug;
 
   registerAllModules();
   const [firstInput, setFirstInput] = useState<any>({
@@ -39,7 +38,7 @@ export default function StartPage({params}:{params: {slug:string}}) {
   const [invalidRows, setInvalidRows] = useState<any>(null);
   const [getDataTable, setGetDataTable] = useState<any>([]);
   const [tableResult, setTableResult] = useState<any>([]);
-  const [outputColumns, setOutputColumns]= useState<any>([]);
+  const [outputColumns, setOutputColumns] = useState<any>([]);
   const [sleetedUserIndex, setSleetedUserIndex] = useState<any>([]);
   const [availableCategoriesData, setAvailableCategoriesData] = useState<any>(
     []
@@ -50,45 +49,45 @@ export default function StartPage({params}:{params: {slug:string}}) {
   const [labData, setLabData] = useState<any>([]);
   useEffect(() => {
     setCurrentPresets(presets);
-
   }, [slug]);
 
   useEffect(() => {
-    if (slug !=="default" && currentPresets.length > 0) {
+    if (slug !== "default" && currentPresets.length > 0) {
       try {
-        const fInput = currentPresets.find((x:any)=>x.ID==slug);
+        const fInput = currentPresets.find((x: any) => x.ID == slug);
         setFirstInput({
-          current_groups: fInput.groups+"",
-          category: fInput.category+"",
-          current_prepost: fInput.prepost+""
+          current_groups: fInput.groups + "",
+          category: fInput.category + "",
+          current_prepost: fInput.prepost + "",
         });
       } catch (error) {
         console.log(error);
-      
-        redirect('/start/default');
-      }
 
+        redirect("/start/default");
+      }
     }
   }, [currentPresets]);
 
   useEffect(() => {
-    if (Object.keys(firstInput).length == 3 && slug !=="default") {
+    if (Object.keys(firstInput).length == 3 && slug !== "default") {
       handleFirstInput();
-      const fInput = currentPresets.find((x:any)=>x.ID==slug);
-      console.log(fInput.prepost, fInput.groups, fInput.category, "there")
-      renameVariables(fInput.prepost, fInput.groups, fInput.category, fInput.colnames).then(
-        (res: any) => {
-          const selectedCategory = fInput.colnames.map((item: any, i: any) => {
-            return { value: item, label: res[i] };
-          });
-          setSelectedCategory(selectedCategory);
-        }
-      );
+      const fInput = currentPresets.find((x: any) => x.ID == slug);
+      console.log(fInput.prepost, fInput.groups, fInput.category, "there");
+      renameVariables(
+        fInput.prepost,
+        fInput.groups,
+        fInput.category,
+        fInput.colnames
+      ).then((res: any) => {
+        const selectedCategory = fInput.colnames.map((item: any, i: any) => {
+          return { value: item, label: res[i] };
+        });
+        setSelectedCategory(selectedCategory);
+      });
     }
   }, [firstInput]);
   useEffect(() => {
-    if (inputParams && selectedCategory.length && slug !=="default") {
-
+    if (inputParams && selectedCategory.length && slug !== "default") {
       handleFunc_IDs();
     }
   }, [inputParams, selectedCategory]);
@@ -112,22 +111,19 @@ export default function StartPage({params}:{params: {slug:string}}) {
     });
   }, []);
 
+  function handleInvalidRows(rows: any, colnum: number, classstr: string) {
+    let outputCells = [];
 
-  function handleInvalidRows(rows:any, colnum:number, classstr:string){
-    let outputCells=[];
-  
-    for(let i=0; i < rows.length; i++){
-      for(let j=0; j < colnum; j++){
-      outputCells.push({
-        row:rows[i]-1,
-        col:j,
-        className: classstr
-      });
+    for (let i = 0; i < rows.length; i++) {
+      for (let j = 0; j < colnum; j++) {
+        outputCells.push({
+          row: rows[i] - 1,
+          col: j,
+          className: classstr,
+        });
       }
-    
     }
     return outputCells;
-
   }
 
   async function handleFirstInput() {
@@ -188,7 +184,8 @@ export default function StartPage({params}:{params: {slug:string}}) {
     } catch (e) {
       Store.addNotification({
         title: "Something went wrong!",
-        message: "You selection doesn't match available conversions.\n Please refer to the guide for more info.",
+        message:
+          "You selection doesn't match available conversions.\n Please refer to the guide for more info.",
         type: "danger",
         insert: "top",
         container: "bottom-full",
@@ -198,7 +195,7 @@ export default function StartPage({params}:{params: {slug:string}}) {
           duration: 5000,
           onScreen: true,
           pauseOnHover: true,
-        }
+        },
       });
       console.log(e);
     }
@@ -218,7 +215,7 @@ export default function StartPage({params}:{params: {slug:string}}) {
     const values = selectedCategory.map((item: any) => item.value);
 
     const df = getDataTable.map((row: any) => {
-      let newRow = row.map((item: any) => item==null? "NA": item);
+      let newRow = row.map((item: any) => (item == null ? "NA" : item));
       newRow = newRow.map((item: any) =>
         typeof item === "number" ? parseFloat(item as any) : item
       );
@@ -237,12 +234,71 @@ export default function StartPage({params}:{params: {slug:string}}) {
           category: firstInput?.category,
         },
       });
-      const renamedCols= await renameVariables(firstInput.current_prepost, firstInput.current_groups, firstInput.category, Object.keys(data[0]).slice(1,-2));
+      const renamedCols = await renameVariables(
+        firstInput.current_prepost,
+        firstInput.current_groups,
+        firstInput.category,
+        Object.keys(data[0]).slice(1, -2)
+      );
       setOutputColumns(renamedCols);
-      setTableResult(data.map((el:any)=> zipObject( Object.keys(el).slice(1,-2), Object.values(el).slice(1,-2))));
-      const invalidIDs=data.filter((el:any)=>el.invalid==1).map((el:any)=>el.ID);
-    
-      setInvalidRows(handleInvalidRows(invalidIDs,renamedCols.length, "invalid-cell"));
+      const oldOutputColumns = JSON.parse(
+        localStorage.getItem("outputColumns") || "[]"
+      );
+
+      localStorage.setItem(
+        "outputColumns",
+        JSON.stringify([...oldOutputColumns, renamedCols])
+      );
+      setTableResult(
+        data.map((el: any) =>
+          zipObject(
+            Object.keys(el).slice(1, -2),
+            Object.values(el).slice(1, -2)
+          )
+        )
+      );
+      const oldLocal = localStorage.getItem("tableResult");
+      if (oldLocal) {
+        const oldLocalData = JSON.parse(oldLocal);
+        oldLocalData.push(
+          data.map((el: any) =>
+            zipObject(
+              Object.keys(el).slice(1, -2),
+              Object.values(el).slice(1, -2)
+            )
+          )
+        ); // Add the new data to the array
+        localStorage.setItem("tableResult", JSON.stringify(oldLocalData)); // Store the updated array
+      } else {
+        localStorage.setItem(
+          "tableResult",
+          JSON.stringify([
+            data.map((el: any) =>
+              zipObject(
+                Object.keys(el).slice(1, -2),
+                Object.values(el).slice(1, -2)
+              )
+            ),
+          ])
+        ); // Wrap the data in an array if it's not an array already
+      }
+      const invalidIDs = data
+        .filter((el: any) => el.invalid == 1)
+        .map((el: any) => el.ID);
+
+      setInvalidRows(
+        handleInvalidRows(invalidIDs, renamedCols.length, "invalid-cell")
+      );
+      const oldLocalStorageInvalidRows = JSON.parse(
+        localStorage.getItem("invalidRows") || "[]"
+      );
+      localStorage.setItem(
+        "invalidRows",
+        JSON.stringify([
+          ...oldLocalStorageInvalidRows,
+          handleInvalidRows(invalidIDs, renamedCols.length, "invalid-cell"),
+        ])
+      );
       // save in local storage for later use
       const oldLocalGetDataTable = localStorage.getItem("getDataTable");
 
@@ -256,15 +312,6 @@ export default function StartPage({params}:{params: {slug:string}}) {
           "getDataTable",
           JSON.stringify([getDataTable]) // Wrap the getDataTable in an array if it's not an array already
         );
-      }
-
-      const oldLocal = localStorage.getItem("tableResult");
-      if (oldLocal) {
-        const oldLocalData = JSON.parse(oldLocal);
-        oldLocalData.push(data); // Add the new data to the array
-        localStorage.setItem("tableResult", JSON.stringify(oldLocalData)); // Store the updated array
-      } else {
-        localStorage.setItem("tableResult", JSON.stringify([data])); // Wrap the data in an array if it's not an array already
       }
 
       const oldSelectedCategory = localStorage.getItem("selectedCategory");
@@ -290,242 +337,231 @@ export default function StartPage({params}:{params: {slug:string}}) {
       source: null,
     };
     if (sleetedUserIndex[value] === "autocomplete" && labData) {
-      result.source = labData.map((el:any)=>el.label);
+      result.source = labData.map((el: any) => el.label);
     }
     return result;
   });
-
+  console.log("invalidRows >>>> ", invalidRows);
   return (
     <>
-    <div className="w-full  h-full pt-[170px]">
-      <div className="pb-12 space-y-4 text-center">
-        <div className="relative flex flex-col ">
-          <Text variant="white" size="f2">
-          <span className="relative mx-2">
-          Customize <Line className="absolute -bottom-2" />
-            </span>
-             Your Conversion Table{" "}
-
-            with
-          </Text>
-          <Text variant="white" size="f2">
-            TreatMeta
-          </Text>
-        </div>
-        <Text variant="default">
-          where exploration meets innovation. Begin your quest for knowledge and
-          discovery as we provide the tools
-        </Text>
-      </div>
-
-      <div className="flex flex-col ">
-        <div className="flex items-end w-full gap-7 ">
-          {category.length < 1 && (
-            <div className="grid items-end w-full grid-cols-12 gap-6">
-              <div className="col-span-4">
-                
-                <Input
-                  label="Number of groups"
-                  name="current_groups"
-                  id="current_groups"
-                  max={10}
-                  min={0}
-                  value={+firstInput.current_groups}
-                  type="number"
-                  data-tooltip-id="groups-tooltip" 
-                  data-tooltip-content="Number of compared arms in the included studies"
-                  onChange={(e) => {
-                    setFirstInput({
-                      ...firstInput,
-                      current_groups: e.target.value.toString(),
-                    });
-                  }}
-                />
-                <Tooltip id="groups-tooltip" />
-              </div>
-              <div className="col-span-4">
-                <Select
-                  name="Category"
-                  label="Conversion category"
-                  options={availableCategoriesData}
-                  onChange={(e: any) => {
-                    setFirstInput({
-                      ...firstInput,
-                      category: e.value.toString(),
-                    });
-                  }}
-                  className="z-10 basic-multi-select"
-                  classNamePrefix="select"
-                  onBlur={() => setOpenSelect(false)}
-                  onFocus={() => setOpenSelect(true)}
-                  menuIsOpen={openSelect}
-                />
-              </div>
-
-              <div className="flex col-span-3 gap-3">
-                <Button onClick={handleFirstInput} className="w-full h-[54px]">
-                  Next
-                </Button>
-                <Button
-                  className="w-full h-[54px]"
-                  onClick={() => {
-                    setFirstInput({
-                      current_prepost: "0",
-                    });
-                    setCategory([]);
-                    setSelectedCategory([]);
-                    setSelectTypes([]);
-                    setInputParams([]);
-                    setFuncIdsValues([]);
-                    setOutputVariables(null);
-                    setGetDataTable([]);
-                    setTableResult([]);
-                    router.push("/start");
-                  }}
-                  variant="ghost"
-                >
-                  Reset
-                </Button>
-              </div>
-              <label
-                htmlFor="current_prepost"
-                className="flex items-center col-span-12 gap-3 text-base font-medium text-white cursor-pointer w-fit"
-                data-tooltip-id="prepost-tooltip" data-tooltip-content="Check this if you want to calculate change from baseline"
-              >
-                <Input
-                  className="w-5 h-5 "
-                  type="checkbox"
-                  color="blue"
-                  id="current_prepost"
-                  name="current_prepost"
-                  onChange={(e) => {
-                    setFirstInput({
-                      ...firstInput,
-                      current_prepost: e ? "1" : "0",
-                    });
-                  }}
-                />
-                Data have pre-post design?
-              </label>
-              <Tooltip id="prepost-tooltip" />
-            </div>
-          )}
-          {category.length !== 0 && !outputVariables && (
-            <div className="flex items-end w-full gap-6">
-              <div className="flex-1">
-                <Select
-                  label="Variables"
-                  isMulti
-                  name="colors"
-                  value={selectedCategory}
-                  // filter if add in selectedCategory
-                  options={category.filter(
-                    (item) => !selectedCategory.includes(item)
-                  )}
-                  onChange={(e: any) => {
-                    setSelectedCategory(e as any);
-                  }}
-                  className="basic-multi-select w-[400px] z-10"
-                  classNamePrefix="select"
-                  onBlur={() => setOpenSelect(false)}
-                  onFocus={() => setOpenSelect(true)}
-                  menuIsOpen={openSelect}
-                />
-              </div>
-
-              <div className="flex gap-6 w-[35%]">
-                <Button
-                  className="w-full h-[54px]"
-                  onClick={() => {
-                    handleFunc_IDs();
-                  }}
-                >
-                  Next
-                </Button>
-              </div>
-            </div>
-          )}
-        </div>
-        {outputVariables && (
-          <div className="mt-10 space-y-6">
-            <div className="flex justify-between">
-              <Text size="tee" variant="white">
-                Enter your data here
-              </Text>
-              <div className="flex">
-
-              {tableResult.length < 1 && (
-               <Button className="h-[54px] !px-10" onClick={handleScripts}>
-                  Convert
-                </Button>
-
-
-              )}
-              {
-                (
-                  <Button
-                  className="h-[54px] mx-2"
-                  onClick={() => {
-                    setTableResult([]);
-                  }}
-                  variant="ghost"
-                >
-                  Reset
-                </Button>
-                )
-              }
-              
-              </div>
-            </div>
-            <div className="w-full my-5 ">
-              <HandsonTable
-                selectedCategory={selectedCategory}
-                setGetDataTable={setGetDataTable}
-                autoComplete={autoComplete}
-              />
-            </div>
+      <div className="w-full  h-full pt-[170px]">
+        <div className="pb-12 space-y-4 text-center">
+          <div className="relative flex flex-col ">
+            <Text variant="white" size="f2">
+              <span className="relative mx-2">
+                Customize <Line className="absolute -bottom-2" />
+              </span>
+              Your Conversion Table with
+            </Text>
+            <Text variant="white" size="f2">
+              TreatMeta
+            </Text>
           </div>
-        )}
+          <Text variant="default">
+            where exploration meets innovation. Begin your quest for knowledge
+            and discovery as we provide the tools
+          </Text>
+        </div>
 
+        <div className="flex flex-col ">
+          <div className="flex items-end w-full gap-7 ">
+            {category.length < 1 && (
+              <div className="grid items-end w-full grid-cols-12 gap-6">
+                <div className="col-span-4">
+                  <Input
+                    label="Number of groups"
+                    name="current_groups"
+                    id="current_groups"
+                    max={10}
+                    min={0}
+                    value={+firstInput.current_groups}
+                    type="number"
+                    data-tooltip-id="groups-tooltip"
+                    data-tooltip-content="Number of compared arms in the included studies"
+                    onChange={(e) => {
+                      setFirstInput({
+                        ...firstInput,
+                        current_groups: e.target.value.toString(),
+                      });
+                    }}
+                  />
+                  <Tooltip id="groups-tooltip" />
+                </div>
+                <div className="col-span-4">
+                  <Select
+                    name="Category"
+                    label="Conversion category"
+                    options={availableCategoriesData}
+                    onChange={(e: any) => {
+                      setFirstInput({
+                        ...firstInput,
+                        category: e.value.toString(),
+                      });
+                    }}
+                    className="z-10 basic-multi-select"
+                    classNamePrefix="select"
+                    onBlur={() => setOpenSelect(false)}
+                    onFocus={() => setOpenSelect(true)}
+                    menuIsOpen={openSelect}
+                  />
+                </div>
 
-        
+                <div className="flex col-span-3 gap-3">
+                  <Button
+                    onClick={handleFirstInput}
+                    className="w-full h-[54px]"
+                  >
+                    Next
+                  </Button>
+                  <Button
+                    className="w-full h-[54px]"
+                    onClick={() => {
+                      setFirstInput({
+                        current_prepost: "0",
+                      });
+                      setCategory([]);
+                      setSelectedCategory([]);
+                      setSelectTypes([]);
+                      setInputParams([]);
+                      setFuncIdsValues([]);
+                      setOutputVariables(null);
+                      setGetDataTable([]);
+                      setTableResult([]);
+                      router.push("/start");
+                    }}
+                    variant="ghost"
+                  >
+                    Reset
+                  </Button>
+                </div>
+                <label
+                  htmlFor="current_prepost"
+                  className="flex items-center col-span-12 gap-3 text-base font-medium text-white cursor-pointer w-fit"
+                  data-tooltip-id="prepost-tooltip"
+                  data-tooltip-content="Check this if you want to calculate change from baseline"
+                >
+                  <Input
+                    className="w-5 h-5 "
+                    type="checkbox"
+                    color="blue"
+                    id="current_prepost"
+                    name="current_prepost"
+                    onChange={(e) => {
+                      setFirstInput({
+                        ...firstInput,
+                        current_prepost: e ? "1" : "0",
+                      });
+                    }}
+                  />
+                  Data have pre-post design?
+                </label>
+                <Tooltip id="prepost-tooltip" />
+              </div>
+            )}
+            {category.length !== 0 && !outputVariables && (
+              <div className="flex items-end w-full gap-6">
+                <div className="flex-1">
+                  <Select
+                    label="Variables"
+                    isMulti
+                    name="colors"
+                    value={selectedCategory}
+                    // filter if add in selectedCategory
+                    options={category.filter(
+                      (item) => !selectedCategory.includes(item)
+                    )}
+                    onChange={(e: any) => {
+                      setSelectedCategory(e as any);
+                    }}
+                    className="basic-multi-select w-[400px] z-10"
+                    classNamePrefix="select"
+                    onBlur={() => setOpenSelect(false)}
+                    onFocus={() => setOpenSelect(true)}
+                    menuIsOpen={openSelect}
+                  />
+                </div>
 
+                <div className="flex gap-6 w-[35%]">
+                  <Button
+                    className="w-full h-[54px]"
+                    onClick={() => {
+                      handleFunc_IDs();
+                    }}
+                  >
+                    Next
+                  </Button>
+                </div>
+              </div>
+            )}
+          </div>
+          {outputVariables && (
+            <div className="mt-10 space-y-6">
+              <div className="flex justify-between">
+                <Text size="tee" variant="white">
+                  Enter your data here
+                </Text>
+                <div className="flex">
+                  {tableResult.length < 1 && (
+                    <Button className="h-[54px] !px-10" onClick={handleScripts}>
+                      Convert
+                    </Button>
+                  )}
+                  {
+                    <Button
+                      className="h-[54px] mx-2"
+                      onClick={() => {
+                        setTableResult([]);
+                      }}
+                      variant="ghost"
+                    >
+                      Reset
+                    </Button>
+                  }
+                </div>
+              </div>
+              <div className="w-full my-5 ">
+                <HandsonTable
+                  selectedCategory={selectedCategory}
+                  setGetDataTable={setGetDataTable}
+                  autoComplete={autoComplete}
+                />
+              </div>
+            </div>
+          )}
           {tableResult.length >= 1 && (
             <div className="w-full my-5">
               <Text size="tee" variant="white" className="my-6">
-                    Results
-                  </Text>
-            
-            <HotTable
-              colHeaders= {outputColumns}
-              data={tableResult.map((row: any) => {
-                return keys(row).map((key) =>
-                  row[key] === "NA" ? "" : row[key]
-                );
-              })}
-              columnSorting={{
-                headerAction: true,
-                sortEmptyCells: false,
-                indicator: true
-              }}
-              readOnly={true}
-              autoColumnSize
-              autoWrapCol={true}
-              rowHeaders={true}
-              cell={invalidRows}
-              width="100%"
-              height="auto"
-              manualColumnResize={true}
-              autoWrapRow={true}
-              licenseKey="non-commercial-and-evaluation"
-            />
-             </div>
+                Results
+              </Text>
+
+              <HotTable
+                colHeaders={outputColumns}
+                data={tableResult.map((row: any) => {
+                  return keys(row).map((key) =>
+                    row[key] === "NA" ? "" : row[key]
+                  );
+                })}
+                columnSorting={{
+                  headerAction: true,
+                  sortEmptyCells: false,
+                  indicator: true,
+                }}
+                readOnly={true}
+                autoColumnSize
+                autoWrapCol={true}
+                rowHeaders={true}
+                cell={invalidRows}
+                width="100%"
+                height="auto"
+                manualColumnResize={true}
+                autoWrapRow={true}
+                licenseKey="non-commercial-and-evaluation"
+              />
+            </div>
           )}
-       
+        </div>
       </div>
-      
-    </div>
-    <div className="h-[50vh] w-full" ></div>
+      <div className="h-[50vh] w-full"></div>
     </>
   );
 }
