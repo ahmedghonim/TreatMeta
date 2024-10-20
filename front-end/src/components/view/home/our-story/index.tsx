@@ -102,7 +102,6 @@ function OurStory() {
           setApi={setApi}
           className="z-20  mx-auto w-[85%]"
           plugins={[
-            //@ts-expect-error
             Autoplay({
               delay: 6000,
             }),

@@ -16,7 +16,7 @@ function Nav() {
   return (
     <nav className="bg-[#0F182E] layoutPadding fixed top-0 z-40 inset-x-0 h-[110px]">
       <div className="grid justify-between w-full grid-cols-12 py-4 mx-auto ">
-        <div className="col-span-2 md:flex md:items-center md:gap-12">
+        <div className="col-span-2 lg:flex lg:items-center lg:gap-12">
           <Link
             href="/"
             className="flex flex-col items-center justify-center text-white font-semibold"
@@ -28,7 +28,7 @@ function Nav() {
 
         <nav
           aria-label="Global"
-          className="col-span-8  hidden md:flex items-center w-[90%]"
+          className="col-span-8  hidden lg:flex items-center w-[90%]"
         >
           <ul className="flex items-center justify-between w-full text-base font-bold text-dark">
             {tabs.map((tab) => (
@@ -46,9 +46,9 @@ function Nav() {
           </ul>
         </nav>
 
-        <div className="flex items-center justify-end md:col-span-2 col-span-10 gap-4">
-          <div className="md:flex md:gap-4">
-            <div className="hidden md:flex">
+        <div className="flex items-center justify-end lg:col-span-2 col-span-10 gap-4">
+          <div className="lg:flex lg:gap-4">
+            <div className="hidden lg:flex">
               <Link href="/history" className="flex items-center">
                 <History
                   width={24}
@@ -59,7 +59,7 @@ function Nav() {
               </Link>
               <Tooltip id="history-tooltip" />
             </div>
-            <div className="hidden md:flex">
+            <div className="hidden lg:flex">
               <Link href="/start">
                 <Button>
                   Get Started <ArrowRight />
@@ -68,7 +68,7 @@ function Nav() {
             </div>
           </div>
 
-          <div className="block md:hidden">
+          <div className="block lg:hidden">
             <button
               onClick={() => setOpenSidBar(!openSidBar)}
               className="p-2 text-gray-600 transition  rounded "
@@ -89,8 +89,8 @@ function Nav() {
           </div>
 
           {openSidBar && (
-            <div className="block md:hidden absolute right-0 left-0 top-0 bg-[#0F182E] h-screen z-[100] px-6 py-8 w-full">
-              <div className="col-span-2 md:flex md:items-center md:gap-12 flex items-center justify-between">
+            <div className="block lg:hidden absolute right-0 left-0 top-0 bg-[#0F182E] h-screen z-[100] px-6 py-8 w-full">
+              <div className="col-span-2 lg:flex lg:items-center lg:gap-12 flex items-center justify-between">
                 <Link href="/" className="block text-teal-600">
                   <span className="sr-only">Home</span>
                   <Logo />

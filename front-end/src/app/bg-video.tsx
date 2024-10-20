@@ -8,7 +8,7 @@ function BgVideo() {
   return (
     pathname === "/" && (
       <video
-        className="w-full object-cover absolute top-[110px] z-[-1] h-[60%]"
+        className="w-full object-cover absolute top-[110px] z-[-1] h-[90%]"
         autoPlay
         loop
         muted

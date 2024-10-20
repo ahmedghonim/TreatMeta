@@ -37,10 +37,13 @@ function ContactForm() {
       email: data.email,
       subject: data.mail_subject,
       html: `
-      <h1>${data.name}</h1>
+      <h2>name: ${data.name}</h2>
+      <h3>email: ${data.email}</h3>
+      <h3>subject: ${data.mail_subject}</h3>
+      <h3>message:</h3>
       <p>${data.message}</p>
       `,
-    }).then(() => {
+    }).then((res) => {
       setData({
         name: "",
         email: "",

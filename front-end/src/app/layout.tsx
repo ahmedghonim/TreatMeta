@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import Nav from "@/components/layout/nav";
 import Content from "@/components/layout/content";
 import BgVideo from "./bg-video";
-
+import { GoogleTagManager } from "@next/third-parties/google";
 const fontSans = localFont({
   src: "./fonts/WorkSans-VariableFont_wght.ttf",
   variable: "--font-sans",
@@ -70,6 +70,7 @@ export default function RootLayout({
           fontSans.variable
         )}
       >
+        <GoogleTagManager gtmId="GTM-TBKDB4D" />
         <Nav />
         <div className="w-full h-[110px]"></div>
         <BgVideo />

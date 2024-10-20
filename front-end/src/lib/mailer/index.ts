@@ -20,8 +20,8 @@ export async function onMailer({
   });
 
   const mailOptions: Mail.Options = {
-    from: process.env.NODE_MAILER_EMAIL,
-    to: email,
+    to: process.env.NODE_MAILER_EMAIL,
+    from: email,
     subject: subject,
     html: html,
   };
