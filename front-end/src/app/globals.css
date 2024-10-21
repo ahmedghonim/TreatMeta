@@ -200,7 +200,7 @@
 }
 
 .layoutPadding {
-  @apply px-6 lg:px-[118px];
+  @apply px-6 xl:px-[118px];
 }
 
 /* thumbnail */

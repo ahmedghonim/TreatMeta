@@ -11,8 +11,8 @@ function FooterContactUsSection() {
         </Text>
         <Text size="sm">
           Have a question, suggestion for a new conversion tool, or need
-          assistance with our services? Feel free to reach out to us! We're here
-          to help and always open to feedback.
+          assistance with our services? Feel free to reach out to us!
+          We&lsquo;re here to help and always open to feedback.
         </Text>
       </div>
       <div className="md:size-[353px] size-[203px] bg-secondary rounded-full absolute right-0 md:top-0 -bottom-[20px] translate-x-[5%] md:-translate-y-[25%] translate-y-[50%] flex md:items-center justify-center">
