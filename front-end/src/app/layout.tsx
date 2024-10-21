@@ -75,7 +75,7 @@ export default function RootLayout({
           fontSans.variable
         )}
       >
-        <GoogleTagManager gtmId="GTM-TBKDB4D" />
+        <GoogleTagManager gtmId="GTM-P8MK6NS7" />
         <Nav />
         <div className="w-full h-[110px]"></div>
 
