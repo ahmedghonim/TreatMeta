@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Logo from "@/svg/logo";
 import ArrowRight from "@/svg/arrow-right";
 import History from "@/svg/history";
@@ -9,12 +9,27 @@ import { cn } from "@/lib/utils";
 import { tabs } from "./chared";
 import { usePathname } from "next/navigation";
 import { Tooltip } from "react-tooltip";
-
+import useDetectScroll, {
+  Axis,
+  Direction
+} from '@smakss/react-scroll-direction';
 function Nav() {
   const pathname = usePathname();
   const [openSidBar, setOpenSidBar] = useState(false);
+  const { scrollDir, scrollPosition } = useDetectScroll();
+  const [round, setRound] = useState(false);
+  useEffect(()=>{
+    if(scrollPosition.top>150){
+      setRound(true);
+    }else{
+      setRound(false);
+    }
+
+    
+  },[scrollDir, scrollPosition])
+
   return (
-    <nav className="bg-[#0F182E] layoutPadding fixed top-0 z-40 inset-x-0 h-[110px]">
+    <nav className={`bg-[#0F182E] layoutPadding fixed top-0 z-40 inset-x-0 h-[110px] ease-[cubic-bezier( 0.175, 0.885, 0.32, 1.275 )] duration-700 transform-gpu ${round? "top-[10px] inset-x-[40px] rounded-full": ""}`}>
       <div className="grid justify-between w-full grid-cols-12 py-4 mx-auto ">
         <div className="col-span-2 md:flex md:items-center md:gap-12">
           <Link
