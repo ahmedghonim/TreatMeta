@@ -58,8 +58,9 @@ function StartPAge() {
             conversion {index + 1}
           </Text>
           <br />
-          <div className="w-full relative">
+          <div className="w-full relative flex flex-col">
             <HotTable
+              stretchH="all"
               key={index + "values"}
               colHeaders={outputColumns?.[index]}
               data={data}
@@ -69,7 +70,6 @@ function StartPAge() {
                 indicator: true,
               }}
               readOnly={true}
-              autoColumnSize
               autoWrapCol={true}
               rowHeaders={true}
               width="100%"
@@ -92,6 +92,7 @@ function StartPAge() {
                   row[key] === "NA" ? "" : row[key]
                 );
               })}
+              stretchH="all"
               columnSorting={{
                 headerAction: true,
                 sortEmptyCells: false,

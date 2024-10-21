@@ -341,7 +341,7 @@ export default function StartPage({ params }: { params: { slug: string } }) {
     }
     return result;
   });
-  console.log("invalidRows >>>> ", invalidRows);
+
   return (
     <>
       <div className="w-full  h-full pt-[170px]">
@@ -541,6 +541,7 @@ export default function StartPage({ params }: { params: { slug: string } }) {
                     row[key] === "NA" ? "" : row[key]
                   );
                 })}
+                stretchH="all"
                 columnSorting={{
                   headerAction: true,
                   sortEmptyCells: false,
