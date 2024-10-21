@@ -63,16 +63,22 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <meta
+          name="google-site-verification"
+          content="mvgALnznelPo2kiRe937cvowChkDYhm_mejpxkhR2v4"
+        />
+      </head>
       <body
         className={cn(
           "min-h-screen bg-background font-sans antialiased ",
           fontSans.variable
         )}
       >
-        <GoogleTagManager gtmId="GTM-TBKDB4D" />
+        <GoogleTagManager gtmId="GTM-P8MK6NS7" />
         <Nav />
         <div className="w-full h-[110px]"></div>
-     
+
         <Content>{children}</Content>
       </body>
     </html>
