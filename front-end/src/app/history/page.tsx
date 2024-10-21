@@ -55,7 +55,7 @@ function StartPAge() {
       {getDataTable.map((data: any, index: any) => (
         <div key={index} className="w-full relative">
           <Text size="tee" variant="white" className="my-6 ">
-            conversion {index + 1}
+            Conversion {index + 1}
           </Text>
           <br />
           <div className="w-full relative flex flex-col">
