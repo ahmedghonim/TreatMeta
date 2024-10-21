@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 
 import {CircleLoader} from "react-spinners"
 
-import { citationsJSON } from "./citations";
+import { citationsJSON , txtCitations} from "./citations";
 
 import {Cite} from "@citation-js/core"
 import "@citation-js/plugin-doi"
@@ -74,20 +74,21 @@ const segmentedData = citations.map((el:any, i:any)=> {
     temp.data=[temp.data[i]];
     return temp;
 });
+const bibliography = segmentedData;
 
-const bibliography = segmentedData.map((el:any)=>el.format('bibliography', {
-    format: 'html',
-    template: 'apa',
-    lang: 'en-US'
-}));
+// const bibliography = segmentedData.map((el:any)=>el.format('bibliography', {
+//     format: 'html',
+//     template: 'apa',
+//     lang: 'en-US'
+// }));
 
 const doc = bibliography.map((el:any)=>{
     const parser = new DOMParser();
     return parser.parseFromString(el, 'text/html').querySelector(".csl-entry")?.textContent;
 
 });
-
-return {dt: data, csl: doc};
+console.log(doc);
+return {dt: data, csl: txtCitations};
 }       
 
         
