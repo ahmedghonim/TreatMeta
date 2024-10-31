@@ -8,6 +8,12 @@ import ArrowDown from "@/svg/arrow-down";
 import Link from "next/link";
 import BgVideo from "@/app/bg-video";
 function Hero() {
+  const handleScroll = (e: any) => {
+    e.preventDefault();
+    const targetSection = document.getElementById("findmore");
+    targetSection?.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
     <>
       <BgVideo />
@@ -26,12 +32,13 @@ function Hero() {
           <Link href="/start/default">
             <Button className="min-w-[155px]">Launch Converter</Button>
           </Link>
+
           <Button
             className="min-w-[155px]"
             variant="ghost"
-            onClick={() => window.scrollTo({ top: 1000, behavior: "smooth" })}
+            onClick={handleScroll}
           >
-            Find More{" "}
+            Find More
             <ArrowDown width={18} height={18} className="stroke-current" />
           </Button>
         </div>

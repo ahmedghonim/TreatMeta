@@ -11,25 +11,27 @@ import { usePathname } from "next/navigation";
 import { Tooltip } from "react-tooltip";
 import useDetectScroll, {
   Axis,
-  Direction
-} from '@smakss/react-scroll-direction';
+  Direction,
+} from "@smakss/react-scroll-direction";
 function Nav() {
   const pathname = usePathname();
   const [openSidBar, setOpenSidBar] = useState(false);
   const { scrollDir, scrollPosition } = useDetectScroll();
   const [round, setRound] = useState(false);
-  useEffect(()=>{
-    if(scrollPosition.top>150){
+  useEffect(() => {
+    if (scrollPosition.top > 150) {
       setRound(true);
-    }else{
+    } else {
       setRound(false);
     }
-
-    
-  },[scrollDir, scrollPosition])
+  }, [scrollDir, scrollPosition]);
 
   return (
-    <nav className={`bg-[#0F182E] layoutPadding fixed top-0 z-40 inset-x-0 h-[110px] ease-[cubic-bezier( 0.175, 0.885, 0.32, 1.275 )] duration-700 transform-gpu ${round? "top-[10px] inset-x-[40px] rounded-full": ""}`}>
+    <nav
+      className={`bg-[#0F182E] layoutPadding fixed top-0 z-40 inset-x-0 md:h-[110px] ease-[cubic-bezier( 0.175, 0.885, 0.32, 1.275 )] duration-700 transform-gpu ${
+        round ? "top-[10px] inset-x-[40px] rounded-full" : ""
+      }`}
+    >
       <div className="grid justify-between w-full grid-cols-12 py-4 mx-auto ">
         <div className="col-span-2 lg:flex lg:items-center lg:gap-12">
           <Link
@@ -112,15 +114,17 @@ function Nav() {
                 </Link>
                 <button
                   onClick={() => setOpenSidBar(!openSidBar)}
-                  className="cursor-pointer active:scale-95"
+                  className="cursor-pointer active:scale-95 text-white !font-[50px]"
                 >
-                  <div className="w-5 h-1 bg-white"></div>
-                  <div className="w-5 h-1 bg-white "></div>
+                  X
                 </button>
               </div>
               <div className="mt-[57px] flex flex-col gap-4">
                 {tabs.map((tab) => (
-                  <span key={tab.name}>
+                  <span
+                    key={tab.name}
+                    onClick={() => setOpenSidBar(!openSidBar)}
+                  >
                     <Link
                       className={cn(
                         " text-[#CCCFD2] font-bold transition hover:text-primary",

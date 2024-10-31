@@ -9,11 +9,10 @@ function Footer() {
   return (
     <div className="flex flex-col justify-end gap-6 bg-background">
       {pathname !== "/contact-us" && <FooterContactUsSection />}
-      <div className="mt-11">
-        <FooterInfo />
-      </div>
 
-      <div className="md:mt-16 mt-11">
+      <FooterInfo />
+
+      <div className="mt-2">
         <CopyRight />
       </div>
     </div>
