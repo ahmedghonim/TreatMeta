@@ -5,10 +5,6 @@ import { cn } from "@/lib/utils";
 import Nav from "@/components/layout/nav";
 import Content from "@/components/layout/content";
 import { GoogleTagManager } from "@next/third-parties/google";
-const fontSans = localFont({
-  src: "./fonts/WorkSans-VariableFont_wght.ttf",
-  variable: "--font-sans",
-});
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
@@ -69,12 +65,7 @@ export default function RootLayout({
           content="mvgALnznelPo2kiRe937cvowChkDYhm_mejpxkhR2v4"
         />
       </head>
-      <body
-        className={cn(
-          "min-h-screen bg-background font-sans antialiased ",
-          fontSans.variable
-        )}
-      >
+      <body className={cn("min-h-screen bg-background font-sans antialiased ")}>
         <GoogleTagManager gtmId="GTM-P8MK6NS7" />
         <Nav />
         <div className="w-full h-[110px]"></div>

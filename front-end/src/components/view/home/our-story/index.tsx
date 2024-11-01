@@ -18,6 +18,7 @@ import tImg from "@/assets/img/2.jpg";
 import uImg from "@/assets/img/1.jpg";
 import vImg from "@/assets/img/3.jpg";
 import fvImg from "@/assets/img/5.png";
+import LogoPage from "@/svg/logo";
 function OurStory() {
   const [api, setApi] = React.useState<CarouselApi>();
   const [current, setCurrent] = React.useState(0);
@@ -88,14 +89,15 @@ function OurStory() {
         "Although ACR software significantly enhanced the data preparation process, it still convert one study at a time and was limited to Windows users. Also, it was limited in customization features with lacking other important conversions. ",
     },
     {
-      src: fvImg,
+      src: <LogoPage className="size-[200px] ms-10" hidname />,
+      isSvg: true,
       title: "The Birth of TreatMeta",
       description:
         "All these challenges, experiences, and limitations led to the development of 'TreatMeta', addressing the previous shortcomings and providing a comprehensive, accessible, and efficient solution for researchers worldwide.",
     },
   ];
   return (
-    <div className="relative flex items-center h-screen">
+    <div className="relative flex items-center h-screen" id="findmore">
       <div className="z-30 flex-1 w-full space-y-7">
         <Text variant="stroke-title">Our Story</Text>
         <Carousel
@@ -133,13 +135,17 @@ function OurStory() {
                     )}
                   </div>
                   <div className="md:w-[400px]  h-auto">
-                    <Image
-                      src={item.src}
-                      className="object-cover md:w-[400px] h-[400px] w-full "
-                      alt="text logo"
-                      width={360}
-                      height={526}
-                    />
+                    {item.isSvg ? (
+                      item.src
+                    ) : (
+                      <Image
+                        src={item.src as any}
+                        className="object-cover md:w-[400px] h-[400px] w-full "
+                        alt="text logo"
+                        width={360}
+                        height={526}
+                      />
+                    )}
                   </div>
                 </div>
               </CarouselItem>

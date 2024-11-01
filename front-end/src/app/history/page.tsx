@@ -6,6 +6,12 @@ import { keys } from "lodash";
 import { Text } from "@/components/ui/text";
 import Empty from "@/components/view/history/empty";
 import { Button } from "@/components/ui/button";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 function StartPAge() {
   const [tableResult, setTableResult] = useState<any>([]);
@@ -58,67 +64,71 @@ function StartPAge() {
           </Button>
         </div>
       )}
-      {getDataTable.map((data: any, index: any) => (
-        <div key={index} className="w-full relative">
-          <Text size="tee" variant="white" className="my-6 ">
-            Conversion {index + 1}
-          </Text>
-          <br />
-          <div className="w-full relative flex flex-col">
-            <HotTable
-              stretchH="all"
-              key={index + "values"}
-              colHeaders={selectedCategory?.[index].map((el:any)=>el.label)}
-              data={data}
-              columnSorting={{
-                headerAction: true,
-                sortEmptyCells: false,
-                indicator: true,
-              }}
-              readOnly={true}
-              autoWrapCol={true}
-              rowHeaders={true}
-              width="100%"
-              height="auto"
-              manualColumnResize={true}
-              autoWrapRow={true}
-              licenseKey="non-commercial-and-evaluation"
-            />
-          </div>
-          <div className="w-full">
-            <Text size="tee" variant="white" className="my-6">
-              Results
-            </Text>
+      <Accordion type="single" collapsible className="w-full">
+        {getDataTable.map((data: any, index: any) => (
+          <AccordionItem value={index} key={index} className="w-full relative">
+            <AccordionTrigger>
+              <Text size="tee" variant="white" className="my-6 ">
+                Conversion {index + 1}
+              </Text>
+            </AccordionTrigger>
+            <AccordionContent>
+              <div className="w-full relative flex flex-col">
+                <HotTable
+                  stretchH="all"
+                  key={index + "values"}
+                  colHeaders={selectedCategory?.[index].map((el:any)=>el.label)}
+                  data={data}
+                  columnSorting={{
+                    headerAction: true,
+                    sortEmptyCells: false,
+                    indicator: true,
+                  }}
+                  readOnly={true}
+                  autoWrapCol={true}
+                  rowHeaders={true}
+                  width="100%"
+                  height="auto"
+                  manualColumnResize={true}
+                  autoWrapRow={true}
+                  licenseKey="non-commercial-and-evaluation"
+                />
+              </div>
+              <div className="w-full">
+                <Text size="tee" variant="white" className="my-6">
+                  Results
+                </Text>
 
-            <HotTable
-              key={index + "result"}
-              colHeaders={outputColumns[index]}
-              data={tableResult[index].map((row: any) => {
-                return keys(row).map((key) =>
-                  row[key] === "NA" ? "" : row[key]
-                );
-              })}
-              stretchH="all"
-              columnSorting={{
-                headerAction: true,
-                sortEmptyCells: false,
-                indicator: true,
-              }}
-              readOnly={true}
-              autoColumnSize
-              autoWrapCol={true}
-              rowHeaders={true}
-              cell={invalidRows[index]}
-              width="100%"
-              height="auto"
-              manualColumnResize={true}
-              autoWrapRow={true}
-              licenseKey="non-commercial-and-evaluation"
-            />
-          </div>
-          <hr className="bg-primary text-primary mt-10" />
-        </div>
-      ))}
+                <HotTable
+                  key={index + "result"}
+                  colHeaders={outputColumns[index]}
+                  data={tableResult[index].map((row: any) => {
+                    return keys(row).map((key) =>
+                      row[key] === "NA" ? "" : row[key]
+                    );
+                  })}
+                  stretchH="all"
+                  columnSorting={{
+                    headerAction: true,
+                    sortEmptyCells: false,
+                    indicator: true,
+                  }}
+                  readOnly={true}
+                  autoColumnSize
+                  autoWrapCol={true}
+                  rowHeaders={true}
+                  cell={invalidRows[index]}
+                  width="100%"
+                  height="auto"
+                  manualColumnResize={true}
+                  autoWrapRow={true}
+                  licenseKey="non-commercial-and-evaluation"
+                />
+              </div>
+            </AccordionContent>
+          </AccordionItem>
+        ))}
+      </Accordion>
     </div>
   );
 }

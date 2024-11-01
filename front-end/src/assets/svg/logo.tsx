@@ -1,8 +1,9 @@
+import { cn } from "@/lib/utils";
 import React from "react";
 
 const LogoPage = (props: any) => {
   return (
-    <>
+    <div className={cn("flex flex-col items-center", props.className)}>
       <svg
         {...props}
         xmlns="http://www.w3.org/2000/svg"
@@ -124,8 +125,8 @@ const LogoPage = (props: any) => {
           fill={props.color || "#F05445"}
         />
       </svg>
-      <span className="mt-1 text-white">TreatMeta</span>
-    </>
+      {props.hidname || <span className="mt-1 text-white">TreatMeta</span>}
+    </div>
   );
 };
 
