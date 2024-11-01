@@ -1,7 +1,10 @@
 import React from "react";
 import localFont from 'next/font/local'
-
- 
+import { cn } from "@/lib/utils";
+const myFont = localFont({
+  src: "../../app/fonts/mismo.otf",
+  
+})
 
 
 const Text_logoPage = (props: any) => {
@@ -51,8 +54,8 @@ const Text_logoPage = (props: any) => {
     //     fill="white"
     //   />
     // </svg>
-    <h1 className="text-white font-mismo text-4xl" >
-      <span className="text-5xl font-mismo text-primary">T</span>reat<span className="text-5xl font-mismo text-primary">M</span>eta
+    <h1 className="text-white !font-mismo text-4xl" >
+      <span className={cn("text-5xl text-primary", myFont.className)}>T</span>reat<span className={cn("text-5xl text-primary", myFont.className)}>M</span>eta
     </h1>
   );
 };
