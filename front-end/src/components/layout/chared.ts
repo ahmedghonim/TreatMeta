@@ -64,6 +64,7 @@ export const presets =[
           "prepost":1,
           "colnames":[
               "Study_ID",
+              "group_ID",
               "change_group",
               "Mean",
               "SD",

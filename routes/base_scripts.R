@@ -80,7 +80,9 @@ split_df_prepost<-function(df){
    
     ready_df<-df%>%rename(preMean=Mean, preSD=SD)%>%mutate(postMean=NA, postSD=NA, ccoef=NA, invalid=1)
   }
-  ready_df<-ready_df%>%select(ID, Study_ID, change_group, preMean,preSD, postMean, postSD, ccoef, invalid, func)
+
+  
+  ready_df<-ready_df%>%select(any_of(c("ID", "Study_ID","group_ID" ,"change_group", "preMean","preSD", "postMean", "postSD", "ccoef", "invalid", "func")))
   return (as_tibble(ready_df))
 }
 
@@ -187,9 +189,8 @@ PrePost_to_MeanSD<-function(df){
 
   #change into pre, post Means and SDs
   prepared_df<-prepare_prepost(df)
-  
 
-  
+
   
   invalid<-prepared_df%>%filter(invalid==1)%>%mutate(changeMean=NA,
                                                      changeSD=NA)
@@ -496,7 +497,7 @@ Task_manager<-function( df, funcIDs, current_outputs, current_prepost, category 
   }
   out_df<-rbind(ready_rows,valid_rows, invalid_rows)%>%arrange(ID)
   if(current_prepost && all(c("Mean", "SD", "change_group") %in% colnames(out_df)) ){
-    
+    current_outs<-c("changeMean", "changeSD")
     valid_prepost<-out_df%>%filter(!is.na(change_group),!is.na(Mean), !is.na(SD), !is.na(Study_ID))
     invalid_prepost<-out_df%>%filter(!(ID %in% valid_prepost$ID))
     
@@ -506,49 +507,52 @@ Task_manager<-function( df, funcIDs, current_outputs, current_prepost, category 
     out_df<-rbind(valid_prepost%>%select(any_of(Prepost_output_vars))
                   ,invalid_prepost%>%select(any_of(Prepost_output_vars))
                   )%>%arrange(ID)%>%select(-ID)%>%rowid_to_column("ID")
+    
   }
 
   if("group_ID" %in% colnames(out_df) && category == 1){
-   
 
+   
     lst<-out_df%>%group_by(Study_ID)%>%group_split()
     valid_inds<-lapply(lst, function(x){if(nrow(x%>%distinct(group_ID))==nrow(x) && nrow(x)>1 && max(x$group_ID)<11){ 
-           return(TRUE)
-           }else {return(FALSE)}})
-    g_df<-do.call("rbind", lst[unlist(valid_inds)])%>%mutate(func=NA)
+      return(TRUE)
+    }else {return(FALSE)}})
+    g_df<-do.call("rbind", lst[unlist(valid_inds)])
     na_df<-do.call("rbind", lst[!unlist(valid_inds)])
-    
-    # na_df<-out_df%>%filter(is.na(group_ID)| invalid==1)%>%mutate(group_ID=1)
-    # dup_df<-out_df%>%filter(duplicated(Study_ID), duplicated(group_ID), !is.na(group_ID))%>%mutate(invalid=1)
-    # na_df<-rbind(na_df, dup_df)%>%distinct(ID, .keep_all = TRUE)
-    #g_df<-out_df%>%filter(!(ID %in% na_df$ID))%>%arrange(ID)
+  
     
     max_group_val<-max(g_df$group_ID)
     ma=ifelse(is.infinite(max_group_val),1,max_group_val)
     
 
     if(ma>1){
+      
+      g_df<-g_df%>%mutate(func=NA)
+      
       newnames<-paste(current_outs,"1")
-      na_df<-na_df%>%rename_at(vars(current_outs), ~newnames)
+      
       newcols<-paste(current_outs, sort(rep(seq(2,ma), length(current_outs))) )
       
       
       g_df<-g_df%>%select(-ID)
       g_df<-g_df%>%pivot_wider(names_from = group_ID, values_from = current_outs, names_glue = "{.value} {group_ID}", names_sort = TRUE, names_repair = "unique")
-      if(nrow(na_df)>0){
-      na_df<-na_df %>% `is.na<-`(newcols)%>%select(-ID, -group_ID)
-      if(length(colnames(g_df))!= length(colnames(na_df)) ){
-        diff_columns<-colnames(na_df)[which(!(colnames(na_df) %in%  colnames(g_df) ))]
-        g_df[,diff_columns]<-NA
-      }
-      out_df<-rbind(na_df, g_df )%>%relocate(c(invalid, func), .after = last_col())%>%rowid_to_column("ID")
+      if(!is.null(na_df) && nrow(na_df) > 0){
+        
+        na_df<-na_df%>%rename_at(vars(current_outs), ~newnames)
+        na_df<-na_df %>% `is.na<-`(newcols)%>%select(-ID, -group_ID)
+        if(length(colnames(g_df))!= length(colnames(na_df)) ){
+          diff_columns<-colnames(na_df)[which(!(colnames(na_df) %in%  colnames(g_df) ))]
+          g_df[,diff_columns]<-NA
+        }
+        out_df<-rbind(na_df, g_df )%>%relocate(c(invalid, func), .after = last_col())%>%rowid_to_column("ID")
       }
       else{
         out_df<-g_df%>%relocate(c(invalid, func), .after = last_col())%>%rowid_to_column("ID")
       }
-      # paircols<-paste(current_outs, sort(rep(seq(1,ma), length(current_outs))))
+      browser()
+       paircols<-paste(current_outs, sort(rep(seq(1,ma), length(current_outs))))
       # 
-      # out_df<-Order_outCols(g_df, paircols)
+       out_df<-Order_outCols(g_df, paircols)%>%relocate(c(invalid, func), .after = last_col())%>%rowid_to_column("ID")
 
     }else{
       out_df<-out_df%>%select(-group_ID)

@@ -12,12 +12,14 @@ function StartPAge() {
   const [outputColumns, setOutputColumns] = useState<any>([]);
   const [invalidRows, setInvalidRows] = useState<any>([]);
   const [getDataTable, setGetDataTable] = useState<any>([]);
+  const [selectedCategory, setSelectedCategory] = useState<any>([]);
 
   useEffect(() => {
     const tableResultStorage = localStorage.getItem("tableResult");
     const outputColumnsStorage = localStorage.getItem("outputColumns");
     const invalidRowsStorage = localStorage.getItem("invalidRows");
     const getDataTableStorage = localStorage.getItem("getDataTable");
+    const getSelectedCategory = localStorage.getItem("selectedCategory");
     if (getDataTableStorage) {
       setGetDataTable(JSON.parse(getDataTableStorage));
     }
@@ -30,6 +32,9 @@ function StartPAge() {
     if (invalidRowsStorage) {
       setInvalidRows(JSON.parse(invalidRowsStorage));
     }
+    if (getSelectedCategory) {
+      setSelectedCategory(JSON.parse(getSelectedCategory));
+    }
   }, []);
 
   const clearHistory = () => {
@@ -37,6 +42,7 @@ function StartPAge() {
     localStorage.removeItem("outputColumns");
     localStorage.removeItem("invalidRows");
     localStorage.removeItem("getDataTable");
+    localStorage.removeItem("selectedCategory");
     window.location.reload();
   };
   if (tableResult[0]?.length === 0) {
@@ -62,7 +68,7 @@ function StartPAge() {
             <HotTable
               stretchH="all"
               key={index + "values"}
-              colHeaders={outputColumns?.[index]}
+              colHeaders={selectedCategory?.[index].map((el:any)=>el.label)}
               data={data}
               columnSorting={{
                 headerAction: true,
