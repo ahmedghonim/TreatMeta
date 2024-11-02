@@ -61,7 +61,7 @@ function OurConversions() {
 
   return (
     <div className="relative flex items-center my-10 lg:my-16 ">
-      <div className="flex-1 space-y-7">
+      <div className="flex-1 space-y-7 max-md:mt-20">
         <Text variant="stroke-title">Available Conversions</Text>
         <div className="w-full gap-4 space-y-4 md:grid md:space-y-0 md:grid-cols-12">
           <div className="col-span-8 gap-4 space-y-4 md:grid md:space-y-0 md:grid-cols-12 ">
