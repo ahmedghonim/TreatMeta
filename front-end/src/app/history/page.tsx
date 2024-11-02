@@ -27,19 +27,19 @@ function StartPAge() {
     const getDataTableStorage = localStorage.getItem("getDataTable");
     const getSelectedCategory = localStorage.getItem("selectedCategory");
     if (getDataTableStorage) {
-      setGetDataTable(JSON.parse(getDataTableStorage));
+      setGetDataTable(JSON.parse(getDataTableStorage).reverse());
     }
     if (tableResultStorage) {
-      setTableResult(JSON.parse(tableResultStorage));
+      setTableResult(JSON.parse(tableResultStorage).reverse());
     }
     if (outputColumnsStorage) {
-      setOutputColumns(JSON.parse(outputColumnsStorage));
+      setOutputColumns(JSON.parse(outputColumnsStorage).reverse());
     }
     if (invalidRowsStorage) {
-      setInvalidRows(JSON.parse(invalidRowsStorage));
+      setInvalidRows(JSON.parse(invalidRowsStorage).reverse());
     }
     if (getSelectedCategory) {
-      setSelectedCategory(JSON.parse(getSelectedCategory));
+      setSelectedCategory(JSON.parse(getSelectedCategory).reverse());
     }
   }, []);
 

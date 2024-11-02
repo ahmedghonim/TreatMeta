@@ -140,16 +140,16 @@ function Nav() {
                 ))}
               </div>
               <div className="flex mt-6 gap-8">
-                <div className=" flex">
-                  <Link href="/history" className="flex items-center">
-                    <History width={24} height={24} />
-                  </Link>
-                </div>
                 <div>
                   <Link href="/start">
                     <Button>
                       Get Started <ArrowRight />
                     </Button>
+                  </Link>
+                </div>
+                <div>
+                  <Link href="/history" className="flex items-center">
+                    <History width={24} height={24} />
                   </Link>
                 </div>
               </div>

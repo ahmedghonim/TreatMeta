@@ -54,8 +54,8 @@ const Text_logoPage = (props: any) => {
     //     fill="white"
     //   />
     // </svg>
-    <h1 className="text-white !font-mismo text-4xl" >
-      <span className={cn("text-5xl text-primary", myFont.className)}>T</span>reat<span className={cn("text-5xl text-primary", myFont.className)}>M</span>eta
+    <h1 className="text-white text-4xl" >
+      <span className={cn("text-5xl tracking-[-0.2em] text-primary", myFont.className)}>T</span>reat<span className={cn("text-5xl text-primary", myFont.className)}>M</span>eta
     </h1>
   );
 };

@@ -12,11 +12,15 @@ import { renameVariables } from "@/lib/renameVariables";
 import Select from "@/components/ui/select";
 import { Text } from "@/components/ui/text";
 import { Button } from "@/components/ui/button";
+import Text_logoPage from "@/assets/svg/text_logo";
+
 import { redirect, useRouter, useSearchParams } from "next/navigation";
 import { presets } from "@/components/layout/chared";
 import { Store } from "react-notifications-component";
 import { Tooltip } from "react-tooltip";
 import React from "react";
+
+
 
 export default function StartPage({ params }: { params: { slug: string } }) {
   const searchParams = useSearchParams();
@@ -351,16 +355,14 @@ export default function StartPage({ params }: { params: { slug: string } }) {
               <span className="relative mx-2">
                 Customize <Line className="absolute -bottom-2" />
               </span>
-              Your Conversion Table with
+              Your Conversion Table With
             </Text>
-            <Text variant="white" size="f2">
-              TreatMeta
-            </Text>
+          <Text_logoPage />
           </div>
-          <Text variant="default">
-            where exploration meets innovation. Begin your quest for knowledge
+          {/* <Text variant="default">
+            Where exploration meets innovation. Begin your quest for knowledge
             and discovery as we provide the tools
-          </Text>
+          </Text> */}
         </div>
 
         <div className="flex flex-col ">
