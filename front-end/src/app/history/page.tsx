@@ -66,7 +66,11 @@ function StartPAge() {
       )}
       <Accordion type="single" collapsible className="w-full">
         {getDataTable.map((data: any, index: any) => (
-          <AccordionItem value={index} key={index} className="w-full relative">
+          <AccordionItem
+            value={index + 1}
+            key={index + 1}
+            className="w-full relative"
+          >
             <AccordionTrigger>
               <Text size="tee" variant="white" className="my-6 ">
                 Conversion {index + 1}
@@ -77,7 +81,9 @@ function StartPAge() {
                 <HotTable
                   stretchH="all"
                   key={index + "values"}
-                  colHeaders={selectedCategory?.[index].map((el:any)=>el.label)}
+                  colHeaders={selectedCategory?.[index].map(
+                    (el: any) => el.label
+                  )}
                   data={data}
                   columnSorting={{
                     headerAction: true,
