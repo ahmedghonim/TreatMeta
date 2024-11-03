@@ -19,4 +19,4 @@ COPY . /app
 EXPOSE 3070
 
 # Command to run the Plumber API
-RUN Rscript /run.R
+CMD [ "Rscript", "run.R" ]
