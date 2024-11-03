@@ -16,7 +16,7 @@ RUN Rscript /packages.R
 COPY . /app
 
 # Expose the port that Plumber will run on
-EXPOSE 8000
+EXPOSE 3070
 
 # Command to run the Plumber API
 CMD ["plumber", "api.R"]
