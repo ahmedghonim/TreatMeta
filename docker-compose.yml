@@ -1,19 +1,19 @@
 version: "3.9"
 
 services:
-  # fornt:
-  #   build:
-  #     context: ./front-end
-  #     dockerfile: Dockerfile
-  #   container_name: front-end
-  #   volumes:
-  #     - ./front-end:/app
-  #   ports:
-  #     - 3000:3000
-  #   networks:
-  #     - rplumber-network
-  #   depends_on:
-  #     - rplumber
+  fornt:
+    build:
+      context: ./front-end
+      dockerfile: Dockerfile
+    container_name: front-end
+    volumes:
+      - ./front-end:/app
+    ports:
+      - 3070:3000
+    networks:
+      - rplumber-network
+    depends_on:
+      - rplumber
   rplumber:
     build: .
     container_name: r-plumber
@@ -21,7 +21,7 @@ services:
       - ./:/app
       - ./api.R:/app/api.R
     ports:
-      - 3070:8000
+      - 3071:8000
     mem_limit: 1g
     networks:
       - rplumber-network
