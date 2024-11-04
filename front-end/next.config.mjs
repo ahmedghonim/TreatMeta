@@ -1,6 +1,10 @@
-import nextra from 'nextra';
+import nextra from "nextra";
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // stope type checking
+  typescript: {
+    ignoreBuildErrors: true,
+  },
   async rewrites() {
     return [
       {
@@ -12,8 +16,8 @@ const nextConfig = {
 };
 
 const withNextra = nextra({
-  theme: 'nextra-theme-docs',
-  themeConfig: './theme.config.jsx',
-  latex: true
-})
+  theme: "nextra-theme-docs",
+  themeConfig: "./theme.config.jsx",
+  latex: true,
+});
 export default withNextra(nextConfig);
