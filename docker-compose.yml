@@ -1,31 +1,25 @@
 version: "3.9"
 
 services:
-  fornt:
+  frontend:
     build:
       context: ./front-end
       dockerfile: Dockerfile
     container_name: front-end
+    ports:
+      - "3070:3000"  # Expose frontend on port 3070, while internally it runs on 3000
+    depends_on:
+      - backend
     volumes:
       - ./front-end:/app
+      - ./front-end/.env:/app/.env 
+  backend:
+    build:
+      context: .  # Assuming the backend Dockerfile is in the root directory
+    container_name: r-plumber
+    volumes:
+      - ./:/app
+      - ./api.R:/app/api.R  # Make sure api.R is correctly mounted and the app can access it
     ports:
-      - 3070:3000
-    networks:
-      - rplumber-network
-    # depends_on:
-    #   - rplumber
-  # rplumber:
-  #   build: .
-  #   container_name: r-plumber
-  #   volumes:
-  #     - ./:/app
-  #     - ./api.R:/app/api.R
-  #   ports:
-  #     - 3071:8000
-  #   mem_limit: 1g
-  #   networks:
-  #     - rplumber-network
-
-networks:
-  rplumber-network:
-    driver: bridge
+      - "3071:8000"  # Expose backend on port 3071, while internally it runs on port 8000
+    mem_limit: 1g  # Limit memory usage for the backend
