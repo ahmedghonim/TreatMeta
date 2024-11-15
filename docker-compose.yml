@@ -12,19 +12,19 @@ services:
       - 3070:3000
     networks:
       - rplumber-network
-    depends_on:
-      - rplumber
-  rplumber:
-    build: .
-    container_name: r-plumber
-    volumes:
-      - ./:/app
-      - ./api.R:/app/api.R
-    ports:
-      - 3071:8000
-    mem_limit: 1g
-    networks:
-      - rplumber-network
+    # depends_on:
+    #   - rplumber
+  # rplumber:
+  #   build: .
+  #   container_name: r-plumber
+  #   volumes:
+  #     - ./:/app
+  #     - ./api.R:/app/api.R
+  #   ports:
+  #     - 3071:8000
+  #   mem_limit: 1g
+  #   networks:
+  #     - rplumber-network
 
 networks:
   rplumber-network:
