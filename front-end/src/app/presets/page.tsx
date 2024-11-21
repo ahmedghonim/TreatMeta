@@ -50,7 +50,7 @@ function PresetPage(){
     return(
         <>
         <Text variant="stroke-title">Presets</Text>
-        <div className="grid grid-cols-3 gap-x-4 gap-y-6 w-full mt-4 items-stretch">
+        <div className="grid md:grid-cols-3 sm:grid-cols-1 gap-x-4 gap-y-6 w-full mt-4 items-stretch">
             {presets.map((el:any, i:any)=><PresetItem key={i} ID={i+1} url={el.ID} Name={el.Name} Description={el.conversions} Sub={el.sub}/>)}
         </div>
         </>

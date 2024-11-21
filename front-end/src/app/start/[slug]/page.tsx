@@ -352,8 +352,8 @@ export default function StartPage({ params }: { params: { slug: string } }) {
         <div className="pb-12 space-y-4 text-center">
           <div className="relative flex flex-col ">
             <Text variant="white" size="f2">
-              <span className="relative mx-2">
-                Customize <Line className="absolute -bottom-2" />
+              <span className="relative md:mx-2">
+                Customize  <Line className="md:absolute -bottom-2 " />
               </span>
               Your Conversion Table With
             </Text>

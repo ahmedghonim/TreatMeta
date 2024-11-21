@@ -29,7 +29,7 @@ function Nav() {
   return (
     <nav
       className={`bg-[#0F182E] layoutPadding fixed top-0 z-40 inset-x-0 md:h-[110px] ease-[cubic-bezier( 0.175, 0.885, 0.32, 1.275 )] duration-700 transform-gpu ${
-        round ? "top-[10px] inset-x-[40px] rounded-full" : ""
+        round ? "md:top-[10px] md:inset-x-[40px] md:rounded-full" : ""
       }`}
     >
       <div className="grid justify-between w-full grid-cols-12 py-4 mx-auto ">

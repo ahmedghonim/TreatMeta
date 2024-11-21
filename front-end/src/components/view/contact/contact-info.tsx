@@ -62,7 +62,7 @@ function ContactInfo() {
           )
         )}
       </div>
-      <div className="bg-primary absolute flex flex-col items-center justify-center bottom-0 right-0 w-[163px] h-[166px]">
+      <div className="bg-primary absolute flex flex-col items-center justify-center bottom-0 right-0 md:w-[163px] md:h-[166px] sm:w-[20%] sm:h-[25%]">
         <Logo color="white" />
       </div>
     </div>

@@ -57,6 +57,31 @@ export const presets =[
             ]
         },  
         {
+          "ID":"B2G",
+          "Name": "In-between Group Difference",
+          "category":1,
+          "groups":2,
+          "prepost":0,
+          "colnames":[
+              "Study_ID",
+              "group_ID",
+              "Mean",
+              "SD",
+              "N1",
+              "N2",
+              "SE",
+              "llci",
+              "ulci",
+              "pval"
+
+          ],
+          "conversions": [
+            "Mean and SE",
+            "Mean and CI",
+            "Mean and P-value"
+          ]
+      }, 
+        {
           "ID":"MeanSdPP",
           "Name": "Change from baseline<span class='text-lg text-gray-400'> (All formats)</span>",
           "category":1,

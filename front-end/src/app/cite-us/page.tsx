@@ -221,7 +221,10 @@ function Bibliography(){
 function CitePage() {
     return (
       <>
-        <Bibliography />
+        {window.innerWidth>720 && <Bibliography />}
+        {window.innerWidth<=720 && <div className="text-white h-[100vh] flex items-center justify-center">
+            View this page on a PC for better experience
+            </div>}
       </>
     );
   }

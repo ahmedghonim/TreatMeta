@@ -549,7 +549,7 @@ Task_manager<-function( df, funcIDs, current_outputs, current_prepost, category 
       else{
         out_df<-g_df%>%relocate(c(invalid, func), .after = last_col())%>%rowid_to_column("ID")
       }
-      browser()
+  
        paircols<-paste(current_outs, sort(rep(seq(1,ma), length(current_outs))))
       # 
        out_df<-Order_outCols(g_df, paircols)%>%relocate(c(invalid, func), .after = last_col())%>%rowid_to_column("ID")
