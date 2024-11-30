@@ -14,12 +14,17 @@ services:
       - ./front-end:/app
       - ./front-end/.env:/app/.env 
   backend:
-    build:
-      context: .  # Assuming the backend Dockerfile is in the root directory
+    # build:
+    #   context: .  # Assuming the backend Dockerfile is in the root directory
+    # container_name: r-plumber
+    # volumes:
+    #   - ./:/app
+    #   - ./api.R:/app/api.R  # Make sure api.R is correctly mounted and the app can access it
+    # ports:
+    #   - "3071:8000"  # Expose backend on port 3071, while internally it runs on port 8000
+    # mem_limit: 1g  # Limit memory usage for the backend
+    image: mohamedmamdoh144/r_project-backend:latest  # Use the Docker Hub image
     container_name: r-plumber
-    volumes:
-      - ./:/app
-      - ./api.R:/app/api.R  # Make sure api.R is correctly mounted and the app can access it
     ports:
-      - "3071:8000"  # Expose backend on port 3071, while internally it runs on port 8000
+      - "3071:8000"  # Expose backend on port 3071
     mem_limit: 1g  # Limit memory usage for the backend
