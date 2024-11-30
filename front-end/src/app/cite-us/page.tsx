@@ -222,9 +222,10 @@ function Bibliography(){
 function CitePage() {
     return (
       <>
-        {window.innerWidth>720? <Bibliography />: <div className="text-white h-[100vh] flex items-center justify-center">
+      <Bibliography />
+       {/* : <div className="text-white h-[100vh] flex items-center justify-center">
             View this page on a PC for better experience
-            </div>}
+            </div>} */}
       </>
     );
   }
