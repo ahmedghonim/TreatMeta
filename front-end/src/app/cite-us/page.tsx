@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 
 import {CircleLoader} from "react-spinners"
 
-import { citationsJSON , txtCitations} from "./citations";
+import {citationsJSON , txtCitations} from "./citations";
 
 import {Cite} from "@citation-js/core"
 import "@citation-js/plugin-doi"
@@ -37,7 +37,7 @@ const citations=[
 
     },
     {
-        title:"Prepost Change",
+        title:"Mean & SD Change",
         doi:'10.1002/sim.2423'
 
     },
@@ -47,13 +47,23 @@ const citations=[
 
     },
     {
-        title:"Range",
+        title:"Median & Range",
         doi:'10.1186/1471-2288-5-13'
 
     },
     {
-        title:"Inbetween Group P-Value",
+        title:"Inbetween Groups P-Value",
         doi:'10.2307/2347681'
+
+    },
+    {
+        title:"Meta-analysis of Prevelance",
+        doi:'10.1136/jech-2013-203104'
+
+    },
+    {
+        title:"Mean Calculation",
+        doi:'10.1098/rspl.1893.0079'
 
     },
     {
@@ -66,28 +76,26 @@ const dois=citations.map((el:any)=>el.doi);
 
 async function grabCitations(){
 const data= Cite(JSON.parse(citationsJSON));
-//const data = await Cite.async(dois, {maxChainLength:10});
+// Load new data then update the store
+// const data = await Cite.async(dois, {maxChainLength:10, generateGraph:false});
+// const strs=data.data.map((el:any)=>{el.abstract=""; el.reference=[]; el.relation=null; return el;})
+// console.log(strs);
 
-// Format output
-const segmentedData = citations.map((el:any, i:any)=> {
-    const temp=cloneDeep(data);
-    temp.data=[temp.data[i]];
-    return temp;
-});
-const bibliography = segmentedData;
+const bibliography = data.format('bibliography', {
+    format: 'html',
+    template: 'apa',
+    lang: 'en-US', 
+    nosort:true,
+    asEntryArray:true
+}).map((el:any)=>el[1]);
 
-// const bibliography = segmentedData.map((el:any)=>el.format('bibliography', {
-//     format: 'html',
-//     template: 'apa',
-//     lang: 'en-US'
-// }));
 
-const doc = bibliography.map((el:any)=>{
-    const parser = new DOMParser();
-    return parser.parseFromString(el, 'text/html').querySelector(".csl-entry")?.textContent;
+// const doc = bibliography.map((el:any)=>{
+//     const parser = new DOMParser();
+//     return parser.parseFromString(el, 'text/html').querySelector(".csl-entry")?.textContent;
 
-});
-console.log(doc);
+// });
+// console.log(doc);
 return {dt: data, csl: txtCitations};
 }       
 
@@ -100,8 +108,8 @@ function Citation(
 
     return(
         <>
-            <div className="row flex">
-                <div className="index flex flex-col">
+            <div className="row flex ">
+                <div className="index flex flex-col w-1/12">
                     
                     <Text size="tef" variant="white" className="mb-2">
                     {id}.
@@ -120,7 +128,7 @@ function Citation(
                   }}
                 />
                 </div>
-                <div className="record">
+                <div className="record w-10/12">
                 <Text size="tef" variant="white" className="mb-2 block">
                     {title}
                   </Text>
@@ -143,7 +151,6 @@ function Bibliography(){
         const dt= await grabCitations();
         setCsl(dt.csl);
         setRefs(dt.dt);
-        console.log(dt);
     }
     init();
 
@@ -162,7 +169,7 @@ function Bibliography(){
         
     <div className="mt-[10vh] flex flex-col justify-center items-start w-1/2">
               <Text size="te" variant="white" className="my-6 font-bold">
-             How to cite us
+             Cite us
                   </Text>
                   {
         <CircleLoader color="#f05445" loading={!csl} size={150} className="self-center" />
@@ -209,20 +216,13 @@ function Bibliography(){
     </>
     );
 }
- {/*  <span className="text-white mt-8 text-lg w-1/2">
-  <strong>If you use our website to convert your data, please cite the following:</strong>   <br />
 
-1- Our study about the website [WHEN PUBLISHED, put its citation]<br />
-
-2- The study about the used conversion (you will find them in the guide)
-    </span> */}
 
 
 function CitePage() {
     return (
       <>
-        {window.innerWidth>720 && <Bibliography />}
-        {window.innerWidth<=720 && <div className="text-white h-[100vh] flex items-center justify-center">
+        {window.innerWidth>720? <Bibliography />: <div className="text-white h-[100vh] flex items-center justify-center">
             View this page on a PC for better experience
             </div>}
       </>

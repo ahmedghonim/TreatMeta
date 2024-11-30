@@ -4,7 +4,7 @@ export const tabs = [
     href: "/",
   },
   {
-    name: "ConvertLab",
+    name: "Converter",
     href: "/start/default",
   },
   {

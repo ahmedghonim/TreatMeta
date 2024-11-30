@@ -18,6 +18,8 @@ import { redirect, useRouter, useSearchParams } from "next/navigation";
 import { presets } from "@/components/layout/chared";
 import { Store } from "react-notifications-component";
 import { Tooltip } from "react-tooltip";
+import { CSVLink, CSVDownload } from "react-csv";
+
 import React from "react";
 
 
@@ -43,6 +45,7 @@ export default function StartPage({ params }: { params: { slug: string } }) {
   const [getDataTable, setGetDataTable] = useState<any>([]);
   const [tableResult, setTableResult] = useState<any>([]);
   const [outputColumns, setOutputColumns] = useState<any>([]);
+  const [downloadHeaders, setDownloadHeaders] = useState<any>([]);
   const [sleetedUserIndex, setSleetedUserIndex] = useState<any>([]);
   const [availableCategoriesData, setAvailableCategoriesData] = useState<any>(
     []
@@ -238,12 +241,17 @@ export default function StartPage({ params }: { params: { slug: string } }) {
           category: firstInput?.category,
         },
       });
+      const keyLabels=Object.keys(data[0]).slice(1, -2);
       const renamedCols = await renameVariables(
         firstInput.current_prepost,
         firstInput.current_groups,
         firstInput.category,
-        Object.keys(data[0]).slice(1, -2)
+        keyLabels
       );
+      const headers=keyLabels.map((el:any,i:any)=>{
+        return {label: renamedCols[i], key:el}
+      });
+      setDownloadHeaders(headers);
       setOutputColumns(renamedCols);
       const oldOutputColumns = JSON.parse(
         localStorage.getItem("outputColumns") || "[]"
@@ -535,7 +543,16 @@ export default function StartPage({ params }: { params: { slug: string } }) {
               <Text size="tee" variant="white" className="my-6">
                 Results
               </Text>
-
+              <CSVLink
+              filename={"Results-Treatmeta.csv"}
+              className="btn btn-primary text-primary underline underline-offset-3 mx-6 "
+              data={tableResult.map((row: any) => {
+                  return keys(row).map((key) =>
+                    row[key] === "NA" ? "" : row[key]
+                  );
+                })} headers={outputColumns}>
+                Download
+              </CSVLink>;
               <HotTable
                 colHeaders={outputColumns}
                 data={tableResult.map((row: any) => {

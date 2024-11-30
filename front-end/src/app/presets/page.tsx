@@ -2,7 +2,7 @@ import React from "react"
 import { Text } from "@/components/ui/text";
 import Link from "next/link";
 import { presets } from "@/components/layout/chared";
-
+import "./presets.css" 
 function PresetItem(
     {
         ID,
@@ -26,7 +26,7 @@ function PresetItem(
       href={`/start/${url}`}
       
     >
-       <div className="py-4 px-6 rounded-md bg-[#1e304052] relative overflow-hidden hover:translate-y-2 hover:scale-[0.95] transform-gpu ease-in-out duration-300 h-full">
+       <div className="preset-item py-4 px-6 rounded-md bg-[#1e304052] relative overflow-hidden h-full">
             <Text size="tee" variant="white"><div dangerouslySetInnerHTML={{ __html: Name }} /></Text>
             {Sub && <Text size="et" variant="default" className="block text-gray-400 font-bold">{Sub}</Text>}
             <ul className="list-disc text-white pl-6 mt-2">
@@ -36,7 +36,7 @@ function PresetItem(
                 </li>
                 </React.Fragment>)}
             </ul>
-            <Text variant="stroke-title" className="absolute right-[5%] bottom-[0px] translate-y-[30%] opacity-85">{ID+""}</Text>
+            <Text variant="stroke-title" className="number absolute right-[5%] bottom-[0px] translate-y-[30%] opacity-85">{ID+""}</Text>
 
        </div>
        </Link>
@@ -50,7 +50,7 @@ function PresetPage(){
     return(
         <>
         <Text variant="stroke-title">Presets</Text>
-        <div className="grid md:grid-cols-3 sm:grid-cols-1 gap-x-4 gap-y-6 w-full mt-4 items-stretch">
+        <div className="presets grid md:grid-cols-3 sm:grid-cols-1 gap-x-4 gap-y-6 w-full mt-4 items-stretch">
             {presets.map((el:any, i:any)=><PresetItem key={i} ID={i+1} url={el.ID} Name={el.Name} Description={el.conversions} Sub={el.sub}/>)}
         </div>
         </>

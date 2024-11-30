@@ -80,16 +80,13 @@ function StartPAge() {
               <div className="w-full relative flex flex-col">
                 <HotTable
                   stretchH="all"
+                  autoColumnSize
+                  autoRowSize
                   key={index + "values"}
                   colHeaders={selectedCategory?.[index].map(
                     (el: any) => el.label
                   )}
                   data={data}
-                  columnSorting={{
-                    headerAction: true,
-                    sortEmptyCells: false,
-                    indicator: true,
-                  }}
                   readOnly={true}
                   autoWrapCol={true}
                   rowHeaders={true}
@@ -114,13 +111,9 @@ function StartPAge() {
                     );
                   })}
                   stretchH="all"
-                  columnSorting={{
-                    headerAction: true,
-                    sortEmptyCells: false,
-                    indicator: true,
-                  }}
                   readOnly={true}
                   autoColumnSize
+                  autoRowSize
                   autoWrapCol={true}
                   rowHeaders={true}
                   cell={invalidRows[index]}

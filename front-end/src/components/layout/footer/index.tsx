@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 function Footer() {
   const pathname = usePathname();
   return (
-    <div className="flex flex-col justify-end gap-6 bg-background mt-4">
+    <div className="flex flex-col justify-end gap-6 bg-background mt-12">
       <div className="w-full h-[1px] bg-white"></div>
       {pathname !== "/contact-us" && <FooterContactUsSection />}
 

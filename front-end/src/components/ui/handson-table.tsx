@@ -116,6 +116,9 @@ const HandsonTable = ({
             },
             cut:{
               name:"Cut"
+            },
+            paste:{
+              name:"Paste"
             }
 
 

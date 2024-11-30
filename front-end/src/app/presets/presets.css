@@ -1,0 +1,23 @@
+.presets
+{
+    transform-style: preserve-3d;
+    transform: perspective(1000px);
+}
+
+.preset-item{
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.presets:has(.preset-item:hover) .preset-item:hover {
+    transform: perspective(1000px) translateZ(50px);
+}
+.presets:has(.preset-item:hover) .preset-item:not(:hover) {
+    filter: grayscale(100%)
+}
+.number {
+    transition: all 0.4s;
+}
+
+.preset-item:hover .number{
+    transform: perspective(1000px) translateZ(50px);
+}
