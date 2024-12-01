@@ -81,13 +81,13 @@ const data= Cite(JSON.parse(citationsJSON));
 // const strs=data.data.map((el:any)=>{el.abstract=""; el.reference=[]; el.relation=null; return el;})
 // console.log(strs);
 
-const bibliography = data.format('bibliography', {
-    format: 'html',
-    template: 'apa',
-    lang: 'en-US', 
-    nosort:true,
-    asEntryArray:true
-}).map((el:any)=>el[1]);
+// const bibliography = data.format('bibliography', {
+//     format: 'html',
+//     template: 'apa',
+//     lang: 'en-US', 
+//     nosort:true,
+//     asEntryArray:true
+// }).map((el:any)=>el[1]);
 
 
 // const doc = bibliography.map((el:any)=>{
