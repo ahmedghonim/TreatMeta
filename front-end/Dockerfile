@@ -11,6 +11,7 @@ COPY .env .env
 
 RUN yarn build
 
+
 # Specify the command to run the app
 CMD ["yarn", "start"]
 
