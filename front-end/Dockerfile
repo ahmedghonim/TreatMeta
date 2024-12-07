@@ -13,7 +13,7 @@ RUN yarn install --frozen-lockfile
 # Copy the rest of the application code
 COPY . .
 
-# Build the Next.js app
+# Build the Next.js app (production build)
 RUN yarn build
 
 # Use a minimal image to run the app
@@ -27,5 +27,5 @@ COPY --from=build /app ./
 # Expose the port that Next.js will run on
 EXPOSE 3000
 
-# Start the Next.js app
+# Start the Next.js app in production mode
 CMD ["yarn", "start"]
