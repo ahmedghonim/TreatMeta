@@ -5,14 +5,14 @@ FROM node:18-alpine AS build
 WORKDIR /app
 
 # Copy package.json and yarn.lock to the container
-COPY package.json ./
+COPY package.json yarn.lock ./
 
 # Install dependencies (yarn install)
 RUN yarn install --frozen-lockfile
 
 # Copy the rest of the application code
 COPY . .
-COPY .env .env
+
 # Build the Next.js app
 RUN yarn build
 
