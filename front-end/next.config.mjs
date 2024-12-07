@@ -1,6 +1,7 @@
 import nextra from "nextra";
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: "standalone",
   // stope type checking
   typescript: {
     ignoreBuildErrors: true,
@@ -9,8 +10,8 @@ const nextConfig = {
     return [
       {
         source: "/api/:path*",
-        destination: `http://127.0.0.1:8000/api/:path*`,
-            },
+        destination: `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/:path*`,
+      },
     ];
   },
 };
