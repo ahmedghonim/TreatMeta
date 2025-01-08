@@ -11,8 +11,8 @@ export async function generateMetadata(): Promise<Metadata> {
       template: `TreatMeta | %s`,
       default: "TreatMeta",
     },
-    description: "description",
-    keywords: "keywords",
+    description: "Treat Your Data, Unlock Analytical Potentials",
+    keywords: "TreatMeta, meta-analysis, systematic review, data conversion, effect size estimation, evidence synthesis, Next.js platform, R API, MetaTransformR",
     authors: [{ name: "TreatMeta" }],
     applicationName: "TreatMeta",
     metadataBase: new URL("https://www.TreatMeta.com"),
@@ -64,6 +64,7 @@ export default function RootLayout({
           name="google-site-verification"
           content="mvgALnznelPo2kiRe937cvowChkDYhm_mejpxkhR2v4"
         />
+        
       </head>
       <body className={cn("min-h-screen bg-background font-sans antialiased ")}>
         <GoogleTagManager gtmId="GTM-P8MK6NS7" />

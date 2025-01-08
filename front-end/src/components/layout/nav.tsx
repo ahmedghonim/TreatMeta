@@ -77,7 +77,7 @@ function Nav() {
               <Tooltip id="history-tooltip" />
             </div>
             <div className="hidden lg:flex">
-              <Link href="/start">
+              <Link href="/start/default">
                 <Button>
                   Get Started <ArrowRight />
                 </Button>
@@ -141,7 +141,7 @@ function Nav() {
               </div>
               <div className="flex mt-6 gap-8">
                 <div>
-                  <Link href="/start">
+                  <Link href="/start/default">
                     <Button>
                       Get Started <ArrowRight />
                     </Button>

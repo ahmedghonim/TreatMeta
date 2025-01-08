@@ -6,6 +6,7 @@ import OurStory from "@/components/view/home/our-story";
 import React from "react";
 
 export default function Home() {
+
   return (
     <>
       <Hero />

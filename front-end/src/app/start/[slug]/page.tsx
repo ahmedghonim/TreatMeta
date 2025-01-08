@@ -217,6 +217,7 @@ export default function StartPage({ params }: { params: { slug: string } }) {
       setSelectedCategory(JSON.parse(oldLocalSelectedCategory || "[]")?.[id]);
     }
   }, [id]);
+  const capArrayLength = (arr:any, maxLength:number) => arr.slice(-maxLength);
 
   async function handleScripts() {
     const values = selectedCategory.map((item: any) => item.value);
@@ -259,7 +260,7 @@ export default function StartPage({ params }: { params: { slug: string } }) {
 
       localStorage.setItem(
         "outputColumns",
-        JSON.stringify([...oldOutputColumns, renamedCols])
+        JSON.stringify(capArrayLength([...oldOutputColumns, renamedCols], 20))
       );
       setTableResult(
         data.map((el: any) =>
@@ -280,18 +281,19 @@ export default function StartPage({ params }: { params: { slug: string } }) {
             )
           )
         ); // Add the new data to the array
-        localStorage.setItem("tableResult", JSON.stringify(oldLocalData)); // Store the updated array
+        localStorage.setItem("tableResult", JSON.stringify(capArrayLength(oldLocalData, 20))); // Store the updated array
       } else {
         localStorage.setItem(
           "tableResult",
-          JSON.stringify([
+          JSON.stringify(
+            capArrayLength([
             data.map((el: any) =>
               zipObject(
                 Object.keys(el).slice(1, -2),
                 Object.values(el).slice(1, -2)
               )
             ),
-          ])
+          ], 20))
         ); // Wrap the data in an array if it's not an array already
       }
       const invalidIDs = data
@@ -306,10 +308,11 @@ export default function StartPage({ params }: { params: { slug: string } }) {
       );
       localStorage.setItem(
         "invalidRows",
-        JSON.stringify([
+        JSON.stringify(
+          capArrayLength([
           ...oldLocalStorageInvalidRows,
           handleInvalidRows(invalidIDs, renamedCols.length, "invalid-cell"),
-        ])
+        ],20))
       );
       // save in local storage for later use
       const oldLocalGetDataTable = localStorage.getItem("getDataTable");
@@ -318,7 +321,7 @@ export default function StartPage({ params }: { params: { slug: string } }) {
         const oldLocalData = JSON.parse(oldLocalGetDataTable);
         oldLocalData.push(getDataTable); // Add the new getDataTable to the array
 
-        localStorage.setItem("getDataTable", JSON.stringify(oldLocalData)); // Store the updated array
+        localStorage.setItem("getDataTable", JSON.stringify(capArrayLength(oldLocalData, 20))); // Store the updated array
       } else {
         localStorage.setItem(
           "getDataTable",
@@ -330,7 +333,7 @@ export default function StartPage({ params }: { params: { slug: string } }) {
       if (oldSelectedCategory) {
         const oldLocalData = JSON.parse(oldSelectedCategory);
         oldLocalData.push(selectedCategory); // Add the new data to the array
-        localStorage.setItem("selectedCategory", JSON.stringify(oldLocalData)); // Store the updated array
+        localStorage.setItem("selectedCategory", JSON.stringify(capArrayLength(oldLocalData, 20))); // Store the updated array
       } else {
         localStorage.setItem(
           "selectedCategory",

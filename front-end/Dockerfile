@@ -23,7 +23,7 @@ WORKDIR /app
 
 # Copy only the necessary files from the build image
 COPY --from=build /app ./
-
+RUN yarn postbuild
 # Expose the port that Next.js will run on
 EXPOSE 3000
 
