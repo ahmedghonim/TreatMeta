@@ -81,7 +81,7 @@ split_df_prepost<-function(df){
   }
   else{
 
-    ready_df<-df%>%rename(preMean=Mean, preSD=ifelse(!is.na(changeSDin), changeSDin, SD))%>%
+    ready_df<-df%>%rename(preMean=Mean, preSD=SD)%>%
       mutate(postMean=NA, postSD=NA, ccoef=NA, invalid=1)
   }
 
@@ -97,11 +97,14 @@ compose_followups<-function(df){
     group_by(change_group)%>%group_split()
   
   split_followups<-lapply(followups, function(x) {
-    
+    if(nrow(baseline)>0){
       bl<-baseline
       bl$Study_ID<-x$Study_ID
       split_df_prepost(rbind(bl, x%>%mutate(change_group=1)) )
-    
+    }else{
+      browser()
+      split_df_prepost( x%>%mutate(change_group=1) )
+    }
     }
   )
   merged_followups<-do.call("rbind", split_followups)
