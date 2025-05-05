@@ -103,7 +103,7 @@ compose_followups<-function(df){
       split_df_prepost(rbind(bl, x%>%mutate(change_group=1)) )
     }else{
       browser()
-      split_df_prepost( x%>%mutate(change_group=1) )
+      split_df_prepost( x%>%mutate(change_group=1) ) 
     }
     }
   )
