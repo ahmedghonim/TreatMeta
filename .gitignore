@@ -4,3 +4,4 @@
 .Ruserdata
 front-end/node_modules
 **/node_modules
+_pagefind/

@@ -1,8 +1,96 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-@layer base {
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --font-sans: var(--font-sans);
+  --font-mismo: Mismo, var(--font-sans);
+
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --color-primary: #f05445;
+  --color-primary-foreground: var(--primary-foreground);
+
+  --color-secondary: #48647d;
+  --color-secondary-foreground: #afbecb3d;
+
+  --color-dark: #cccfd2;
+  --color-dark-foreground: #f9fafb;
+
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+
+  @keyframes accordion-down {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--radix-accordion-content-height);
+    }
+  }
+  @keyframes accordion-up {
+    from {
+      height: var(--radix-accordion-content-height);
+    }
+    to {
+      height: 0;
+    }
+  }
+}
+
+@utility container {
+  margin-inline: auto;
+  padding-inline: 2rem;
+  @media (width >= --theme(--breakpoint-sm)) {
+    max-width: none;
+  }
+  @media (width >= 1400px) {
+    max-width: 1400px;
+  }
+}
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+
+
+
   :root {
     --primary: #f05445;
     --primary-foreground: 210 40% 98%;
@@ -37,9 +125,9 @@
 
     --radius: 10px;
   }
-}
 
-@layer base {
+
+
   * {
    font-family: sans-serif;
    font-weight: 600;
@@ -176,11 +264,13 @@
   .markdown-content {
     @apply text-white;
   }
-
+  button[title="Change theme"]{
+    display: none;
+  }
   body {
     @apply bg-background text-foreground;
   }
-}
+
 
 .stroke {
   color: rgba(240, 84, 69, 0.12);
@@ -247,14 +337,14 @@
   background-color: var(--primary) !important;
 }
 .handsontable th > div {
-  @apply bg-[#48647D] text-white text-base font-bold !p-2;
+  @apply bg-[#48647D] text-white text-base font-bold p-2!;
 }
 .handsontable th {
-  @apply !p-0 w-fit;
+  @apply p-0! w-fit;
 }
 
 .handsontable td {
-  @apply !bg-[#1E3040] !text-base !text-white !font-bold !text-center;
+  @apply bg-[#1E3040]! text-base! text-white! font-bold! text-center!;
 }
 
 .citation {
@@ -285,32 +375,7 @@
   font-style: normal;
 }
 
-div:has(article) {
-  background-color: #080d20;
-}
 
-.Docs nav {
-  @apply !h-28;
-}
-#__next > div > div > div.nx-mx-auto.nx-flex.nx-max-w-\[90rem\] > aside * {
-  background-color: #080d20;
-  box-shadow: none !important;
-}
-#__next > div > div > div.nx-mx-auto.nx-flex.nx-max-w-\[90rem\] > aside {
-  top: 7rem !important;
-}
-#__next
-  > div
-  > div
-  > div.nx-mx-auto.nx-flex.nx-max-w-\[90rem\]
-  > nav
-  > div
-  > div {
-  background-color: #080d20;
-  box-shadow: none !important;
-}
-
-nav.nextra-toc {
-  position: sticky;
-  top: 7rem;
+*:where(:dir(ltr),[dir=ltr],[dir=ltr] *){
+  rotate: 0!;
 }
