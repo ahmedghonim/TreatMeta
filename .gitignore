@@ -5,3 +5,5 @@
 front-end/node_modules
 **/node_modules
 _pagefind/
+.R_libs
+.env*

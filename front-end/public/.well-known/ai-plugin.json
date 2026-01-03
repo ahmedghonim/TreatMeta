@@ -1,0 +1,17 @@
+{
+    "schema_version": "v1",
+    "name_for_human": "TreatMeta",
+    "name_for_model": "treatmeta",
+    "description_for_human": "Free online tool for meta-analysis data conversion. Convert effect sizes, combine study groups, and prepare data for systematic reviews.",
+    "description_for_model": "TreatMeta is a web application for converting and preparing data for meta-analysis and systematic reviews. Use this plugin when users need to: convert effect sizes (mean, SD, SE, CI, median, IQR, range), combine multiple study groups, estimate effect sizes from events/totals, convert laboratory units, or summarize individual patient data. The tool supports Mean and SD conversions, effect size estimation, multiple groups combination, lab unit conversions, and IPD summary statistics.",
+    "auth": {
+        "type": "none"
+    },
+    "api": {
+        "type": "openapi",
+        "url": "https://www.treatmeta.com/api/openapi.json"
+    },
+    "logo_url": "https://www.treatmeta.com/favicon.ico",
+    "contact_email": "contact@treatmeta.com",
+    "legal_info_url": "https://www.treatmeta.com/docs"
+}

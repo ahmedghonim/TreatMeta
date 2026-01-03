@@ -13,6 +13,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
+// Note: For client components, noindex is handled via next-sitemap.js exclude config
 function StartPAge() {
   const [tableResult, setTableResult] = useState<any>([]);
   const [outputColumns, setOutputColumns] = useState<any>([]);

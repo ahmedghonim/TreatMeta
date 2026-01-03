@@ -1,0 +1,50 @@
+# TreatMeta - Meta-Analysis Data Conversion Tool
+
+> TreatMeta is a free, open-source web application for converting and preparing data for meta-analysis and systematic reviews.
+
+## What is TreatMeta?
+
+TreatMeta helps researchers, clinicians, and data analysts convert effect sizes, combine study groups, estimate statistics, and prepare data for systematic reviews. It's designed to streamline the data preparation phase of evidence synthesis.
+
+## Key Features
+
+- **Mean and SD Conversions**: Convert between mean±SE, mean±CI, median±IQR, and median±range formats
+- **Effect Size Estimation**: Calculate effect sizes from events/totals or summary statistics
+- **Multiple Groups Combination**: Combine means and SDs from multiple intervention groups
+- **Lab Unit Conversions**: Convert laboratory values between different measurement units
+- **Individual Patient Data Summary**: Calculate summary statistics from individual patient data
+
+## Use Cases
+
+1. Preparing data for meta-analysis software (RevMan, Stata, R meta package)
+2. Converting reported statistics to common formats for pooling
+3. Combining treatment arms in multi-arm trials
+4. Converting laboratory measurements for consistent units across studies
+
+## Technical Details
+
+- **Frontend**: Next.js 14, React, TypeScript
+- **Backend**: R Plumber API
+- **Data Processing**: R statistical computing
+- **Hosting**: https://www.treatmeta.com
+
+## API Access
+
+TreatMeta provides a REST API for programmatic access:
+- Base URL: https://api.treatmeta.com
+- Documentation: https://www.treatmeta.com/docs
+
+## Citation
+
+If you use TreatMeta in your research, please cite:
+Visit https://www.treatmeta.com/cite-us for citation information.
+
+## Contact
+
+- Website: https://www.treatmeta.com
+- Support: https://www.treatmeta.com/contact-us
+- Documentation: https://www.treatmeta.com/docs
+
+## Related Terms
+
+meta-analysis, systematic review, effect size, data conversion, evidence synthesis, forest plot, pooled estimate, heterogeneity, mean difference, standardized mean difference, risk ratio, odds ratio

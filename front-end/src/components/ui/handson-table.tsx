@@ -33,15 +33,15 @@ const HandsonTable = ({
   return (
     <div>
       <HotTable
-        data={getDataTable}
+        data={getDataTable && getDataTable.length > 0 ? getDataTable : undefined}
         autoColumnSize
         autoRowSize
         colHeaders={selectedCategory.map((item: any) => item.label)}
         ref={hotRef}
         startRows={10}
-        allowInsertRow= {true}
-        allowInsertColumn= {false}
-        allowRemoveColumn= {false}
+        allowInsertRow={true}
+        allowInsertColumn={false}
+        allowRemoveColumn={false}
         columnSorting={{
           headerAction: true,
           sortEmptyCells: false,
@@ -57,14 +57,14 @@ const HandsonTable = ({
         manualColumnResize={true}
         autoWrapRow={true}
         licenseKey="non-commercial-and-evaluation"
-        afterDocumentKeyDown={(e)=>{
+        afterDocumentKeyDown={(e) => {
           if (hotRef.current) {
             const hot = hotRef.current?.hotInstance;
-            if(e.key=="Insert"){
-             
-            const row= hot.getSelectedLast()[2];
-            hot.alter("insert_row_below", row, 1)
-          }
+            if (e.key == "Insert") {
+
+              const row = hot.getSelectedLast()[2];
+              hot.alter("insert_row_below", row, 1)
+            }
           }
         }}
         contextMenu={{
@@ -73,70 +73,73 @@ const HandsonTable = ({
             console.log(key, selection, clickEvent);
           },
           items: {
-            row_above:{
-              name:"Add row above"
+            row_above: {
+              name: "Add row above"
             },
-            row_below:{
-              name:"Add row below"
+            row_below: {
+              name: "Add row below"
             },
-            row_10_below:{
-              name:"Add 10 rows below",
+            row_10_below: {
+              name: "Add 10 rows below",
               callback(key, selection, clickEvent) {
                 if (hotRef.current) {
                   const hot = hotRef.current?.hotInstance;
-                  const row= hot.getSelectedLast()[2];
+                  const row = hot.getSelectedLast()[2];
                   hot.alter("insert_row_below", row, 10)
                 }
               }
 
             },
-            row_50_below:{
-              name:"Add 50 rows below",
+            row_50_below: {
+              name: "Add 50 rows below",
               callback(key, selection, clickEvent) {
                 if (hotRef.current) {
                   const hot = hotRef.current?.hotInstance;
-                  const row= hot.getSelectedLast()[2];
+                  const row = hot.getSelectedLast()[2];
                   hot.alter("insert_row_below", row, 50)
                 }
               }
 
             },
-            remove_row:{
-              name:	"Remove row"
+            remove_row: {
+              name: "Remove row"
             },
-            sp1:{ name:'---------'},
-            undo:{
-              name:"Undo"
+            sp1: { name: '---------' },
+            undo: {
+              name: "Undo"
             },
-            redo:{
-              name:"Redo"
+            redo: {
+              name: "Redo"
             },
-            copy:{
-              name:"Copy"
+            copy: {
+              name: "Copy"
             },
-            cut:{
-              name:"Cut"
+            cut: {
+              name: "Cut"
             },
-            paste:{
-              name:"Paste"
+            paste: {
+              name: "Paste"
             }
 
 
           }
-            
+
         }}
-        afterChange={() => {
+        afterChange={(changes, source) => {
+          // Only update state for user-initiated changes, not when data is loaded from props
+          if (!changes || source === 'loadData') return;
+
           if (hotRef.current) {
             const hot = hotRef.current?.hotInstance;
-            let changedData=hot.getData();
-            const colAutoComplete=autoComplete.findIndex(el=>el.type==="autocomplete");
-            
-            if(colAutoComplete!=-1) {
-              const localLabs=autoComplete[colAutoComplete].source;
-              changedData=changedData.map((row:any)=> {
+            let changedData = hot.getData();
+            const colAutoComplete = autoComplete.findIndex(el => el.type === "autocomplete");
 
-                const labIndex=localLabs.findIndex((el:any)=>el==row[colAutoComplete]);
-                row[colAutoComplete]= labIndex==-1 ? null: labIndex + 1; //Index starts at 1 not 0
+            if (colAutoComplete != -1) {
+              const localLabs = autoComplete[colAutoComplete].source;
+              changedData = changedData.map((row: any) => {
+
+                const labIndex = localLabs.findIndex((el: any) => el == row[colAutoComplete]);
+                row[colAutoComplete] = labIndex == -1 ? null : labIndex + 1; //Index starts at 1 not 0
                 return row;
 
               });
@@ -145,28 +148,28 @@ const HandsonTable = ({
           }
         }}
       />
-    <div className="mt-4">
-      <Button  className="mr-2"
-      variant={"ghost"}
-        onClick={ ()=>{
-          if (hotRef.current) {
-            const hot = hotRef.current?.hotInstance;
-            const row= hot.countRenderedRows();
-            
-            hot.alter("insert_row_below", row, 1)
-          }
-        }}
-      >Add Row</Button>
-          <Button variant={"ghost"}
-        onClick={ ()=>{
-          if (hotRef.current) {
-            const hot = hotRef.current?.hotInstance;
-            const row= hot.countRenderedRows();
-            
-            hot.alter("insert_row_below", row, 10)
-          }
-        }}
-      >Add 10 Rows</Button>
+      <div className="mt-4">
+        <Button className="mr-2"
+          variant={"ghost"}
+          onClick={() => {
+            if (hotRef.current) {
+              const hot = hotRef.current?.hotInstance;
+              const row = hot.countRenderedRows();
+
+              hot.alter("insert_row_below", row, 1)
+            }
+          }}
+        >Add Row</Button>
+        <Button variant={"ghost"}
+          onClick={() => {
+            if (hotRef.current) {
+              const hot = hotRef.current?.hotInstance;
+              const row = hot.countRenderedRows();
+
+              hot.alter("insert_row_below", row, 10)
+            }
+          }}
+        >Add 10 Rows</Button>
       </div>
     </div>
   );

@@ -6,6 +6,18 @@ import { onMailer } from "@/lib/mailer";
 import React, { useState, useTransition } from "react";
 import { Store } from "react-notifications-component";
 
+// Escape HTML to prevent XSS
+function escapeHtml(text: string): string {
+  const map: Record<string, string> = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#039;',
+  };
+  return text.replace(/[&<>"']/g, (char) => map[char]);
+}
+
 function ContactForm() {
   const [data, setData] = useState({
     name: "",
@@ -15,6 +27,7 @@ function ContactForm() {
   });
   const [error, setError] = useState("");
   const [isPending, startTransition] = useTransition();
+
   const onSubmit = () => {
     if (!data.name || !data.email || !data.mail_subject || !data.message) {
       setError("All fields are required");
@@ -33,17 +46,40 @@ function ContactForm() {
       return;
     }
     setError("");
+
+    // Escape all user input to prevent XSS
+    const safeHtml = `
+      <h2>Name: ${escapeHtml(data.name)}</h2>
+      <h3>Email: ${escapeHtml(data.email)}</h3>
+      <h3>Subject: ${escapeHtml(data.mail_subject)}</h3>
+      <h3>Message:</h3>
+      <p>${escapeHtml(data.message)}</p>
+    `;
+
     onMailer({
       email: data.email,
       subject: data.mail_subject,
-      html: `
-      <h2>name: ${data.name}</h2>
-      <h3>email: ${data.email}</h3>
-      <h3>subject: ${data.mail_subject}</h3>
-      <h3>message:</h3>
-      <p>${data.message}</p>
-      `,
+      html: safeHtml,
     }).then((res) => {
+      // Check for error in response
+      if (res && 'error' in res) {
+        Store.addNotification({
+          title: "Error",
+          message: "Failed to send message. Please try again later.",
+          type: "danger",
+          insert: "top",
+          container: "top-right",
+          animationIn: ["animate__animated", "animate__fadeIn"],
+          animationOut: ["animate__animated", "animate__fadeOut"],
+          dismiss: {
+            duration: 5000,
+            onScreen: true,
+          },
+        });
+        return;
+      }
+
+      // Success
       setData({
         name: "",
         email: "",
@@ -63,27 +99,51 @@ function ContactForm() {
           onScreen: true,
         },
       });
+    }).catch(() => {
+      Store.addNotification({
+        title: "Error",
+        message: "Failed to send message. Please try again later.",
+        type: "danger",
+        insert: "top",
+        container: "top-right",
+        animationIn: ["animate__animated", "animate__fadeIn"],
+        animationOut: ["animate__animated", "animate__fadeOut"],
+        dismiss: {
+          duration: 5000,
+          onScreen: true,
+        },
+      });
     });
   };
+
   const handelChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setData({ ...data, [e.target.name]: e.target.value });
   };
+
   return (
     <div className="flex flex-col gap-4 flex-1 h-full w-full">
-      <Input required onChange={handelChange} name="name" label="Name" />
+      <Input
+        required
+        onChange={handelChange}
+        name="name"
+        label="Name"
+        value={data.name}
+      />
       <Input
         required
         name="email"
         onChange={handelChange}
         type="email"
-        label="Your E-mail "
+        label="Your E-mail"
+        value={data.email}
       />
       <Input
         required
         name="mail_subject"
         onChange={handelChange}
-        type="tel"
+        type="text"
         label="Mail subject"
+        value={data.mail_subject}
       />
       <TextArea
         required
@@ -91,6 +151,7 @@ function ContactForm() {
         onChange={handelChange as any}
         label="Message"
         rows={10}
+        value={data.message}
       />
 
       <p className="text-red-500">{error}</p>
@@ -102,3 +163,4 @@ function ContactForm() {
 }
 
 export default ContactForm;
+

@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Line from "@/assets/svg/line";
 import { first, keys, zipObject } from "lodash";
 import { HotTable } from "@handsontable/react";
@@ -50,47 +50,101 @@ export default function StartPage({ params }: { params: { slug: string } }) {
   const [availableCategoriesData, setAvailableCategoriesData] = useState<any>(
     []
   );
-  const [currentPresets, setCurrentPresets] = useState<any>([]);
-
-  const [category, setCategory] = useState([]);
+  /* Removed redundant currentPresets state */
+  const [category, setCategory] = useState<any>([]);
   const [labData, setLabData] = useState<any>([]);
-  useEffect(() => {
-    setCurrentPresets(presets);
-  }, [slug]);
 
+
+
+  const isInitialized = useRef(false);
+
+  // Combined Initialization Logic: History > Draft > Presets
   useEffect(() => {
-    if (slug !== "default" && currentPresets.length > 0) {
+    // Reset initialization status on dependency change (new slug/id)
+    isInitialized.current = false;
+
+    // 1. History (ID in URL)
+    if (id) {
+      const oldLocalGetDataTable = localStorage.getItem("getDataTable");
+      const oldLocalSelectedCategory = localStorage.getItem("selectedCategory");
+      setGetDataTable(JSON.parse(oldLocalGetDataTable || "[]")?.[id]);
+      setTableResult(tableResult);
+      setSelectedCategory(JSON.parse(oldLocalSelectedCategory || "[]")?.[id]);
+      isInitialized.current = true; // Mark initialized
+      return;
+    }
+
+    // 2. Autosaved Draft
+    const draftKey = `autosave_draft_${slug}`;
+    const savedDraft = localStorage.getItem(draftKey);
+    console.log("Checking for draft:", draftKey, !!savedDraft);
+    let draftLoaded = false;
+    if (savedDraft) {
       try {
-        const fInput = currentPresets.find((x: any) => x.ID == slug);
-        setFirstInput({
-          current_groups: fInput.groups + "",
-          category: fInput.category + "",
-          current_prepost: fInput.prepost + "",
-        });
-      } catch (error) {
-        console.log(error);
-
-        redirect("/start/default");
+        const parsedDraft = JSON.parse(savedDraft);
+        if (parsedDraft.slug === slug) {
+          setFirstInput(parsedDraft.firstInput);
+          setSelectedCategory(parsedDraft.selectedCategory);
+          setGetDataTable(parsedDraft.getDataTable);
+          draftLoaded = true;
+        }
+      } catch (e) {
+        console.error("Failed to load autosave draft", e);
       }
     }
-  }, [currentPresets]);
+
+    // 3. Preset Defaults (only if no draft loaded)
+    if (!draftLoaded && slug !== "default" && presets.length > 0) {
+      try {
+        const fInput = presets.find((x: any) => x.ID == slug);
+        if (fInput) {
+          setFirstInput({
+            current_groups: fInput.groups + "",
+            category: fInput.category + "",
+            current_prepost: fInput.prepost + "",
+          });
+        }
+      } catch (error) {
+        console.log(error);
+        if (slug !== "default") {
+          router.push("/start/default");
+        }
+      }
+    }
+
+    // Allow React state updates to be scheduled before enabling autosave
+    setTimeout(() => {
+      isInitialized.current = true;
+    }, 0);
+
+  }, [id, slug]);
 
   useEffect(() => {
     if (Object.keys(firstInput).length == 3 && slug !== "default") {
       handleFirstInput();
-      const fInput = currentPresets.find((x: any) => x.ID == slug);
-      console.log(fInput.prepost, fInput.groups, fInput.category, "there");
-      renameVariables(
-        fInput.prepost,
-        fInput.groups,
-        fInput.category,
-        fInput.colnames
-      ).then((res: any) => {
-        const selectedCategory = fInput.colnames.map((item: any, i: any) => {
-          return { value: item, label: res[i] };
+      const fInput = presets.find((x: any) => x.ID == slug);
+      // Ensure fInput exists before accessing props to avoid error
+      if (fInput) {
+        console.log(fInput.prepost, fInput.groups, fInput.category, "there");
+        renameVariables(
+          fInput.prepost,
+          fInput.groups,
+          fInput.category,
+          fInput.colnames
+        ).then((res: any) => {
+          const selectedCategory = fInput.colnames.map((item: any, i: any) => {
+            return { value: item, label: res[i] };
+          });
+          setSelectedCategory((prev: any) => {
+            if (prev && prev.length > 0) {
+              console.log("Skipping preset default overwrite, keeping existing category:", prev);
+              return prev;
+            }
+            console.log("Applying preset defaults for category:", selectedCategory);
+            return selectedCategory;
+          });
         });
-        setSelectedCategory(selectedCategory);
-      });
+      }
     }
   }, [firstInput]);
   useEffect(() => {
@@ -207,17 +261,24 @@ export default function StartPage({ params }: { params: { slug: string } }) {
       console.log(e);
     }
   }
-  useEffect(() => {
-    const oldLocalGetDataTable = localStorage.getItem("getDataTable");
 
-    const oldLocalSelectedCategory = localStorage.getItem("selectedCategory");
-    if (!slug && id) {
-      setGetDataTable(JSON.parse(oldLocalGetDataTable || "[]")?.[id]);
-      setTableResult(tableResult);
-      setSelectedCategory(JSON.parse(oldLocalSelectedCategory || "[]")?.[id]);
+  // Autosave logic: Save state to localStorage whenever key inputs change
+  useEffect(() => {
+    if (!isInitialized.current) return;
+
+    if (Object.keys(firstInput).length > 1 || selectedCategory.length > 0) {
+      const draft = {
+        slug,
+        firstInput,
+        selectedCategory,
+        getDataTable,
+      };
+      console.log("Autosaving draft for:", slug);
+      localStorage.setItem(`autosave_draft_${slug}`, JSON.stringify(draft));
     }
-  }, [id]);
-  const capArrayLength = (arr:any, maxLength:number) => arr.slice(-maxLength);
+  }, [firstInput, selectedCategory, getDataTable, slug]);
+
+  const capArrayLength = (arr: any, maxLength: number) => arr.slice(-maxLength);
 
   async function handleScripts() {
     const values = selectedCategory.map((item: any) => item.value);
@@ -242,15 +303,15 @@ export default function StartPage({ params }: { params: { slug: string } }) {
           category: firstInput?.category,
         },
       });
-      const keyLabels=Object.keys(data[0]).slice(1, -2);
+      const keyLabels = Object.keys(data[0]).slice(1, -2);
       const renamedCols = await renameVariables(
         firstInput.current_prepost,
         firstInput.current_groups,
         firstInput.category,
         keyLabels
       );
-      const headers=keyLabels.map((el:any,i:any)=>{
-        return {label: renamedCols[i], key:el}
+      const headers = keyLabels.map((el: any, i: any) => {
+        return { label: renamedCols[i], key: el }
       });
       setDownloadHeaders(headers);
       setOutputColumns(renamedCols);
@@ -287,13 +348,13 @@ export default function StartPage({ params }: { params: { slug: string } }) {
           "tableResult",
           JSON.stringify(
             capArrayLength([
-            data.map((el: any) =>
-              zipObject(
-                Object.keys(el).slice(1, -2),
-                Object.values(el).slice(1, -2)
-              )
-            ),
-          ], 20))
+              data.map((el: any) =>
+                zipObject(
+                  Object.keys(el).slice(1, -2),
+                  Object.values(el).slice(1, -2)
+                )
+              ),
+            ], 20))
         ); // Wrap the data in an array if it's not an array already
       }
       const invalidIDs = data
@@ -310,9 +371,9 @@ export default function StartPage({ params }: { params: { slug: string } }) {
         "invalidRows",
         JSON.stringify(
           capArrayLength([
-          ...oldLocalStorageInvalidRows,
-          handleInvalidRows(invalidIDs, renamedCols.length, "invalid-cell"),
-        ],20))
+            ...oldLocalStorageInvalidRows,
+            handleInvalidRows(invalidIDs, renamedCols.length, "invalid-cell"),
+          ], 20))
       );
       // save in local storage for later use
       const oldLocalGetDataTable = localStorage.getItem("getDataTable");
@@ -368,7 +429,7 @@ export default function StartPage({ params }: { params: { slug: string } }) {
               </span>
               Your Conversion Table With
             </Text>
-          <Text_logoPage />
+            <Text_logoPage />
           </div>
           {/* <Text variant="default">
             Where exploration meets innovation. Begin your quest for knowledge
@@ -536,6 +597,7 @@ export default function StartPage({ params }: { params: { slug: string } }) {
                 <HandsonTable
                   selectedCategory={selectedCategory}
                   setGetDataTable={setGetDataTable}
+                  getDataTable={getDataTable}
                   autoComplete={autoComplete}
                 />
               </div>
@@ -547,9 +609,9 @@ export default function StartPage({ params }: { params: { slug: string } }) {
                 Results
               </Text>
               <CSVLink
-              filename={"Results-Treatmeta.csv"}
-              className="btn btn-primary text-primary underline underline-offset-3 mx-6 "
-              data={tableResult.map((row: any) => {
+                filename={"Results-Treatmeta.csv"}
+                className="btn btn-primary text-primary underline underline-offset-3 mx-6 "
+                data={tableResult.map((row: any) => {
                   return keys(row).map((key) =>
                     row[key] === "NA" ? "" : row[key]
                   );
