@@ -13,6 +13,7 @@ import Select from "@/components/ui/select";
 import { Text } from "@/components/ui/text";
 import { Button } from "@/components/ui/button";
 import Text_logoPage from "@/assets/svg/text_logo";
+import ConverterWarnings from "@/components/ui/converter-warnings";
 
 import { redirect, useRouter, useSearchParams } from "next/navigation";
 import { presets } from "@/components/layout/chared";
@@ -436,6 +437,9 @@ export default function StartPage({ params }: { params: { slug: string } }) {
             and discovery as we provide the tools
           </Text> */}
         </div>
+
+        {/* Converter Warnings */}
+        <ConverterWarnings showNormalDistributionWarning={true} />
 
         <div className="flex flex-col ">
           <div className="flex items-end w-full gap-7 ">
