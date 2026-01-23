@@ -3,7 +3,7 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import Nav from "@/components/layout/nav";
 import Content from "@/components/layout/content";
-import { GoogleTagManager } from "@next/third-parties/google";
+import { GoogleTagManager, GoogleAnalytics } from "@next/third-parties/google";
 import { DefaultJsonLd } from "@/components/seo/JsonLd";
 
 export const viewport: Viewport = {
@@ -115,6 +115,7 @@ export default function RootLayout({
       </head>
       <body className={cn("min-h-screen bg-background font-sans antialiased ")}>
         <GoogleTagManager gtmId="GTM-P8MK6NS7" />
+        <GoogleAnalytics gaId="G-7DF68G4BRW" />
         <Nav />
         <div className="w-full h-[110px]"></div>
 
