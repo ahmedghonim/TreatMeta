@@ -1,5 +1,5 @@
 # Use an official Node.js image as a base
-FROM node:18-alpine AS build
+FROM node:20-alpine AS build
 
 # Set working directory in the container
 WORKDIR /app
@@ -17,7 +17,7 @@ COPY . .
 RUN yarn build
 
 # Use a minimal image to run the app
-FROM node:18-alpine AS runtime
+FROM node:20-alpine AS runtime
 
 WORKDIR /app
 

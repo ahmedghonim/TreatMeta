@@ -12,7 +12,11 @@ services:
       - backend
     volumes:
       #- ./front-end:/app
+<<<<<<< HEAD
       - ./front-end/.env:/app/.env
+=======
+      - ./front-end/.env:/app/.env 
+>>>>>>> 75c1a99 (Docker files updated)
   backend:
     build:
       context: . # Assuming the backend Dockerfile is in the root directory
