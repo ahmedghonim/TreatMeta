@@ -65,17 +65,18 @@ SE_2N_to_SD<-function(df){
 split_df_prepost<-function(df){
   #change_group=0 ->Pre, change_group=1 ->Post 
   #invalidate anything that has more than 2 rows or has invalid prepost groups
-  
+  df<-df%>%fill(any_of(c("changeSDin", "ccoef")), .direction = "updown")
   ready_df<-data.frame()
   if(nrow(df)==2 && sum(df$change_group) == 1){
 
-    df<-calc_CCoef(df)
+    
     pre_group<-df%>% filter(change_group==0) %>% rename(preMean=Mean, preSD=SD)
     
     post_group<-df%>% filter(change_group==1) %>% rename(postMean=Mean, postSD=SD) %>%
       mutate(changeSD = ifelse(!is.na(changeSDin), changeSDin, changeSD))
     
-    ready_df<-cbind(pre_group,postMean=post_group$postMean, postSD=post_group$postSD)%>%mutate(invalid=0, func="PrePost_to_MeanSD")
+    ready_df<-cbind(pre_group,postMean=post_group$postMean, postSD=post_group$postSD)%>%
+      mutate(invalid=0, func="PrePost_to_MeanSD")
     
     
   }
@@ -86,7 +87,7 @@ split_df_prepost<-function(df){
   }
 
 
-  ready_df<-ready_df%>%select(any_of(c("ID", "Study_ID","group_ID" ,"change_group","changeSD" ,"preMean","preSD", "postMean", "postSD","N", "ccoef", "invalid", "func")))
+  ready_df<-ready_df%>%select(any_of(c("ID", "Study_ID","group_ID" ,"change_group","changeSD" ,"preMean","preSD", "postMean", "postSD","N", "changeSDin", "ccoef", "invalid", "func")))
   return (as_tibble(ready_df))
 }
 
@@ -116,6 +117,7 @@ prepare_prepost<-function(df){
 
   grouped_by_study<-df%>%group_by(Study_ID)%>%group_split()
   output_study_list<-list()
+  
   for (i in 1:length(grouped_by_study)){
     itm<-grouped_by_study[[i]]
     if(nrow(itm)<=2){
@@ -174,18 +176,17 @@ calc_CCoef<-function(df){
   change_sd<-data.frame()
   if("ccoef" %in% colnames(df))
   { 
-    ccoef<-df%>%filter(!is.na(`ccoef`))
+    ccoef<-df%>%filter(!is.na(`ccoef`) | !is.na(changeSDin))
   }
-  else if("changeSDin" %in% colnames(df))
-  {  
-    change_sd<-df%>%filter(!is.na(changeSD),!is.na(preSD),!is.na(postSD))
+
+  if(nrow(ccoef)>0){
+    ccoef<-ccoef%>%mutate(ccoef=ifelse(is.na(ccoef),(preSD^2+postSD^2-changeSDin^2)/(2*preSD*postSD), ccoef))
+    m_ccoef<-mean(ccoef$ccoef)
+  }else{
+    m_ccoef<-0
   }
-  if(nrow(ccoef)){
-    cc_def<-mean(ccoef$ccoef)
-  }
-  else if(nrow(change_sd)){
-    change_sd<-change_sd%>%mutate(CC=(preSD^2+postSD^2-changeSD^2)/(2*preSD*postSD))
-    cc_def<-mean(change_sd$change_sd)
+  if(!is.na(m_ccoef) && m_ccoef!=0){
+    cc_def<-m_ccoef
   }
   
   return(df%>%mutate(ccoef=cc_def))
@@ -196,7 +197,7 @@ PrePost_to_MeanSD<-function(df){
 
   #change into pre, post Means and SDs
   prepared_df<-prepare_prepost(df)
-
+  prepared_df<-calc_CCoef(prepared_df)
   invalid<-prepared_df%>%filter(invalid==1)%>%mutate(changeMean=preMean,
                                                      changeSD=preSD)
   out<-prepared_df%>%filter(invalid==0)%>%mutate(changeMean=postMean-preMean,
