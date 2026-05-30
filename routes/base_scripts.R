@@ -4,11 +4,9 @@ source("./loadDB.R")
 Ci_N_to_SD<-function(df){
   
   ci<-0.95
-  if("CI%" %in% colnames(df)){
-    ci<-ifelse(is.na(df$`CI_percent`),0.95,df$`CI%`[1])
-  }
+
   out<-df%>%
-    mutate(SD=sqrt(N) * (ulci-llci) / ifelse(N>=100, 3.92, 2*tinv(1-ci,N-1) ) )
+    mutate(SD=sqrt(N) * (ulci-llci) / ifelse(N>=100, 3.92, 2*tinv(1-ci, pmax(N-1, 1)) )  )
   
   return(out)
 }
@@ -180,7 +178,9 @@ calc_CCoef<-function(df){
   }
 
   if(nrow(ccoef)>0){
-    ccoef<-ccoef%>%mutate(ccoef=ifelse(is.na(ccoef),(preSD^2+postSD^2-changeSDin^2)/(2*preSD*postSD), ccoef))
+    
+    ccoef<-ccoef%>%mutate(ccoef=ifelse(is.na(ccoef),(preSD^2+postSD^2-changeSDin^2)/(2*preSD*postSD), ccoef))%>%
+      mutate(ccoef = ifelse(is.finite(ccoef), ccoef, 0.5))
     m_ccoef<-mean(ccoef$ccoef)
   }else{
     m_ccoef<-0
