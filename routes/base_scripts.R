@@ -213,7 +213,7 @@ PrePost_to_MeanSD<-function(df){
 calculate_prop<-function(df){
 #Rename N_total -> N_Events
   m.prop.r<-metaprop(N_events,N,studlab = Study_ID ,df, sm = "PRAW",method.incr = "only0")
-  m.prop<-metaprop(N_events,N,studlab = Study_ID ,df, sm = "PLN", method.incr = "only0")
+  m.prop<-metaprop(N_events,N,studlab = Study_ID ,df, sm = "PLOGIT", method.incr = "only0")
   df$TE=m.prop.r$TE
   df$seTE=m.prop.r$seTE
   df$logTE=m.prop$TE

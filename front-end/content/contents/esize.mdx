@@ -1,4 +1,4 @@
-# Effect size estimation (for single group)
+# Effect size calculation (for single group)
 
 ## 1. Dichotomous data pooling 
 (for indirect meta-analysis, prevalence [proportional] meta-analysis)
@@ -21,20 +21,15 @@ To estimate the effect size and its logit transformation for dichotomous data, y
 
 The output was calculated upon the following equations: 
 
-**1) Prevalence**:
+1) Prevalence:
 
-$$
- \textbf{Prevalence estimate}=\frac{\text { Event } }{\text { Total  }} 
-$$
+$$\textbf{Prevalence estimate}=\frac{\text{Event}}{\text{Total}}$$
 
-**2)** Log Prevalence = log (Prevalence)
+2) Logit Prevalence = $\ln\left(\frac{\text{Prevalence}}{1 - \text{Prevalence}}\right)$
 
-**3)** Standard error **(**SE) [log transformed]:
+3) Standard error (SE) [logit transformed]:
 
-$$
-SE = \sqrt{\frac{1}{Event}-\frac{1}{Total}}
-$$
-
+$$SE = \sqrt{\frac{1}{\text{Event}} + \frac{1}{\text{Total} - \text{Event}}}$$
 ### D) Citation and equations source
 
 **1)** Higgins JPT, Thomas J, Chandler J, Cumpston M, Li T, Page MJ, Welch VA (editors). *Cochrane Handbook for Systematic Reviews of Interventions* version 6.4 (updated August 2023). Cochrane, 2023. Available from www.training.cochrane.org/handbook. (Chapter: 6.4.1.2 Measures of relative effect: the risk ratio and odds ratio, URL: [Chapter 6: Choosing effect measures and computing estimates of effect | Cochrane Training](https://training.cochrane.org/handbook/current/chapter-06#section-6-4-1-2))

@@ -1,7 +1,7 @@
 # Use the official rstudio/plumber image
 FROM rstudio/plumber:latest
 
-RUN apt-get update && apt-get install -y  git-core libcurl4-openssl-dev libgit2-dev libicu-dev libsodium-dev libssl-dev libxml2-dev make pandoc zlib1g-dev && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y  git-core libcurl4-openssl-dev libgit2-dev libicu-dev libsodium-dev libssl-dev libxml2-dev make pandoc zlib1g-dev libuv1-dev && rm -rf /var/lib/apt/lists/*
 
 COPY ./packages.R /packages.R
 # Set the working directory

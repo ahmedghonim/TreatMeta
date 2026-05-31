@@ -30,7 +30,7 @@ function OurConversions() {
     {
       id: "TeSe",
       icon: Icon2,
-      title: "Effect size estimation",
+      title: "Effect size calculation",
       list: [
         "Dichotomous data pooling (for indirect meta-analysis, and proportional meta-analysis)",
         "Continuous data pooling (for indirect meta-analysis)",
