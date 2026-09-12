@@ -3,10 +3,10 @@
   "version": "0.1.1",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "node api.js && next dev",
     "prebuild": "cp node_modules/nextra-theme-docs/dist/style-prefixed.css public/nextra-theme.css",
     "build": "next build",
-    "start": "next start",
+    "start": "node api.js && next start",
     "lint": "next lint",
     "postbuild": "next-sitemap & pagefind --site .next/server/app --output-path public/_pagefind"
   },
