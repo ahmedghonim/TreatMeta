@@ -8,4 +8,4 @@ _pagefind/
 .R_libs
 
 # restored env ignore rules
-config.bat
+.env*
