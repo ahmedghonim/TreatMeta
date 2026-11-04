@@ -1,6 +1,7 @@
 import { Footer, Layout, Navbar } from 'nextra-theme-docs'
 import { Search } from 'nextra/components'
 import { getPageMap } from 'nextra/page-map'
+import 'katex/dist/katex.min.css'
 
 export const metadata = {
   title: {
@@ -34,6 +35,35 @@ export default async function RootLayout({ children }) {
     <>
       <link rel="stylesheet" href="/nextra-theme.css" />
       <style>{`
+        /* Hide MathML fallback to prevent duplicate equation/symbol rendering */
+        .katex-mathml {
+          display: none !important;
+        }
+        /* Ensure all documentation tables are contained and scroll on small viewports */
+        article table,
+        main table,
+        .nextra-content table,
+        table {
+          display: block !important;
+          width: 100% !important;
+          max-width: 100% !important;
+          overflow-x: auto !important;
+          border-collapse: collapse !important;
+          margin: 1.5rem 0 !important;
+        }
+        article th, article td,
+        main th, main td,
+        .nextra-content th, .nextra-content td,
+        th, td {
+          padding: 0.65rem 0.85rem !important;
+          border: 1px solid rgba(255, 255, 255, 0.15) !important;
+          font-size: 0.875rem !important;
+        }
+        article th, main th, .nextra-content th, th {
+          background-color: rgba(255, 255, 255, 0.06) !important;
+          font-weight: 600 !important;
+          white-space: nowrap !important;
+        }
         /* Override Nextra CSS for main navbar */
         body > nav {
           background-color: #0F182E !important;

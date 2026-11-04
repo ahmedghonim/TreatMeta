@@ -1,12 +1,12 @@
-export default{
+export default {
 
     "meansd": "Mean & SD conversions",
-    "esize": "Effect size estimation",
+    "esize": "Single-Arm data transformations",
     "mcomb": "Group combination",
     "ipd": "Summary for indvidual patient data",
     "units": "Unit conversion",
     "faq": "Frequently asked questions"
-    
 
-    
+
+
 }  

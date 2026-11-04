@@ -30,10 +30,10 @@ function OurConversions() {
     {
       id: "TeSe",
       icon: Icon2,
-      title: "Effect size calculation",
+      title: "Single-Arm Data Transformations",
       list: [
-        "Dichotomous data pooling (for indirect meta-analysis, and proportional meta-analysis)",
-        "Continuous data pooling (for indirect meta-analysis)",
+        "Dichotomous data transformations (for indirect meta-analysis, and proportional meta-analysis)",
+        "Continuous data transformations (for indirect meta-analysis)",
       ],
     },
     {

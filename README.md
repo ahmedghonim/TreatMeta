@@ -42,7 +42,7 @@ This repository contains the **MetaTransformR** R API.
 | Category | Description | Example Conversions |
 |----------|-------------|---------------------|
 | **1. Mean & SD** | Convert various statistics to Mean ± SD | Median[IQR] → Mean±SD, Median(Range) → Mean±SD, SE → SD, CI → SD, P-value → SD |
-| **2. Effect Size Estimation** | Calculate effect sizes for single-arm studies | Prevalence with log transformation, Indirect meta-analysis (Mean→SE) |
+| **2. Single-Group Summary Transformations** | Calculate summary statistics for single-arm studies | Prevalence with logit transformation, Indirect meta-analysis (Mean→SE) |
 | **3. Group Combination** | Pool multiple independent groups | Combine 2+ study arms into single estimate |
 | **4. Individual Patient Data** | Summarize raw data | List of values → Mean±SD |
 | **5. Unit Conversions** | Laboratory value conversions | 448+ medical unit conversions |

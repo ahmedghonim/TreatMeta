@@ -37,7 +37,14 @@ const ConverterWarnings: React.FC<ConverterWarningsProps> = ({
                         All mean and SD conversions assume your raw data follows a normal
                         distribution. Since we have no access to raw data from primary studies, it is your
                         responsibility to verify this assumption before using the converted
-                        values.
+                        values. Consult our{" "}
+                        <Link
+                            href="/docs/contents/meansd#9-guidance-on-the-normality-assumption-skewness-assessment-and-sensitivity-analyses"
+                            className="text-amber-300 underline hover:text-amber-200 font-medium"
+                        >
+                            normality & skewness guide
+                        </Link>{" "}
+                        for practical checks and recommended sensitivity analyses.
                     </p>
                 </div>
             )}

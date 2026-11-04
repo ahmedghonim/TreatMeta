@@ -209,7 +209,7 @@ Hozo SP, Djulbegovic B, Hozo I. Estimating the mean and variance from the median
 
 ### E) Additional notes
 
-Use this conversion with caution, as the data skewness may affect the results. 
+Use this conversion with caution, as data skewness and extreme outliers significantly affect range-based estimators. See [Section 9](#9-guidance-on-the-normality-assumption-skewness-assessment-and-sensitivity-analyses) for methods to check skewness from published summaries and conduct recommended sensitivity analyses.
 
 ---
 
@@ -217,7 +217,7 @@ Use this conversion with caution, as the data skewness may affect the results.
 
 ### **A) Needed values**
 
-To estimate mean (x̄) and standard deviation (SD) from median (Md) and inter-quartile range (هضق), you need the following values:
+To estimate mean (x̄) and standard deviation (SD) from median (Md) and inter-quartile range (IQR), you need the following values:
 
 1) Median (Md)
 
@@ -265,7 +265,7 @@ Hozo SP, Djulbegovic B, Hozo I. Estimating the mean and variance from the median
 
 ### E) Additional notes
 
-None.  
+Quantile-to-mean transformations rely on approximate distributional symmetry. See [Section 9](#9-guidance-on-the-normality-assumption-skewness-assessment-and-sensitivity-analyses) for detailed instructions on assessing quantile asymmetry from published summary statistics, small-sample corrections, and sensitivity analysis strategies.  
 
 ---
 
@@ -410,3 +410,122 @@ Higgins JPT, Thomas J, Chandler J, Cumpston M, Li T, Page MJ, Welch VA (editors)
 ### E) Additional notes
 
 In the meta-analysis, you probably need SDs for both the experimental and comparator groups. These equations compute the average SDs for both arms, allowing you to use this common SD for both groups.
+
+---
+
+## 9. Guidance on the Normality Assumption, Skewness Assessment, and Sensitivity Analyses
+
+TreatMeta provides automated conversions to standard mean and SD metrics to enable synthesis in meta-analyses. However, parametric methods and quantile-to-mean transformations rely on underlying distributional assumptions. Because systematic reviewers typically have access only to published summary statistics rather than participant-level raw data, the following practical guidelines explain:
+* **Evaluating Distributional Plausibility:** Practical rules of thumb using published summary statistics.
+* **Conversion Sensitivity:** Categorizing which conversions depend strictly on normality versus algebraic definitions.
+* **Recommended Methodological Safeguards:** Sensitivity analyses, small-sample corrections, and non-parametric alternatives.
+
+---
+
+### A) Assessing Distributional Plausibility from Published Summary Statistics
+
+When individual participant data (IPD) are unavailable, reviewers can detect departures from normality using established rules of thumb applied to published summary tables:
+
+#### Boundary and Non-Negativity Check (Altman & Bland Rule)
+For inherently non-negative physical or clinical variables (e.g., hospital length of stay, intensive care unit days, laboratory biomarkers, blood loss, cost, time to recovery):
+* **The Rule of Thumb:** In a normal distribution, approximately 95% of observations fall within Mean ± 2 SD, and 68% within Mean ± 1 SD.
+* **Detection Criterion:**
+  * If Mean < 2 SD, the normal model implies that more than 2.5% of underlying values would be negative, indicating **probable positive (right) skewness**.
+  * If Mean < SD, the normal model implies that more than 16% of values would be negative, indicating **severe right skewness**. Standard mean-based conversions are heavily distorted in such cases.
+
+#### Median vs. Mean Disparity
+* In a symmetric (normal) distribution, the population mean and median coincide (Mean ≈ Median).
+* When primary studies report both, or when other studies in the same systematic review report means while some report medians, check the standardized disparity:
+
+$$
+\Delta = \frac{|\text{Mean} - \text{Median}|}{\text{SD}}
+$$
+
+* If |Mean - Median| > 0.2 × SD, or if the median is substantially smaller than the mean (Mean > Median), the distribution has a pronounced right tail.
+
+#### Quantile and Interquartile Range (IQR) Asymmetry
+When a study reports the median and quartiles (Q1, Median, Q3):
+* Calculate the distance from each quartile to the median:
+  * D_lower = Median - Q1
+  * D_upper = Q3 - Median
+* **Symmetry Ratio:**
+
+$$
+\text{Ratio}_{\text{IQR}} = \frac{Q_3 - \text{Median}}{\text{Median} - Q_1}
+$$
+
+* In a symmetric normal distribution, Ratio_IQR ≈ 1.0.
+* If Ratio_IQR > 1.5 (or < 0.67), there is substantial asymmetry, violating the assumption of underlying normality required for simple linear averaging.
+
+#### Range Asymmetry Check
+When minimum (a), median (m), and maximum (b) are reported:
+* Check whether the median is situated near the midpoint of the range:
+  * D_min = m - a
+  * D_max = b - m
+* A ratio (b - m) / (m - a) >> 1.0 is a classic indicator of severe right skewness, frequently observed in small clinical trials with outliers.
+
+#### Domain Knowledge and Reporting Patterns
+* **Biological and Clinical Context:** Certain biomarkers (e.g., cytokines, troponin, viral loads, D-dimer) and health economic endpoints (costs, duration of ventilation) are universally known to follow skewed (often log-normal or gamma) distributions.
+* **Reporting Practices in the Field:** If original trial authors intentionally reported non-parametric summary statistics (median, IQR, or range), it is often because they tested the raw data (e.g., via Shapiro-Wilk tests) and confirmed a significant violation of normality.
+
+---
+
+### B) Relevance of Normality Across Conversion Types
+
+Not all conversions in TreatMeta are equally sensitive to the normality assumption:
+
+| Conversion | Normality Reliance | Primary Estimator / Method |
+| :--- | :---: | :--- |
+| **Median & Range to Mean & SD** | **Very High** | Hozo (2005), Bland (2015), Wan (2014) |
+| **Median & IQR to Mean & SD** | **High** | Wan (2014), Luo (2018), Shi (2020) |
+| **Confidence Interval to SD** | **Moderate / Low** | Cochrane Handbook Eq. (6.5.2.2) |
+| **P-value to SD** | **Moderate / Low** | Altman & Bland (2011), Cochrane |
+| **Mean & SE to SD** | **None (Algebraic)** | Standard Definition: SD = SE × √N |
+| **Pre-Post Change SD** | **Low to Moderate** | Cochrane Handbook Eq. (6.5.2.8) |
+| **Multiple Groups Pooling** | **Low** | Cochrane Handbook Eq. (6.5.2.10) |
+
+#### Detailed Rationale by Tier:
+* **High Reliance (Quantile & Range Transformations):**
+  * *Median & Range:* Sample extremes (a, b) are highly vulnerable to skewness and outlier inflation. Formulas derived under normal distribution theory produce biased estimates when distributions are skewed.
+  * *Median & IQR:* Quantile models assume approximate symmetry to relate quartiles to μ and σ. Marked skewness biases the imputed mean toward the median and underestimates sample variance.
+* **Moderate / Sample-Size Dependent Reliance (CI & P-value Conversions):**
+  * *CI & P-value:* Relies on the sampling distribution of the mean. For moderate to large samples (N ≥ 30 to 50), the Central Limit Theorem (CLT) guarantees approximate normality of the mean estimate regardless of raw data skew. For small samples (N < 25), raw data normality is strictly required for valid t-distribution inference.
+* **No Distributional Reliance (Algebraic Transformations):**
+  * *Mean & SE:* Exact algebraic relationship; independent of underlying distribution.
+  * *Combining Groups:* Standard weighted pooling of sums and sums of squares; robust under mild non-normality for combined cohorts.
+
+---
+
+### C) Recommended Sensitivity Analyses and Alternative Approaches
+
+When summary statistic checks reveal evident skewness or when dealing with small sample sizes, reviewers should adopt the following methodological safeguards:
+
+#### Recommended Sensitivity Analyses
+* **Leave-Converted-Studies-Out Analysis:** Perform a sensitivity analysis comparing pooled meta-analytic effect sizes with and without studies that required quantile-to-mean conversion.
+* **Subgroup Stratification by Reporting Format:** Stratify the meta-analysis by whether studies natively reported Mean ± SD versus converted from Median / IQR. If point estimates or heterogeneity (I²) differ markedly between strata, discuss the influence of skewness transparently.
+* **Estimator Robustness Check:** Compare results across different conversion algorithms. For example, test Wan et al. (2014) against Luo et al. (2018) for sample mean and Shi et al. (2020) for sample standard deviation.
+* **Correlation Sensitivity for Baseline Change:** If imputing change-from-baseline SDs, repeat the meta-analysis across a sensitivity grid of correlation coefficients (r = 0.2, 0.5, 0.8) to assess whether conclusion stability depends on the assumed correlation.
+
+#### Guidance for Small Samples (N < 25 to 30)
+* **Avoid Range-Based Conversions in Small Trials:** Sample range is notoriously unstable in small samples (N < 25). Prefer studies reporting IQRs over ranges whenever possible.
+* **Use Sample-Size-Adjusted Estimators:** TreatMeta incorporates the optimized weightings from Luo et al. (2018) and Shi et al. (2020), which correct for small-sample finite population biases that were present in earlier formulas (e.g., Hozo et al. 2005).
+* **Exact t-Distribution Degrees of Freedom:** When back-calculating SD from CIs or P-values in small studies, avoid using the large-sample normal critical value (1.96); instead, use the exact two-tailed t-distribution quantile with df = N - 1 or df = N1 + N2 - 2.
+
+#### Alternative Synthesis Methods for Marked Skewness
+If severe skewness is pervasive across the included studies:
+* **Direct Median-Based Meta-Analysis:** Instead of forcing non-normal medians into means and standard deviations, synthesize medians directly using non-parametric quantile-based meta-analytic methods (e.g., McGrath et al. 2020, via the `metamedian` or `qmd` R packages).
+* **Log-Transformation and Ratio of Means (RoM):** If the continuous measure is positively skewed and strictly positive (e.g., biomarker concentration, hospital stay), consider analyzing the **Ratio of Means (RoM)** or geometric means after logarithmic transformation (ln(Mean)), which stabilizes variance and eliminates skewness (Friedrich et al. 2008).
+* **Qualitative or Narrative Tabulation:** If primary studies present extreme skewness and sample sizes are small (N < 15), converting medians to means may yield misleading pooled estimates. In such scenarios, reporting medians and IQRs narratively in a structured evidence table is recommended by the Cochrane Handbook.
+
+---
+
+### D) Citations and Methodological Sources
+* **Altman DG, Bland JM.** Detecting skewness from summary information. *BMJ*. 1996;313(7066):1200.
+* **Bland JM.** Estimating mean and standard deviation from the median, range, and the size of a sample. *Stat Med*. 2015;34(12):227-242.
+* **Hozo SP, Djulbegovic B, Hozo I.** Estimating the mean and variance from the median, range, and the size of a sample. *BMC Med Res Methodol*. 2005;5:13.
+* **Luo D, Wan X, Liu J, Tong T.** Optimally estimating the sample mean from the sample size, median, mid-range, and/or mid-quartile range. *Stat Methods Med Res*. 2018;27(6):1785-1805.
+* **Shi J, Luo D, Weng H, et al.** Optimally estimating the sample standard deviation from the five-number summary for normal and skewed distributions. *Stat Methods Med Res*. 2020;29(9):2529-2545.
+* **Wan X, Wang W, Liu J, Tong T.** Estimating the sample mean and standard deviation from the sample size, median, range and/or interquartile range. *BMC Med Res Methodol*. 2014;14:135.
+* **McGrath S, Zhao X, Steele R, Thombs BD, Benedetti A.** Estimating the sample mean and standard deviation from commonly reported quantiles in meta-analysis. *Stat Methods Med Res*. 2020;29(9):2520-2537.
+* **Friedrich JO, Adhikari NK, Beyene J.** Ratio of means for analyzing continuous outcomes in meta-analysis: a novel approach. *PLoS Clin Trials*. 2008;3(4):e1000032.
+* **Higgins JPT, Thomas J, et al. (eds).** *Cochrane Handbook for Systematic Reviews of Interventions* version 6.4 (updated August 2023). Cochrane, 2023. Chapter 6: Choosing effect measures and computing estimates of effect.

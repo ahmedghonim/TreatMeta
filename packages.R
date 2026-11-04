@@ -1,3 +1,7 @@
+if(!require("rlang") || packageVersion("rlang") < "1.1.7"){
+  install.packages("rlang")
+  library(rlang)
+}
 if(!require("jsonlite")){
   install.packages("jsonlite")
   library(jsonlite)
@@ -46,6 +50,12 @@ if(!require("meta")){
   library(meta)
 }
 
+if(!require("testthat")){
+  install.packages("testthat")
+  library(testthat)
+}
 
-
-
+if(!require("covr")){
+  install.packages("covr")
+  library(covr)
+}

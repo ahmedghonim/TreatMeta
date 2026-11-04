@@ -20,6 +20,7 @@ import { presets } from "@/components/layout/chared";
 import { Store } from "react-notifications-component";
 import { Tooltip } from "react-tooltip";
 import { CSVLink, CSVDownload } from "react-csv";
+import { attachHeaderTooltip } from "@/lib/columnTooltips";
 
 import React from "react";
 
@@ -509,7 +510,7 @@ export default function StartPage({ params }: { params: { slug: string } }) {
                     }}
                     variant="ghost"
                   >
-                    Reset
+                    Clear Results
                   </Button>
                 </div>
                 <label
@@ -546,7 +547,7 @@ export default function StartPage({ params }: { params: { slug: string } }) {
                     value={selectedCategory}
                     // filter if add in selectedCategory
                     options={category.filter(
-                      (item) => !selectedCategory.includes(item)
+                      (item: any) => !selectedCategory.includes(item)
                     )}
                     onChange={(e: any) => {
                       setSelectedCategory(e as any);
@@ -592,7 +593,7 @@ export default function StartPage({ params }: { params: { slug: string } }) {
                       }}
                       variant="ghost"
                     >
-                      Reset
+                      Clear Results
                     </Button>
                   }
                 </div>
@@ -645,7 +646,11 @@ export default function StartPage({ params }: { params: { slug: string } }) {
                 manualColumnResize={true}
                 autoWrapRow={true}
                 licenseKey="non-commercial-and-evaluation"
+                afterGetColHeader={(col, TH) => {
+                  attachHeaderTooltip(col, TH, outputColumns);
+                }}
               />
+              <Tooltip id="col-header-tooltip" className="!z-[9999] max-w-sm text-xs shadow-xl" />
             </div>
           )}
         </div>

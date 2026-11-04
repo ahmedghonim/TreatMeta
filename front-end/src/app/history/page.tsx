@@ -6,6 +6,8 @@ import { keys } from "lodash";
 import { Text } from "@/components/ui/text";
 import Empty from "@/components/view/history/empty";
 import { Button } from "@/components/ui/button";
+import { attachHeaderTooltip } from "@/lib/columnTooltips";
+import { Tooltip } from "react-tooltip";
 import {
   Accordion,
   AccordionContent,
@@ -96,6 +98,13 @@ function StartPAge() {
                   manualColumnResize={true}
                   autoWrapRow={true}
                   licenseKey="non-commercial-and-evaluation"
+                  afterGetColHeader={(col, TH) => {
+                    attachHeaderTooltip(
+                      col,
+                      TH,
+                      selectedCategory?.[index]?.map((el: any) => el.label)
+                    );
+                  }}
                 />
               </div>
               <div className="w-full">
@@ -123,12 +132,16 @@ function StartPAge() {
                   manualColumnResize={true}
                   autoWrapRow={true}
                   licenseKey="non-commercial-and-evaluation"
+                  afterGetColHeader={(col, TH) => {
+                    attachHeaderTooltip(col, TH, outputColumns[index]);
+                  }}
                 />
               </div>
             </AccordionContent>
           </AccordionItem>
         ))}
       </Accordion>
+      <Tooltip id="col-header-tooltip" className="!z-[9999] max-w-sm text-xs shadow-xl" />
     </div>
   );
 }

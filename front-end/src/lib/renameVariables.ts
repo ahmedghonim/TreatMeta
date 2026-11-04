@@ -1,7 +1,7 @@
 
 import { fetchData } from "./fetchData";
 export async function renameVariables(
-  prepost: boolean,
+  prepost: boolean | number,
   groups: number,
   category: number,
   vars: Array<string>
